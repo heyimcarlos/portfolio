@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
+import { IoSunny, IoMoon } from 'react-icons/io5'
 
 const themes = ['light', 'dark']
 
 export default function ThemeToggle() {
-  console.log('import', import.meta)
   const [isMounted, setIsMounted] = useState(false)
   const [theme, setTheme] = useState(() => {
+    // @info: this is a vite thingie. We can access the env to see if we're on the server.
     if (import.meta.env.SSR) {
       return undefined
     }
@@ -36,5 +37,25 @@ export default function ThemeToggle() {
     setIsMounted(true)
   }, [])
 
-  return isMounted ? <div className="inline-flex">Button</div> : <div />
+  return isMounted ? (
+    <div className="inline-flex items-center p-[1px] rounded-3xl bg-orange-300 dark:bg-zinc-600">
+      {themes.map(t => {
+        const checked = t === theme
+        return (
+          <button
+            onClick={toggleTheme}
+            key={t}
+            aria-label="Toggle theme"
+            className={`${
+              checked ? 'bg-white text-black' : ''
+            } cursor-pointer rounded-3xl p-2`}
+          >
+            {t === 'light' ? <IoSunny /> : <IoMoon />}
+          </button>
+        )
+      })}
+    </div>
+  ) : (
+    <div />
+  )
 }

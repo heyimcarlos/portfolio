@@ -1,11 +1,12 @@
 ---
 import HeaderLink from './HeaderLink.astro'
-import { IoLogoGithub } from 'react-icons/io5/index.js'
+import { IoLogoGithub } from 'react-icons/io5'
 import { Image } from '@astrojs/image/components'
 import logo from '../../public/assets/logo.png'
+import ThemeToggle from './ThemeToggleButton'
 ---
 
-<header class="fixed w-full pq2 z-20 backdrop-blur-md">
+<header class="fixed w-full p-2 z-20 backdrop-blur-md">
   <div class="mx-auto max-w-3xl">
     <nav class="flex items-center gap-3 text-base">
       <a href="/" class="group">
@@ -27,6 +28,7 @@ import logo from '../../public/assets/logo.png'
         >
       </div>
       <div class="flex-1"></div>
+      <ThemeToggle client:load />
     </nav>
   </div>
 </header>
