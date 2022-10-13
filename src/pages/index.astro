@@ -4,7 +4,9 @@ import MainHead from '../components/MainHead.astro'
 import Nav from '../components/Nav.astro'
 import Footer from '../components/Footer.astro'
 import PortfolioPreview from '../components/PortfolioPreview.astro'
-
+import Body from '../components/Body.astro'
+import Header from '../components/Header.astro'
+import { SITE_TITLE } from '../config'
 // Data Fetching: List all Markdown posts in the repo.
 const projects = await Astro.glob('./project/**/*.md')
 const featuredProject = projects[0]
@@ -13,71 +15,62 @@ const featuredProject = projects[0]
 <html lang="en">
   <head>
     <MainHead
-      title="Jeanine White: Personal Site"
-      description="Jeanine White: Developer, Speaker, and Writer..."
+      title="Carlos de la Cruz: Personal Site"
+      description="Carlos de la Cruz: Developer"
     />
   </head>
-  <body>
-    <Nav />
-    <header class="hero">
-      <img
-        width="1600"
-        height="1131"
-        class="img"
-        src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1200&q=75"
-        srcset="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1200&q=75 800w,https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1200&q=75 1200w,https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1600&q=75 1600w,https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=2400&q=75 2400w"
-        sizes="(max-width: 800px) 800px, (max-width: 1200px) 1200px, (max-width: 1600px) 1600px, (max-width: 2400px) 2400px, 1200px"
-      />
-      <div class="font-mplus text-xl">Hello World</div>
-      <div class="gradient"></div>
-      <div class="gradient2"></div>
-      <div class="overlay">
-        <h1 class="title">
-          <small class="subtitle">The personal site of</small>Jeanine White
-        </h1>
-        <div class="roles">
-          <span class="role"
-            >👩‍💻 Developer <span class="invert">👩‍💻 Developer</span>
-          </span>
-          <span class="role"
-            >🎤 Speaker <span class="invert">🎤 Speaker</span>
-          </span>
-          <span class="role"
-            >✏️ Writer <span class="invert">✏️ Writer</span>
-          </span>
-        </div>
-        <p class="desc">Lover of dogs, roadtrips, and poetry.</p>
-      </div>
-    </header>
-    <main class="wrapper">
-      <div class="grid">
-        <div class="section">
-          <h3 class="sectionTitle">Selected Work</h3>
-          <PortfolioPreview project={featuredProject} />
-          <div class="buttonContainer">
-            <a href="/projects/" class="button">View All</a>
-          </div>
-        </div>
-        <div class="section">
-          <h3 class="sectionTitle">About me</h3>
-          <p class="bio">
-            <span>Hello!</span> I’m Jeanine, and this is my website. It was made
-            using{' '}
-            <a
-              href="https://github.com/withastro/astro"
-              target="_blank"
-              rel="nofollow"
-            >
-              Astro</a
-            >, a new way to build static sites. This is just an example template
-            for you to modify.
-          </p>
-          <p>
-            <a href="/about">Read more</a>
-          </p>
-        </div>
-      </div>
+  <Body>
+    <Header title={SITE_TITLE} class="" />
+    <!-- <div class="bg-red-500 p-2 mb-3 text-center rounded-xl">
+        Hello I&apos;m a full-stack developer with a passion for building!
+      </div> -->
+
+    <main>
+      <h1>🧑‍🚀 Hello, Astronaut!</h1>
+      <p>
+        Welcome to the official <a href="https://astro.build/">Astro</a> blog starter
+        template. This template serves as a lightweight, minimally-styled starting
+        point for anyone looking to build a personal website, blog, or portfolio
+        with Astro.
+      </p>
+      <p>
+        This template comes with a few integrations already configured in your
+        <code>astro.config.mjs</code> file. You can customize your setup with
+        <a href="https://astro.build/integrations">Astro Integrations</a> to add
+        tools like Tailwind, React, or Vue to your project.
+      </p>
+      <p>Here are a few ideas on how to get started with the template:</p>
+      <ul>
+        <li>Edit this page in <code>src/pages/index.astro</code></li>
+        <li>
+          Edit the site header items in <code>src/components/Header.astro</code>
+        </li>
+        <li>
+          Add your name to the footer in <code
+            >src/components/Footer.astro</code>
+        </li>
+        <li>
+          Check out the included blog posts in <code>src/pages/blog/</code>
+        </li>
+        <li>
+          Customize the blog post page layout in <code
+            >src/layouts/BlogPost.astro</code>
+        </li>
+      </ul>
+      <p>
+        Have fun! If you get stuck, remember to <a
+          href="https://docs.astro.build/"
+          >read the docs
+        </a> or <a href="https://astro.build/chat">join us on Discord</a> to ask
+        questions.
+      </p>
+      <p>
+        Looking for a blog template with a bit more personality? Check out <a
+          href="https://github.com/Charca/astro-blog-template"
+          >astro-blog-template
+        </a> by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
+      </p>
     </main>
     <Footer />
-  </body>
+  </Body>
 </html>
