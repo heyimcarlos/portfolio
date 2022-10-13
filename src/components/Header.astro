@@ -1,9 +1,8 @@
 ---
 import HeaderLink from './HeaderLink.astro'
 import { IoLogoGithub } from 'react-icons/io5'
-import { Image } from '@astrojs/image/components'
-import logo from '../../public/assets/logo.png'
 import ThemeToggle from './ThemeToggleButton'
+import TerminalIcon from './icons/terminal'
 ---
 
 <header class="fixed w-full p-2 z-20 backdrop-blur-md">
@@ -11,11 +10,7 @@ import ThemeToggle from './ThemeToggleButton'
     <nav class="flex items-center gap-3 text-base">
       <a href="/" class="group">
         <h2 class="font-semibold tracking-tighter p-2 font-mplus text-lg">
-          <Image
-            src={logo}
-            alt="Logo"
-            class="w-6 h-[25px] inline-block transition-transform group-hover:rotate-[20deg]"
-          />
+          <TerminalIcon />
           Carlos de la Cruz
         </h2>
       </a>
