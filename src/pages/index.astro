@@ -1,5 +1,4 @@
 ---
-// Component Imports
 import Footer from '../components/Footer.astro'
 import Body from '../components/Body.astro'
 import Header from '../components/Header.astro'
@@ -27,13 +26,22 @@ import Content from '../components/Content.astro'
           Hello I&apos;m a full-stack developer with a passion for building!
         </div>
 
-        <section>
-          <p class="mb-8 indent-4">
+        <section class="md:flex">
+          <div class="grow">
+            <h2
+              class="leading-10 text-3xl font-mplus font-bold md:leading-tight md:text-4xl"
+            >
+              Carlos de la Cruz
+            </h2>
+            <p>Digital Craftzman ( Artist / Developer / Designer )</p>
+          </div>
+
+          <!-- <p class="mb-8 indent-4">
             Welcome to the official <a href="https://astro.build/">Astro</a> blog
             starter template. This template serves as a lightweight, minimally-styled
             starting point for anyone looking to build a personal website, blog,
             or portfolio with Astro.
-          </p>
+          </p> -->
         </section>
       </Content>
     </main>

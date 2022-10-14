@@ -4,6 +4,7 @@ specifiers:
   '@astrojs/image': ^0.9.3
   '@astrojs/react': ^1.2.0
   '@astrojs/tailwind': ^2.0.2
+  '@headlessui/react': ^1.7.3
   '@types/react': ^18.0.21
   '@typescript-eslint/parser': ^5.40.0
   astro: ^1.4.7
@@ -20,6 +21,7 @@ dependencies:
   '@astrojs/image': 0.9.3_sharp@0.31.1
   '@astrojs/react': 1.2.0_biqbaboplfbrettd7655fr4n2y
   '@astrojs/tailwind': 2.0.2_tailwindcss@3.1.8
+  '@headlessui/react': 1.7.3_biqbaboplfbrettd7655fr4n2y
   astro: 1.4.7
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
@@ -485,6 +487,17 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /@headlessui/react/1.7.3_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-LGp06SrGv7BMaIQlTs8s2G06moqkI0cb0b8stgq7KZ3xcHdH3qMP+cRyV7qe5x4XEW/IGY48BW4fLesD6NQLng==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      react: ^16 || ^17 || ^18
+      react-dom: ^16 || ^17 || ^18
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+    dev: false
 
   /@humanwhocodes/config-array/0.10.7:
     resolution: {integrity: sha512-MDl6D6sBsaV452/QSdX+4CXIjZhIcI0PELsxUjk4U828yd58vk3bTIvk/6w5FY+4hIy9sLW0sfrV7K7Kc++j/w==}

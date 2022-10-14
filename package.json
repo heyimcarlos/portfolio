@@ -17,6 +17,7 @@
     "@astrojs/image": "^0.9.3",
     "@astrojs/react": "^1.2.0",
     "@astrojs/tailwind": "^2.0.2",
+    "@headlessui/react": "^1.7.3",
     "astro": "^1.4.7",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
