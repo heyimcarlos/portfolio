@@ -2,9 +2,13 @@
 import Footer from '../components/Footer.astro'
 import Body from '../components/Body.astro'
 import Header from '../components/Header.astro'
+import Paragraph from '../components/Paragraph.astro'
 import { SITE_TITLE } from '../config'
 import BaseHead from '../components/BaseHead.astro'
 import Content from '../components/Content.astro'
+import { Image } from '@astrojs/image/components'
+import MotionSection from '../components/MotionSection.astro'
+import { IoChevronForward } from 'react-icons/io5'
 // Data Fetching: List all Markdown posts in the repo.
 // const projects = await Astro.glob('./project/**/*.md')
 // const featuredProject = projects[0]
@@ -23,13 +27,14 @@ import Content from '../components/Content.astro'
     <main class="pt-[56px]">
       <Content>
         <div
-          class="bg-orange-200 dark:bg-zinc-800 p-3 my-6 text-center rounded-lg"
+          class="bg-orange-200 dark:bg-zinc-800 p-3 mb-6 mt-1 text-center rounded-lg"
         >
           Hello I&apos;m a full-stack developer with a passion for building!
         </div>
 
         <section class="md:flex">
           <div class="grow">
+            <!-- Heading -->
             <h2
               class="leading-10 text-3xl font-mplus font-bold md:leading-tight md:text-4xl"
             >
@@ -37,14 +42,42 @@ import Content from '../components/Content.astro'
             </h2>
             <p>Digital Craftzman ( Artist / Developer / Designer )</p>
           </div>
-
-          <!-- <p class="mb-8 indent-4">
+          <div class="shrink-0 mt-4 md:mt-0 md:ml-6 text-center">
+            <!-- aspectRatio must be included if only with is provided -->
+            <Image
+              src="../me.jpg"
+              alt="Profile Image"
+              width={720}
+              aspectRatio={1}
+              class="border-2 border-solid max-w-[100px] inline-block rounded-full"
+            />
+          </div>
+        </section>
+        <MotionSection delay={0.2}>
+          <!-- Heading -->
+          <h3
+            class="font-mplus font-bold text-xl mb-4 mt-3 leading-[1.33] md:leading-tight underline underline-offset-[6px] decoration-4 decoration-orange-200 dark:decoration-zinc-700"
+          >
+            Work
+          </h3>
+          <Paragraph>
             Welcome to the official <a href="https://astro.build/">Astro</a> blog
             starter template. This template serves as a lightweight, minimally-styled
             starting point for anyone looking to build a personal website, blog,
             or portfolio with Astro.
-          </p> -->
-        </section>
+          </Paragraph>
+          <div class="text-center my-4">
+            <a href="/work">
+              <button
+                class="my-4 inline-flex appearance-none items-center justify-center select-none relative whitespace-nowrap align-middle outline-none leading-tight rounded-md font-semibold h-10 px-4 text-zinc-800 bg-amber-500 hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 transition-colors"
+                >My portfolio
+                <IoChevronForward
+                  className="text-current align-middle shrink-0 leading-4 ml-2 mt-[1px] w-4 h-4"
+                />
+              </button>
+            </a>
+          </div>
+        </MotionSection>
       </Content>
     </main>
     <Footer />
