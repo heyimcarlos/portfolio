@@ -5,6 +5,10 @@ module.exports = {
   darkMode: 'class',
   theme: {
     extend: {
+      colors: {
+        'custom-teal': '#5de4c7',
+        'custom-zinc': '#252b37'
+      },
       fontFamily: {
         // @info: Adding a utility class for the font
         mplus: ["'M PLUS Rounded 1c'", 'Verdana', 'sans-serif']
