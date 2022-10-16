@@ -17,6 +17,7 @@
     "@astrojs/image": "^0.9.3",
     "@astrojs/react": "^1.2.0",
     "@astrojs/tailwind": "^2.0.2",
+    "@astrojs/vercel": "^2.2.0",
     "@headlessui/react": "^1.7.3",
     "astro": "^1.4.7",
     "framer-motion": "^7.5.3",
