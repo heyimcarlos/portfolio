@@ -8,10 +8,17 @@ import BaseHead from '../components/BaseHead.astro'
 import Content from '../components/Content.astro'
 import { Image } from '@astrojs/image/components'
 import MotionSection from '../components/MotionSection.astro'
-import { IoChevronForward } from 'react-icons/io5'
+import {
+  IoChevronForward,
+  IoLogoTwitter,
+  IoLogoGithub,
+  IoLogoLinkedin
+} from 'react-icons/io5'
 import BioSection from '../components/Bio/Bio.astro'
 import BioYear from '../components/Bio/BioYear.astro'
 import Heading from '../components/Heading'
+import ListItem from '../components/ListItem.astro'
+import GridItem from '../components/GridItem.astro'
 // Data Fetching: List all Markdown posts in the repo.
 // const projects = await Astro.glob('./project/**/*.md')
 // const featuredProject = projects[0]
@@ -47,7 +54,7 @@ import Heading from '../components/Heading'
             <p>Web enthusiast ( Developer / Gamer )</p>
           </div>
           <div class="shrink-0 mt-4 md:mt-0 md:ml-6 text-center">
-            <!-- aspectRatio must be included if only with is provided -->
+            <!-- aspectRatio must be included only if one dimension property is provided -->
             <Image
               src="../me.jpg"
               alt="Profile Image"
@@ -131,10 +138,42 @@ import Heading from '../components/Heading'
           </Paragraph>
         </MotionSection>
         <MotionSection delay={0.8}>
-          <Heading as="h3" variant="section-title">I Love</Heading>
-          <Paragraph class="indent-3">
-            Surfing, Brazilian Jiu-Jitsu, , Music and playing video games.
-          </Paragraph>
+          <Heading as="h3" variant="section-title">On the web</Heading>
+          <ul>
+            <ListItem>
+              <a href="https://github.com/heyimcarlos" target="_blank">
+                <button class="inline-flex items-center"
+                  ><IoLogoGithub className="mr-2" /> @heyimcarlos</button
+                >
+              </a>
+            </ListItem>
+            <ListItem>
+              <a href="https://twitter.com/heyimcarlos_dev" target="_blank">
+                <button class="inline-flex items-center"
+                  ><IoLogoTwitter className="mr-2" /> @heyimcarlos_dev</button
+                >
+              </a>
+            </ListItem>
+            <ListItem>
+              <a href="https://linkedin.com/in/carlos-dev/" target="_blank">
+                <button class="inline-flex items-center"
+                  ><IoLogoLinkedin className="mr-2" /> @carlos-dev</button
+                >
+              </a>
+            </ListItem>
+          </ul>
+        </MotionSection>
+        <MotionSection delay={1}>
+          <Heading as="h3" variant="section-title">Featured Work</Heading>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
+            <GridItem
+              href="https://305gm.com"
+              thumbnail="../305-front.png"
+              title="305 Global Marketing"
+            >
+              E-commerce membership app (&gt;100k total users)
+            </GridItem>
+          </div>
         </MotionSection>
       </Content>
     </main>
