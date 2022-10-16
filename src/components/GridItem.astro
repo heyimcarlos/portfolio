@@ -1,0 +1,35 @@
+---
+import { Image } from '@astrojs/image/components'
+export interface Props {
+  thumbnail: string
+  title: string
+  href: string
+}
+const { thumbnail, title, href } = Astro.props
+---
+
+<!-- Box -->
+<div class="w-full text-center">
+  <!-- Link box -->
+  <div class="cursor-pointer relative">
+    <Image
+      src={thumbnail}
+      alt={title}
+      position="top"
+      width={720}
+      aspectRatio={1.5}
+      decoding="async"
+      loading="lazy"
+      class="rounded-xl min-h-full min-w-full max-h-full max-w-full"
+    />
+    <!-- Link overlay -->
+    <a
+      href="https://305gm.com"
+      target="_blank"
+      class="static before:absolute before:cursor-pointer before:block before:top-0 before:left-0 before:z-0 before:w-full before:h-full"
+    >
+      <p class="mt-2">{title}</p>
+    </a>
+    <p class="text-sm"><slot /></p>
+  </div>
+</div>
