@@ -3,12 +3,12 @@ lockfileVersion: 5.4
 specifiers:
   '@astrojs/image': ^0.9.3
   '@astrojs/react': ^1.2.0
-  '@astrojs/tailwind': ^2.0.2
-  '@astrojs/vercel': 0.0.0-monorepos-20221010034923
+  '@astrojs/tailwind': ^2.1.0
+  '@astrojs/vercel': ^2.2.0
   '@headlessui/react': ^1.7.3
   '@types/react': ^18.0.21
   '@typescript-eslint/parser': ^5.40.0
-  astro: ^1.4.7
+  astro: ^1.5.0
   eslint: ^8.25.0
   eslint-plugin-astro: ^0.20.0
   framer-motion: ^7.5.3
@@ -23,7 +23,7 @@ dependencies:
   '@astrojs/image': 0.9.3_sharp@0.31.1
   '@astrojs/react': 1.2.0_biqbaboplfbrettd7655fr4n2y
   '@astrojs/tailwind': 2.1.0_tailwindcss@3.1.8
-  '@astrojs/vercel': 0.0.0-monorepos-20221010034923
+  '@astrojs/vercel': 2.2.0
   '@headlessui/react': 1.7.3_biqbaboplfbrettd7655fr4n2y
   astro: 1.5.0
   framer-motion: 7.5.3_biqbaboplfbrettd7655fr4n2y
@@ -191,8 +191,8 @@ packages:
       - supports-color
     dev: false
 
-  /@astrojs/vercel/0.0.0-monorepos-20221010034923:
-    resolution: {integrity: sha512-lFXhbCGxYD8E783MjQl00jJTZmhdhPlN5SWJYEcXm4n1hz3AhoRwleEvXHIOCMTEjG4S7VzfBR7oZYhk8PQTAg==}
+  /@astrojs/vercel/2.2.0:
+    resolution: {integrity: sha512-gqi4ij3RwInj9/O90HKMc82Fo08Gd1TjfbrSAlHzf8Ywno+4Br36vMuuvdgD6Rn6l7EuP2BYiR9zlG2yh2D0tA==}
     dependencies:
       '@astrojs/webapi': 1.1.0
       '@vercel/nft': 0.22.1
