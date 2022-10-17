@@ -23,10 +23,7 @@ import Heading from '../components/Heading.js'
 
 <html lang="en">
   <head>
-    <BaseHead
-      title={SITE_TITLE}
-      description={SITE_DESCRIPTION}
-    />
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
   </head>
   <Body>
     <Header title={SITE_TITLE} />
@@ -140,21 +137,33 @@ import Heading from '../components/Heading.js'
           <Heading as="h3" variant="section-title">On the web</Heading>
           <ul>
             <ListItem>
-              <a href="https://github.com/heyimcarlos" target="_blank">
+              <a
+                href="https://github.com/heyimcarlos"
+                target="_blank"
+                class="underline-offset-[6px] decoration-2 hover:underline decoration-custom-teal"
+              >
                 <button class="inline-flex items-center"
                   ><IoLogoGithub className="mr-2" /> @heyimcarlos</button
                 >
               </a>
             </ListItem>
             <ListItem>
-              <a href="https://twitter.com/heyimcarlos_dev" target="_blank">
+              <a
+                href="https://twitter.com/heyimcarlos_dev"
+                target="_blank"
+                class="underline-offset-[6px] decoration-2 hover:underline decoration-custom-teal"
+              >
                 <button class="inline-flex items-center"
                   ><IoLogoTwitter className="mr-2" /> @heyimcarlos_dev</button
                 >
               </a>
             </ListItem>
             <ListItem>
-              <a href="https://linkedin.com/in/carlos-dev/" target="_blank">
+              <a
+                href="https://linkedin.com/in/carlos-dev/"
+                target="_blank"
+                class="underline-offset-[6px] decoration-2 hover:underline decoration-custom-teal"
+              >
                 <button class="inline-flex items-center"
                   ><IoLogoLinkedin className="mr-2" /> @carlos-dev</button
                 >
@@ -170,7 +179,7 @@ import Heading from '../components/Heading.js'
               thumbnail="../305-front.png"
               title="305 Global Marketing"
             >
-              E-commerce membership app (&gt;100k total users)
+              E-commerce membership app (&gt;50k total users)
             </GridItem>
           </div>
         </MotionSection>

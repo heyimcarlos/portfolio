@@ -3,7 +3,7 @@ import React from 'react'
 export default function TerminalIcon() {
   return (
     <svg
-      className="w-6 inline-block animate-bounce"
+      className="w-6 inline-block transition-transform group-hover:rotate-[30deg]"
       viewBox="0 0 25 25"
       fill="currentColor"
     >
