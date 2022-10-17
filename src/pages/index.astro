@@ -4,7 +4,9 @@ import {
   IoChevronForward,
   IoLogoTwitter,
   IoLogoGithub,
-  IoLogoLinkedin
+  IoLogoLinkedin,
+  IoMailOutline,
+  IoMail
 } from 'react-icons/io5/index.js'
 import { SITE_DESCRIPTION, SITE_TITLE } from '../config'
 import MotionSection from '../components/MotionSection'
@@ -136,6 +138,17 @@ import Heading from '../components/Heading.js'
         <MotionSection client:load delay={0.8}>
           <Heading as="h3" variant="section-title">On the web</Heading>
           <ul>
+            <ListItem>
+              <a
+                href="mailto:me@heyimcarlos.dev"
+                target="_self"
+                class="underline-offset-[6px] decoration-2 hover:underline decoration-custom-teal"
+              >
+                <button class="inline-flex items-center"
+                  ><IoMail className="mr-2" /> me@heyimcarlos.dev</button
+                >
+              </a>
+            </ListItem>
             <ListItem>
               <a
                 href="https://github.com/heyimcarlos"
