@@ -6,8 +6,9 @@ export interface Props {
 const { delay = 0 } = Astro.props
 ---
 
+<!-- client:only [x] | client:visible [x] -->
 <motion.div
-  client:only
+  client:load
   initial={{ y: 10, opacity: 0 }}
   animate={{ y: 0, opacity: 1 }}
   transition={{ duration: 0.8, delay }}
