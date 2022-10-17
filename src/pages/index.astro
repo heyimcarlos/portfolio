@@ -13,7 +13,7 @@ import Header from '../components/Header.astro'
 import Paragraph from '../components/Paragraph.astro'
 import BaseHead from '../components/BaseHead.astro'
 import Content from '../components/Content.astro'
-// import MotionSection from '../components/MotionSection.astro'
+import MotionSection from '../components/MotionSection.astro'
 import BioSection from '../components/Bio/Bio.astro'
 import BioYear from '../components/Bio/BioYear.astro'
 import ListItem from '../components/ListItem.astro'
@@ -164,18 +164,18 @@ import Heading from '../components/Heading.js'
           </ListItem>
         </ul>
         <!-- </MotionSection> -->
-        <!-- <MotionSection delay={1}> -->
-        <Heading as="h3" variant="section-title">Featured Work</Heading>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
-          <GridItem
-            href="https://305gm.com"
-            thumbnail="../305-front.png"
-            title="305 Global Marketing"
-          >
-            E-commerce membership app (&gt;100k total users)
-          </GridItem>
-        </div>
-        <!-- </MotionSection> -->
+        <MotionSection delay={1}>
+          <Heading as="h3" variant="section-title">Featured Work</Heading>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
+            <GridItem
+              href="https://305gm.com"
+              thumbnail="../305-front.png"
+              title="305 Global Marketing"
+            >
+              E-commerce membership app (&gt;100k total users)
+            </GridItem>
+          </div>
+        </MotionSection>
       </Content>
     </main>
     <Footer />
