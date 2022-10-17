@@ -1,182 +1,183 @@
 ---
-// import { Image } from '@astrojs/image/components'
-// import {
-//   IoChevronForward,
-//   IoLogoTwitter,
-//   IoLogoGithub,
-//   IoLogoLinkedin
-// } from 'react-icons/io5/index.js'
-// import { SITE_TITLE } from '../config'
+import { Image } from '@astrojs/image/components'
+import {
+  IoChevronForward,
+  IoLogoTwitter,
+  IoLogoGithub,
+  IoLogoLinkedin
+} from 'react-icons/io5/index.js'
+import { SITE_TITLE } from '../config'
 import Footer from '../components/Footer.astro'
 import Body from '../components/Body.astro'
-// import Header from '../components/Header.astro'
+import Header from '../components/Header.astro'
 import Paragraph from '../components/Paragraph.astro'
-// import BaseHead from '../components/BaseHead.astro'
+import BaseHead from '../components/BaseHead.astro'
 import Content from '../components/Content.astro'
 // import MotionSection from '../components/MotionSection.astro'
 import BioSection from '../components/Bio/Bio.astro'
 import BioYear from '../components/Bio/BioYear.astro'
 import ListItem from '../components/ListItem.astro'
 import GridItem from '../components/GridItem.astro'
-// import Heading from '../components/Heading.js'
+import Heading from '../components/Heading.js'
 ---
 
 <html lang="en">
-  <!-- <head>
+  <head>
     <BaseHead
       title="Carlos de la Cruz: Personal Site"
       description="Carlos de la Cruz: Developer"
     />
-  </head> -->
+  </head>
   <Body>
-    <!-- <Header title={SITE_TITLE} /> -->
+    <Header title={SITE_TITLE} />
 
-    <!-- <main class="pt-[56px]"> -->
-    <Content>
-      <div
-        class="bg-custom-teal dark:bg-zinc-700 p-3 my-6 text-center rounded-lg"
-      >
-        Hello I&apos;m a full-stack developer with a passion for building!
-      </div>
+    <main class="pt-[56px]">
+      <Content>
+        <div
+          class="bg-custom-teal dark:bg-zinc-700 p-3 my-6 text-center rounded-lg"
+        >
+          Hello I&apos;m a full-stack developer with a passion for building!
+        </div>
 
-      <section class="md:flex">
-        <div class="grow">
-          <!-- Heading -->
-          <!-- <Heading
+        <section class="md:flex">
+          <div class="grow">
+            Heading
+            <Heading
               className="leading-10 text-3xl font-mplus font-bold md:leading-tight md:text-4xl"
               as="h2"
             >
               Carlos de la Cruz
-            </Heading> -->
-          <p>Web enthusiast ( Developer / Gamer )</p>
-        </div>
-        <div class="shrink-0 mt-4 md:mt-0 md:ml-6 text-center">
-          <!-- aspectRatio must be included only if one dimension property is provided -->
-          <!-- <Image
+            </Heading>
+            <p>Web enthusiast ( Developer / Gamer )</p>
+          </div>
+          <div class="shrink-0 mt-4 md:mt-0 md:ml-6 text-center">
+            <!-- aspectRatio must be included only if one dimension property is provided -->
+            <Image
               src="../me.jpg"
               alt="Profile Image"
               width={720}
               aspectRatio={1}
               class="border-2 border-solid border-custom-teal max-w-[100px] inline-block rounded-full"
-            /> -->
-        </div>
-      </section>
-      <!-- <MotionSection delay={0.2}> -->
-      <!-- <Heading as="h3" variant="section-title">Work</Heading> -->
-      <Paragraph>
-        Carlos is a full-stack developer currently freelancing and actively
-        looking for work opportunities, with a passion for building. He's been
-        working with web technologies for over two years, including JavaScript,
-        TypeScript, SQL, PHP, WordPress, AWS, ORM, and more. He's currently
-        working on a variety of projects, including a personal blog, a personal
-        website, and a few other projects. He's also looking to expand his
-        knowledge through mentorship and open-source contribution.
-      </Paragraph>
+            />
+          </div>
+        </section>
+        <!-- <MotionSection delay={0.2}> -->
+        <Heading as="h3" variant="section-title">Work</Heading>
+        <Paragraph>
+          Carlos is a full-stack developer currently freelancing and actively
+          looking for work opportunities, with a passion for building. He's been
+          working with web technologies for over two years, including
+          JavaScript, TypeScript, SQL, PHP, WordPress, AWS, ORM, and more. He's
+          currently working on a variety of projects, including a personal blog,
+          a personal website, and a few other projects. He's also looking to
+          expand his knowledge through mentorship and open-source contribution.
+        </Paragraph>
 
-      <div class="text-center my-4">
-        <a href="/work">
-          <button
-            class="my-4 inline-flex appearance-none items-center justify-center select-none relative whitespace-nowrap align-middle outline-none leading-tight rounded-md font-semibold h-10 px-4 text-zinc-800 bg-custom-teal hover:bg-teal-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-teal transition-colors"
-            >My portfolio
-            <!-- <IoChevronForward
-                  className="text-current align-middle shrink-0 leading-4 ml-2 mt-[1px] w-4 h-4"
-                /> -->
-          </button>
-        </a>
-      </div>
-      <!-- </MotionSection> -->
-      <!-- <MotionSection delay={0.4}> -->
-      <!-- <Heading as="h3" variant="section-title">Bio</Heading> -->
-      <BioSection>
-        <BioYear>1995</BioYear>
-        Born in Santo Domingo, Dominican Republic.
-      </BioSection>
-      <BioSection>
-        <BioYear>2014 to 2019</BioYear>
-        Streamed competitive e-sports on <a
-          class="text-custom-teal"
-          href="https://twitch.tv/renzik">Twitch</a
-        > with a peak of 100 concurrent viewers, building an interactive community
-        for a Spanish-speaking and English-speaking audience.
-      </BioSection>
-      <BioSection>
-        <BioYear>2019</BioYear>
-        Graduated from the <a
-          class="text-custom-teal"
-          href="https://www.pucmm.edu.do/"
-          >Mother and Teacher Pontifical Catholic University
-        </a>with a bachelor&apos;s degree in Business Administration(B.B.A).
-      </BioSection>
-      <BioSection>
-        <BioYear>2019</BioYear>
-        Started to learn basics of web development online, mainly at Udemy, Freecodecamp,
-        and CodeAcademy. Eventually got hired by a small agency called Grupo Serviweb,
-        where I developed multiple websites using Wordpress, JavaScript, CSS and
-        HTML.
-      </BioSection>
-      <BioSection>
-        <BioYear>2020</BioYear>
-        <a
-          href="https://drive.google.com/file/d/1WreG-vngtZtpPZUGnIdLN4it6vsYv79V/view"
-          class="text-custom-teal ml-1">Completed</a
-        > the program<a
-          href="https://www.fullstackacademy.com/programs/coding-bootcamp"
-        >
-          Software Engineering Immersive for Intermediate Coders</a
-        > from <a href="fullstackacademy.com">Fullstack Academy.</a>
-      </BioSection>
-      <BioSection>
-        <BioYear>2020 to 2022</BioYear>
-        Worked at <a class="text-custom-teal" href="https://305gm.com/">305GM</a
-        > as a full-stack developer.
-      </BioSection>
-      <!-- </MotionSection> -->
-      <!-- <MotionSection delay={0.6}> -->
-      <!-- <Heading as="h3" variant="section-title">I Love</Heading> -->
-      <Paragraph class="indent-3">
-        Surfing, Brazilian Jiu-Jitsu, Snowboarding, Music, and Gaming.
-      </Paragraph>
-      <!-- </MotionSection> -->
-      <!-- <MotionSection delay={0.8}> -->
-      <!-- <Heading as="h3" variant="section-title">On the web</Heading> -->
-      <ul>
-        <ListItem>
-          <a href="https://github.com/heyimcarlos" target="_blank">
-            <!-- <button class="inline-flex items-center"
-                  ><IoLogoGithub className="mr-2" /> @heyimcarlos</button
-                > -->
+        <div class="text-center my-4">
+          <a href="/work">
+            <button
+              class="my-4 inline-flex appearance-none items-center justify-center select-none relative whitespace-nowrap align-middle outline-none leading-tight rounded-md font-semibold h-10 px-4 text-zinc-800 bg-custom-teal hover:bg-teal-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-teal transition-colors"
+              >My portfolio
+              <IoChevronForward
+                className="text-current align-middle shrink-0 leading-4 ml-2 mt-[1px] w-4 h-4"
+              />
+            </button>
           </a>
-        </ListItem>
-        <ListItem>
-          <a href="https://twitter.com/heyimcarlos_dev" target="_blank">
-            <!-- <button class="inline-flex items-center"
-                  ><IoLogoTwitter className="mr-2" /> @heyimcarlos_dev</button
-                > -->
-          </a>
-        </ListItem>
-        <ListItem>
-          <a href="https://linkedin.com/in/carlos-dev/" target="_blank">
-            <!-- <button class="inline-flex items-center"
-                  ><IoLogoLinkedin className="mr-2" /> @carlos-dev</button
-                > -->
-          </a>
-        </ListItem>
-      </ul>
-      <!-- </MotionSection> -->
-      <!-- <MotionSection delay={1}> -->
-      <!-- <Heading as="h3" variant="section-title">Featured Work</Heading> -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
-        <GridItem
-          href="https://305gm.com"
-          thumbnail="../305-front.png"
-          title="305 Global Marketing"
-        >
-          E-commerce membership app (&gt;100k total users)
-        </GridItem>
-      </div>
-      <!-- </MotionSection> -->
-    </Content>
-    <!-- </main> -->
+        </div>
+        <!-- </MotionSection> -->
+        <!-- <MotionSection delay={0.4}> -->
+        <Heading as="h3" variant="section-title">Bio</Heading>
+        <BioSection>
+          <BioYear>1995</BioYear>
+          Born in Santo Domingo, Dominican Republic.
+        </BioSection>
+        <BioSection>
+          <BioYear>2014 to 2019</BioYear>
+          Streamed competitive e-sports on <a
+            class="text-custom-teal"
+            href="https://twitch.tv/renzik">Twitch</a
+          > with a peak of 100 concurrent viewers, building an interactive community
+          for a Spanish-speaking and English-speaking audience.
+        </BioSection>
+        <BioSection>
+          <BioYear>2019</BioYear>
+          Graduated from the <a
+            class="text-custom-teal"
+            href="https://www.pucmm.edu.do/"
+            >Mother and Teacher Pontifical Catholic University
+          </a>with a bachelor&apos;s degree in Business Administration(B.B.A).
+        </BioSection>
+        <BioSection>
+          <BioYear>2019</BioYear>
+          Started to learn basics of web development online, mainly at Udemy, Freecodecamp,
+          and CodeAcademy. Eventually got hired by a small agency called Grupo Serviweb,
+          where I developed multiple websites using Wordpress, JavaScript, CSS and
+          HTML.
+        </BioSection>
+        <BioSection>
+          <BioYear>2020</BioYear>
+          <a
+            href="https://drive.google.com/file/d/1WreG-vngtZtpPZUGnIdLN4it6vsYv79V/view"
+            class="text-custom-teal ml-1">Completed</a
+          > the program<a
+            href="https://www.fullstackacademy.com/programs/coding-bootcamp"
+          >
+            Software Engineering Immersive for Intermediate Coders</a
+          > from <a href="fullstackacademy.com">Fullstack Academy.</a>
+        </BioSection>
+        <BioSection>
+          <BioYear>2020 to 2022</BioYear>
+          Worked at <a class="text-custom-teal" href="https://305gm.com/"
+            >305GM</a
+          > as a full-stack developer.
+        </BioSection>
+        <!-- </MotionSection> -->
+        <!-- <MotionSection delay={0.6}> -->
+        <Heading as="h3" variant="section-title">I Love</Heading>
+        <Paragraph class="indent-3">
+          Surfing, Brazilian Jiu-Jitsu, Snowboarding, Music, and Gaming.
+        </Paragraph>
+        <!-- </MotionSection> -->
+        <!-- <MotionSection delay={0.8}> -->
+        <Heading as="h3" variant="section-title">On the web</Heading>
+        <ul>
+          <ListItem>
+            <a href="https://github.com/heyimcarlos" target="_blank">
+              <button class="inline-flex items-center"
+                ><IoLogoGithub className="mr-2" /> @heyimcarlos</button
+              >
+            </a>
+          </ListItem>
+          <ListItem>
+            <a href="https://twitter.com/heyimcarlos_dev" target="_blank">
+              <button class="inline-flex items-center"
+                ><IoLogoTwitter className="mr-2" /> @heyimcarlos_dev</button
+              >
+            </a>
+          </ListItem>
+          <ListItem>
+            <a href="https://linkedin.com/in/carlos-dev/" target="_blank">
+              <button class="inline-flex items-center"
+                ><IoLogoLinkedin className="mr-2" /> @carlos-dev</button
+              >
+            </a>
+          </ListItem>
+        </ul>
+        <!-- </MotionSection> -->
+        <!-- <MotionSection delay={1}> -->
+        <Heading as="h3" variant="section-title">Featured Work</Heading>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
+          <GridItem
+            href="https://305gm.com"
+            thumbnail="../305-front.png"
+            title="305 Global Marketing"
+          >
+            E-commerce membership app (&gt;100k total users)
+          </GridItem>
+        </div>
+        <!-- </MotionSection> -->
+      </Content>
+    </main>
     <Footer />
   </Body>
 </html>
