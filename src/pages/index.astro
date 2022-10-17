@@ -6,7 +6,7 @@ import {
   IoLogoGithub,
   IoLogoLinkedin
 } from 'react-icons/io5/index.js'
-import { SITE_TITLE } from '../config'
+import { SITE_DESCRIPTION, SITE_TITLE } from '../config'
 import MotionSection from '../components/MotionSection'
 import Footer from '../components/Footer.astro'
 import Body from '../components/Body.astro'
@@ -24,8 +24,8 @@ import Heading from '../components/Heading.js'
 <html lang="en">
   <head>
     <BaseHead
-      title="Carlos de la Cruz: Personal Site"
-      description="Carlos de la Cruz: Developer"
+      title={SITE_TITLE}
+      description={SITE_DESCRIPTION}
     />
   </head>
   <Body>
