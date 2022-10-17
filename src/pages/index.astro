@@ -5,10 +5,9 @@ import {
   IoLogoTwitter,
   IoLogoGithub,
   IoLogoLinkedin,
-  IoMailOutline,
   IoMail
 } from 'react-icons/io5/index.js'
-import { SITE_DESCRIPTION, SITE_TITLE } from '../config'
+import { SITE_DESCRIPTION, SITE_TITLE, EMAIL } from '../config'
 import MotionSection from '../components/MotionSection'
 import Footer from '../components/Footer.astro'
 import Body from '../components/Body.astro'
@@ -140,7 +139,7 @@ import Heading from '../components/Heading.js'
           <ul>
             <ListItem>
               <a
-                href="mailto:me@heyimcarlos.dev"
+                href={`mailto:${EMAIL}`}
                 target="_self"
                 class="underline-offset-[6px] decoration-2 hover:underline decoration-custom-teal"
               >

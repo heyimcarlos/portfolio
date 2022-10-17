@@ -2,10 +2,11 @@ import React, { Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { IoMenu } from 'react-icons/io5/index.js'
 import DropdownMenuItem from './DropdownMenuItem'
-import { SOURCE_URL } from '../config'
+import { SOURCE_URL, EMAIL } from '../config'
 
 const navItems = [
-  { title: 'About', path: '/' }
+  { title: 'About', path: '/' },
+  { title: 'Contact', path: `mailto:${EMAIL}` }
   // { title: 'Work', path: '/work' },
   // { title: 'Blog', path: '/blog' }
 ]

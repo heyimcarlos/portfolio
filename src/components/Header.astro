@@ -4,7 +4,7 @@ import { IoLogoGithub } from 'react-icons/io5/index.js'
 import ThemeToggle from './ThemeToggleButton'
 import DropdownMenu from './DropdownMenu'
 import TerminalIcon from './icons/terminal'
-import { SOURCE_URL } from '../config'
+import { EMAIL, SOURCE_URL } from '../config'
 ---
 
 <header class="fixed w-full p-2 z-20 backdrop-blur-md">
@@ -18,9 +18,7 @@ import { SOURCE_URL } from '../config'
       </a>
       <div class="items-center gap-6 hidden md:flex">
         <HeaderLink href="/">About</HeaderLink>
-        <HeaderLink href="mailto:me@heyimcarlos.dev" target="_self"
-          >Contact</HeaderLink
-        >
+        <HeaderLink href={`mailto:${EMAIL}`} target="_self">Contact</HeaderLink>
         <!-- <HeaderLink href="/blog">Blog</HeaderLink> -->
         <HeaderLink href={SOURCE_URL}>
           <IoLogoGithub />
