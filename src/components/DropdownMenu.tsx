@@ -5,9 +5,9 @@ import DropdownMenuItem from './DropdownMenuItem'
 import { SOURCE_URL } from '../config'
 
 const navItems = [
-  { title: 'About', path: '/' },
-  { title: 'Work', path: '/work' },
-  { title: 'Blog', path: '/blog' }
+  { title: 'About', path: '/' }
+  // { title: 'Work', path: '/work' },
+  // { title: 'Blog', path: '/blog' }
 ]
 
 export default function DropdownMenu() {
