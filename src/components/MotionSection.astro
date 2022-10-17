@@ -10,7 +10,7 @@ const { delay = 0 } = Astro.props
   client:load [x]
  -->
 <motion.div
-  client:idle
+  client:media="(prefers-reduced-motion: no-preference)"
   initial={{ y: 10, opacity: 0 }}
   animate={{ y: 0, opacity: 1 }}
   transition={{ duration: 0.8, delay }}
