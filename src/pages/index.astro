@@ -1,27 +1,24 @@
 ---
-import Footer from '../components/Footer.astro'
-import Body from '../components/Body.astro'
-import Header from '../components/Header.astro'
-import Paragraph from '../components/Paragraph.astro'
-import { SITE_TITLE } from '../config'
-import BaseHead from '../components/BaseHead.astro'
-import Content from '../components/Content.astro'
 import { Image } from '@astrojs/image/components'
-import MotionSection from '../components/MotionSection.astro'
 import {
   IoChevronForward,
   IoLogoTwitter,
   IoLogoGithub,
   IoLogoLinkedin
-} from 'react-icons/io5'
+} from 'react-icons/io5/index.js'
+import { SITE_TITLE } from '../config'
+import MotionSection from '../components/MotionSection'
+import Footer from '../components/Footer.astro'
+import Body from '../components/Body.astro'
+import Header from '../components/Header.astro'
+import Paragraph from '../components/Paragraph.astro'
+import BaseHead from '../components/BaseHead.astro'
+import Content from '../components/Content.astro'
 import BioSection from '../components/Bio/Bio.astro'
 import BioYear from '../components/Bio/BioYear.astro'
-import Heading from '../components/Heading'
 import ListItem from '../components/ListItem.astro'
 import GridItem from '../components/GridItem.astro'
-// Data Fetching: List all Markdown posts in the repo.
-// const projects = await Astro.glob('./project/**/*.md')
-// const featuredProject = projects[0]
+import Heading from '../components/Heading.js'
 ---
 
 <html lang="en">
@@ -32,7 +29,7 @@ import GridItem from '../components/GridItem.astro'
     />
   </head>
   <Body>
-    <Header title={SITE_TITLE} class="" />
+    <Header title={SITE_TITLE} />
 
     <main class="pt-[56px]">
       <Content>
@@ -41,10 +38,8 @@ import GridItem from '../components/GridItem.astro'
         >
           Hello I&apos;m a full-stack developer with a passion for building!
         </div>
-
         <section class="md:flex">
           <div class="grow">
-            <!-- Heading -->
             <Heading
               className="leading-10 text-3xl font-mplus font-bold md:leading-tight md:text-4xl"
               as="h2"
@@ -64,7 +59,7 @@ import GridItem from '../components/GridItem.astro'
             />
           </div>
         </section>
-        <MotionSection delay={0.2}>
+        <MotionSection client:load delay={0.2}>
           <Heading as="h3" variant="section-title">Work</Heading>
           <Paragraph>
             Carlos is a full-stack developer currently freelancing and actively
@@ -76,7 +71,6 @@ import GridItem from '../components/GridItem.astro'
             also looking to expand his knowledge through mentorship and
             open-source contribution.
           </Paragraph>
-
           <div class="text-center my-4">
             <a href="/work">
               <button
@@ -89,7 +83,7 @@ import GridItem from '../components/GridItem.astro'
             </a>
           </div>
         </MotionSection>
-        <MotionSection delay={0.4}>
+        <MotionSection client:load delay={0.4}>
           <Heading as="h3" variant="section-title">Bio</Heading>
           <BioSection>
             <BioYear>1995</BioYear>
@@ -136,13 +130,13 @@ import GridItem from '../components/GridItem.astro'
             > as a full-stack developer.
           </BioSection>
         </MotionSection>
-        <MotionSection delay={0.6}>
+        <MotionSection client:load delay={0.6}>
           <Heading as="h3" variant="section-title">I Love</Heading>
           <Paragraph class="indent-3">
             Surfing, Brazilian Jiu-Jitsu, Snowboarding, Music, and Gaming.
           </Paragraph>
         </MotionSection>
-        <MotionSection delay={0.8}>
+        <MotionSection client:load delay={0.8}>
           <Heading as="h3" variant="section-title">On the web</Heading>
           <ul>
             <ListItem>
@@ -168,7 +162,7 @@ import GridItem from '../components/GridItem.astro'
             </ListItem>
           </ul>
         </MotionSection>
-        <MotionSection delay={1}>
+        <MotionSection client:load delay={1}>
           <Heading as="h3" variant="section-title">Featured Work</Heading>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
             <GridItem

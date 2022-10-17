@@ -1,13 +1,13 @@
 import React, { Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
-import { IoMenu } from 'react-icons/io5'
+import { IoMenu } from 'react-icons/io5/index.js'
 import DropdownMenuItem from './DropdownMenuItem'
 import { SOURCE_URL } from '../config'
 
 const navItems = [
-  { title: 'About', path: '/' },
-  { title: 'Work', path: '/work' },
-  { title: 'Blog', path: '/blog' }
+  { title: 'About', path: '/' }
+  // { title: 'Work', path: '/work' },
+  // { title: 'Blog', path: '/blog' }
 ]
 
 export default function DropdownMenu() {

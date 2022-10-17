@@ -1,9 +1,10 @@
 ---
 import HeaderLink from './HeaderLink.astro'
-import { IoLogoGithub } from 'react-icons/io5'
+import { IoLogoGithub } from 'react-icons/io5/index.js'
 import ThemeToggle from './ThemeToggleButton'
 import DropdownMenu from './DropdownMenu'
 import TerminalIcon from './icons/terminal'
+import { SOURCE_URL } from '../config'
 ---
 
 <header class="fixed w-full p-2 z-20 backdrop-blur-md">
@@ -20,7 +21,7 @@ import TerminalIcon from './icons/terminal'
         <HeaderLink href="/">About</HeaderLink>
         <!-- <HeaderLink href="/work">Work</HeaderLink> -->
         <!-- <HeaderLink href="/blog">Blog</HeaderLink> -->
-        <HeaderLink href="https://github.com/heyimcarlos">
+        <HeaderLink href={SOURCE_URL}>
           <IoLogoGithub />
           Source</HeaderLink
         >
