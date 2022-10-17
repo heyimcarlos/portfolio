@@ -1,5 +1,5 @@
 ---
-import { Image } from '@astrojs/image/components'
+// import { Image } from '@astrojs/image/components'
 import {
   IoChevronForward,
   IoLogoTwitter,
@@ -29,7 +29,7 @@ import GridItem from '../components/GridItem.astro'
     />
   </head> -->
   <Body>
-    <Header title={SITE_TITLE} class="" />
+    <Header title={SITE_TITLE} />
 
     <main class="pt-[56px]">
       <Content>
@@ -52,13 +52,13 @@ import GridItem from '../components/GridItem.astro'
           </div>
           <div class="shrink-0 mt-4 md:mt-0 md:ml-6 text-center">
             <!-- aspectRatio must be included only if one dimension property is provided -->
-            <Image
+            <!-- <Image
               src="../me.jpg"
               alt="Profile Image"
               width={720}
               aspectRatio={1}
               class="border-2 border-solid border-custom-teal max-w-[100px] inline-block rounded-full"
-            />
+            /> -->
           </div>
         </section>
         <MotionSection delay={0.2}>
