@@ -9,9 +9,9 @@ export interface Props {
   lang: string
   title: string
   description: string
-  pageHeading: string
+  heading: string
 }
-const { description, lang, title, pageHeading } = Astro.props
+const { description, lang, title, heading } = Astro.props
 ---
 
 <html lang={lang}>
@@ -25,7 +25,7 @@ const { description, lang, title, pageHeading } = Astro.props
         <div
           class="bg-custom-teal dark:bg-zinc-700 p-3 my-6 text-center rounded-lg"
         >
-          {pageHeading}
+          {heading}
         </div>
         <slot />
       </Content>

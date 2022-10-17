@@ -1,0 +1,28 @@
+---
+import Page from '../../layouts/page.astro'
+
+export function getStaticPaths() {
+  return [
+    {
+      params: { slug: 'hello', title: 'first project', text: 'lovely project' }
+    },
+    {
+      params: { slug: 'world', title: 'first project', text: 'lovely project' }
+    }
+  ]
+}
+const { slug, title, text } = Astro.params
+---
+
+<Page
+  description="Portfolio page"
+  heading="Below you can check a list of past personal and professional projects"
+  lang="en"
+  title="Portfolio site"
+>
+  <section>
+    <div>{slug}</div>
+    <div>{title}</div>
+    <div>{text}</div>
+  </section>
+</Page>

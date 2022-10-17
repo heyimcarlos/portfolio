@@ -1,0 +1,36 @@
+---
+import { Image } from '@astrojs/image/components'
+import Heading from './Heading'
+const { frontmatter, url } = Astro.props.project
+---
+
+<div class="w-full my-4">
+  <div>
+    <a href={url} class="inline-block">
+      <Heading as="h1" variant="section-title">{frontmatter.title}</Heading>
+    </a>
+    <p class="text-base mb-4">{frontmatter.description}</p>
+    <div class="relative">
+      <Image
+        src={frontmatter.img}
+        alt={frontmatter.title}
+        width={720}
+        position="top"
+        aspectRatio={1.5}
+        decoding="async"
+        loading="lazy"
+        class="rounded-xl"
+      />
+      <!-- opacity overlay -->
+      <a
+        href={'/projects'}
+        class="absolute cursor-default top-0 left-0 w-full h-full flex justify-center items-center flex-col rounded-md hover:bg-opacity-30 dark:hover:bg-opacity-40 hover:bg-orange-50 dark:hover:bg-custom-zinc transition-all duration-500 [&>button]:hover:opacity-100"
+      >
+        <button
+          class="opacity-0 font-mplus rounded-md border border-zinc-400 dark:border-zinc-700 px-2 py-2 text-sm font-medium shadow-sm hover:bg-custom-teal dark:hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-custom-teal focus:ring-offset-2 focus:ring-offset-gray-100 transition-all"
+          >Inspect</button
+        >
+      </a>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,28 @@
+---
+import MotionSection from '../components/MotionSection'
+import ProjectGridItem from '../components/ProjectGridItem.astro'
+import Page from '../layouts/page.astro'
+
+const projects = (await Astro.glob('./project/**/*.md'))
+  .filter(({ frontmatter }) => !!frontmatter.publishDate)
+  .sort(
+    (a, b) =>
+      new Date(b.frontmatter.publishDate).valueOf() -
+      new Date(a.frontmatter.publishDate).valueOf()
+  )
+---
+
+<Page
+  title="Portfolio page"
+  description="Carlos's portfolio page"
+  heading="The following list includes personal, freelance and job projects."
+  lang="en"
+>
+  {
+    projects.map((project, idx) => (
+      <MotionSection client:load delay={!idx ? 0.2 : idx / 2.5}>
+        <ProjectGridItem project={project} />
+      </MotionSection>
+    ))
+  }
+</Page>
