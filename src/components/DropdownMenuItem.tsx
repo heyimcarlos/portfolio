@@ -1,9 +1,6 @@
-import { Menu } from '@headlessui/react'
 import React, { ReactNode } from 'react'
-
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(' ')
-}
+import { Menu } from '@headlessui/react'
+import { classNames } from '../lib/utils'
 
 type Props = {
   href: string

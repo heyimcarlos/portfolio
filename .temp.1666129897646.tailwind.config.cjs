@@ -19,15 +19,15 @@ module.exports = {
           '50%': { transform: 'rotate(3deg)' }
         },
         shake: {
-          '0%': { transform: 'translate(0rem)' },
-          '25%': { transform: 'translateX(5px)' },
-          '75%': { transform: 'translateX(-5px)' },
-          '100%': { transform: 'translate(0rem)' }
+          '0%': { transform: translateX(0) },
+          '25%': { transform: "translateX('5px')" },
+          '75%': { transform: "translateX('-5px')" },
+          '100%': { transform: "translate('0rem')" }
         }
       },
       animation: {
         wiggle: 'wiggle 0.2s linear 0s 1 normal none running',
-        shake: 'shake 0.2s linear 0s 1 normal none running'
+        shake: 'shake 0.2s linear 10s infinite normal none running'
       }
     }
   },

@@ -19,10 +19,10 @@ module.exports = {
           '50%': { transform: 'rotate(3deg)' }
         },
         shake: {
-          '0%': { transform: 'translate(0rem)' },
-          '25%': { transform: 'translateX(5px)' },
-          '75%': { transform: 'translateX(-5px)' },
-          '100%': { transform: 'translate(0rem)' }
+          '0%': { transform: translate('0rem') },
+          '25%': { transformX: translate('0.5rem') },
+          '75%': { transformY: translate('-0.5rem') },
+          '100%': { transform: translate('0rem') }
         }
       },
       animation: {

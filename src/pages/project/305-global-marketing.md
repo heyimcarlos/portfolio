@@ -2,6 +2,7 @@
 layout: ../../layouts/project.astro
 title: 305 Global Marketing
 client: Self
+password: 305globalmarketing
 publishDate: 2022-10-17 18:00:00
 img: 305-global-marketing.png
 description: |

@@ -1,102 +1,62 @@
 ---
+import PasswordInput from '../components/PasswordInput'
+import MotionSection from '../components/MotionSection'
+import Page from './page.astro'
 import BaseHead from '../components/BaseHead.astro'
+import Body from '../components/Body.astro'
+import Header from '../components/Header.astro'
+import Content from '../components/Content.astro'
 import Footer from '../components/Footer.astro'
-import Nav from '../components/Nav.astro'
-
 const { content } = Astro.props
 ---
 
-<html lang={content.lang || 'en'}>
+<html lang="en">
   <head>
     <BaseHead title={content.title} description={content.description} />
-    <style>
-      .hero {
-        padding: 8rem;
-        display: flex;
-        background-color: var(--t-fg);
-        background-repeat: no-repeat;
-        background-size: cover;
-        min-height: 25vw;
-        color: white;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .tag {
-        margin-left: 0.5em;
-        margin-right: 0.5em;
-        text-transform: uppercase;
-      }
-
-      .tag:nth-of-type(1n) {
-        color: var(--c-green);
-      }
-      .tag:nth-of-type(2n) {
-        color: var(--c-orange);
-      }
-      .tag:nth-of-type(3n) {
-        color: var(--c-blue);
-      }
-      .tag:nth-of-type(4n) {
-        color: var(--c-pink);
-      }
-
-      .title {
-        font-size: var(--f-u10);
-        font-weight: 900;
-        text-transform: uppercase;
-        letter-spacing: 0.0625em;
-      }
-
-      .leadIn {
-        padding-top: 4em;
-        color: var(--t-bg);
-        background-color: var(--t-fg);
-        text-align: center;
-      }
-
-      .tagline {
-        font-weight: 300;
-        font-size: var(--f-u3);
-        line-height: 1.5;
-      }
-
-      .content {
-        font-size: var(--f-u1);
-        line-height: 2.2;
-        max-width: 50em;
-        margin: auto;
-      }
-
-      .wrapper {
-        padding-bottom: 4em;
-        margin-bottom: 4em;
-      }
-
-      footer {
-        text-align: center;
-        margin-top: 3rem;
-      }
-    </style>
   </head>
-  <body>
-    <Nav />
-    <header style={`background-image:url(${content.img})`} class="hero">
-      <h1 class="title">{content.title}</h1>
-    </header>
-    <div class="leadIn">
-      <div class="wrapper">
-        <!-- {content.tags.map(t => <span class="tag">{t}</span>)} -->
-        <h3 class="tagline">{content.description}</h3>
-      </div>
-    </div>
-    <div class="wrapper">
-      <div class="content"><slot /></div>
-    </div>
-    <footer>
-      <a href="/projects" class="button">View More</a>
-    </footer>
-    <Footer />
-  </body>
+  <Body>
+    <Header />
+    <main class="relative pt-[56px] h-[calc(100vh-56px)] overflow-hidden">
+      {
+        content.password && (
+          <PasswordInput
+            client:load
+            password={content.password}
+            title={content.title}
+          />
+        )
+      }
+      <Content>
+        <div
+          class="bg-custom-teal dark:bg-zinc-700 p-3 my-6 text-center rounded-lg"
+        >
+          {content.title}
+        </div>
+        <MotionSection client:load delay={0.1}>
+          Introductory text
+
+          <div>Design Process</div>
+
+          <div>My Role</div>
+          image concluding section
+        </MotionSection>
+        <MotionSection client:load delay={0.2}>
+          introductory image Pain points
+          <div>
+            grid
+            <div>one</div>
+            <div>one</div>
+            <div>one</div>
+            <div>one</div>
+          </div>
+        </MotionSection>
+        <MotionSection client:load delay={0.3}>
+          intro image
+          <div>Lessons learned</div>
+          <div>next steps</div>
+        </MotionSection>
+      </Content>
+    </main>
+  </Body>
+  <Footer />
 </html>
