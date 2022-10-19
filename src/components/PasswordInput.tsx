@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { FaLock } from 'react-icons/fa'
-import { IoAlertCircle } from 'react-icons/io5'
+import { FaLock } from 'react-icons/fa/index.js'
+import { IoAlertCircle } from 'react-icons/io5/index.js'
 import { classNames } from '../lib/utils'
 
 type Props = {

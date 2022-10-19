@@ -1,12 +1,14 @@
 ---
+import { Image } from '@astrojs/image/components'
+import Heading from '../components/Heading'
 import PasswordInput from '../components/PasswordInput'
 import MotionSection from '../components/MotionSection'
-import Page from './page.astro'
 import BaseHead from '../components/BaseHead.astro'
 import Body from '../components/Body.astro'
 import Header from '../components/Header.astro'
 import Content from '../components/Content.astro'
 import Footer from '../components/Footer.astro'
+import Paragraph from '../components/Paragraph.astro'
 const { content } = Astro.props
 ---
 
@@ -16,7 +18,7 @@ const { content } = Astro.props
   </head>
   <Body>
     <Header />
-    <main class="relative pt-[56px] h-[calc(100vh-56px)] overflow-hidden">
+    <main class="relative pt-[56px] h-[calc(100vh-56px)]">
       {
         content.password && (
           <PasswordInput
@@ -30,24 +32,68 @@ const { content } = Astro.props
         <div
           class="bg-custom-teal dark:bg-zinc-700 p-3 my-6 text-center rounded-lg"
         >
-          {content.title}
+          <Heading as="h1" variant="section-title" className="no-underline">
+            {content.title}
+          </Heading>
         </div>
         <MotionSection client:load delay={0.1}>
-          Introductory text
+          <Paragraph>
+            Introductory text new Lorem ipsum dolor, sit amet consectetur
+            adipisicing elit. Quasi aut id voluptatum alias tempore placeat unde
+            sapiente autem, repellendus labore facilis, obcaecati voluptas odit
+            iure enim dolorum tenetur amet laboriosam!
+          </Paragraph>
+          <div class="grid md:grid-cols-2 gap-4 sm:text-justify my-4">
+            <div>
+              <Heading as="h2" variant="section-title">Design Process</Heading>
+              <Paragraph>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum,
+                labore mollitia fugiat, laudantium sed deserunt quas numquam cum
+                quae ipsum, harum perferendis. Ad consequuntur quasi vel, quae
+                velit sed delectus.
+              </Paragraph>
+            </div>
 
-          <div>Design Process</div>
-
-          <div>My Role</div>
-          image concluding section
+            <div>
+              <Heading as="h2" variant="section-title">My Role</Heading>
+              <Paragraph>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Repellat quaerat delectus aliquam expedita consequuntur eius
+                impedit eligendi! Laborum minus quis consequatur suscipit
+                aperiam, deleniti pariatur delectus dolor ut inventore adipisci?
+              </Paragraph>
+            </div>
+          </div>
+          <figure class="mb-4">
+            <Image
+              src={content.img}
+              width={720}
+              aspectRatio={1.2}
+              position="top"
+              alt="Introduction image"
+            />
+            <figcaption>Homepage</figcaption>
+          </figure>
         </MotionSection>
         <MotionSection client:load delay={0.2}>
-          introductory image Pain points
-          <div>
-            grid
-            <div>one</div>
-            <div>one</div>
-            <div>one</div>
-            <div>one</div>
+          Pain points
+          <div class="grid md:grid-cols-2 gap-4">
+            <div>
+              <Heading as="h2" variant="section-title">My Role</Heading>
+              one
+            </div>
+            <div>
+              <Heading as="h2" variant="section-title">My Role</Heading>
+              one
+            </div>
+            <div>
+              <Heading as="h2" variant="section-title">My Role</Heading>
+              one
+            </div>
+            <div>
+              <Heading as="h2" variant="section-title">My Role</Heading>
+              one
+            </div>
           </div>
         </MotionSection>
         <MotionSection client:load delay={0.3}>
