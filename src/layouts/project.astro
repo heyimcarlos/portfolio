@@ -18,16 +18,18 @@ const { content } = Astro.props
   </head>
   <Body>
     <Header />
-    <main class="relative pt-[56px] h-[calc(100vh-56px)]">
-      {
-        content.password && (
-          <PasswordInput
-            client:load
-            password={content.password}
-            title={content.title}
-          />
-        )
-      }
+    <main class="pt-[56px] relative">
+      <div class="z-50 w-full h-[calc(100%-15px)] absolute backdrop-blur-sm">
+        {
+          content.password && (
+            <PasswordInput
+              client:load
+              password={content.password}
+              title={content.title}
+            />
+          )
+        }
+      </div>
       <Content>
         <div
           class="bg-custom-teal dark:bg-zinc-700 p-3 my-6 text-center rounded-lg"
