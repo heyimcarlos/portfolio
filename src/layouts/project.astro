@@ -9,12 +9,26 @@ import Header from '../components/Header.astro'
 import Content from '../components/Content.astro'
 import Footer from '../components/Footer.astro'
 import Paragraph from '../components/Paragraph.astro'
-const { content } = Astro.props
+import { SITE_TITLE } from '../config'
+import type { MarkdownLayoutProps } from 'astro'
+type Props = MarkdownLayoutProps<{
+  title: string
+  description: string
+  img: string
+  date: string
+  password: string
+  tags: string[]
+}>
+const { content, url = '' } = Astro.props
+console.log({ props: Astro.props.compiledContent() })
 ---
 
 <html lang="en">
   <head>
-    <BaseHead title={content.title} description={content.description} />
+    <BaseHead
+      title={`${SITE_TITLE} | ${content.title}`}
+      description={content.description}
+    />
   </head>
   <Body>
     <Header />
@@ -32,75 +46,19 @@ const { content } = Astro.props
         <div
           class="bg-custom-teal dark:bg-zinc-700 p-3 my-6 text-center rounded-lg"
         >
-          <Heading as="h1" variant="section-title" className="no-underline">
-            {content.title}
-          </Heading>
+          <MotionSection client:load delay={0.15} classNames="mb-0">
+            <a href={content.href} class="inline-block">
+              <Heading as="h1" variant="section-title" className="no-underline">
+                {content.title}
+              </Heading>
+            </a>
+          </MotionSection>
         </div>
-        <MotionSection client:load delay={0.1}>
-          <Paragraph>
-            Introductory text new Lorem ipsum dolor, sit amet consectetur
-            adipisicing elit. Quasi aut id voluptatum alias tempore placeat unde
-            sapiente autem, repellendus labore facilis, obcaecati voluptas odit
-            iure enim dolorum tenetur amet laboriosam!
-          </Paragraph>
-          <div class="grid md:grid-cols-2 gap-4 sm:text-justify my-4">
-            <div>
-              <Heading as="h2" variant="section-title">Design Process</Heading>
-              <Paragraph>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum,
-                labore mollitia fugiat, laudantium sed deserunt quas numquam cum
-                quae ipsum, harum perferendis. Ad consequuntur quasi vel, quae
-                velit sed delectus.
-              </Paragraph>
-            </div>
-
-            <div>
-              <Heading as="h2" variant="section-title">My Role</Heading>
-              <Paragraph>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Repellat quaerat delectus aliquam expedita consequuntur eius
-                impedit eligendi! Laborum minus quis consequatur suscipit
-                aperiam, deleniti pariatur delectus dolor ut inventore adipisci?
-              </Paragraph>
-            </div>
-          </div>
-          <figure class="mb-4">
-            <Image
-              src={content.img}
-              width={720}
-              aspectRatio={1.2}
-              position="top"
-              alt="Introduction image"
-            />
-            <figcaption>Homepage</figcaption>
-          </figure>
-        </MotionSection>
-        <MotionSection client:load delay={0.2}>
-          Pain points
-          <div class="grid md:grid-cols-2 gap-4">
-            <div>
-              <Heading as="h2" variant="section-title">My Role</Heading>
-              one
-            </div>
-            <div>
-              <Heading as="h2" variant="section-title">My Role</Heading>
-              one
-            </div>
-            <div>
-              <Heading as="h2" variant="section-title">My Role</Heading>
-              one
-            </div>
-            <div>
-              <Heading as="h2" variant="section-title">My Role</Heading>
-              one
-            </div>
-          </div>
-        </MotionSection>
         <MotionSection client:load delay={0.3}>
-          intro image
-          <div>Lessons learned</div>
-          <div>next steps</div>
+          <slot />
         </MotionSection>
+        <span class="text-4xl"></span>
+        <span class="text-2xl"></span>
       </Content>
     </main>
   </Body>

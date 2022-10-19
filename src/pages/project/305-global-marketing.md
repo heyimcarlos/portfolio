@@ -2,6 +2,7 @@
 layout: ../../layouts/project.astro
 title: 305 Global Marketing
 client: Self
+href: https://305gm.com
 password: 305globalmarketing
 publishDate: 2022-10-17 18:00:00
 img: 305-global-marketing.png
@@ -11,12 +12,23 @@ tags:
   - dev
 ---
 
-Rubber cheese mascarpone cut the cheese. Jarlsberg parmesan cheesy grin cream cheese port-salut stinking bishop ricotta brie. Roquefort when the cheese comes out everybody's happy goat cheese triangles stilton cheese and biscuits goat babybel. Bocconcini roquefort queso danish fontina pecorino.
+Introductory text new Lorem ipsum dolor, sit amet consectetur
+adipisicing elit. Quasi aut id voluptatum alias tempore placeat unde
+sapiente autem, repellendus labore facilis, obcaecati voluptas odit
+iure enim dolorum tenetur amet laboriosam!
 
-Smelly cheese stinking bishop roquefort. Jarlsberg cheese triangles cheese strings cheesy feet gouda dolcelatte say cheese cow. Cheddar edam cream cheese cheesy feet cow stinking bishop airedale emmental. Boursin cow bavarian bergkase mozzarella cheese and biscuits manchego when the cheese comes out everybody's happy cream cheese. Cheese on toast st. agur blue cheese croque monsieur halloumi.
+## Design Process
 
-Fromage frais jarlsberg st. agur blue cheese. Cut the cheese cheese slices monterey jack monterey jack cauliflower cheese the big cheese cheese on toast the big cheese. Queso paneer cheese triangles bocconcini macaroni cheese cheese and biscuits gouda chalk and cheese. Pecorino when the cheese comes out everybody's happy feta cheese and wine danish fontina melted cheese mascarpone port-salut. When the cheese comes out everybody's happy pecorino cottage cheese.
+Introductory text new Lorem ipsum dolor, sit amet consectetur
+adipisicing elit. Quasi aut id voluptatum alias tempore placeat unde
+sapiente autem, repellendus labore facilis, obcaecati voluptas odit
+iure enim dolorum tenetur amet laboriosam!
 
-Caerphilly parmesan manchego. Bocconcini cheesecake when the cheese comes out everybody's happy cheesy grin chalk and cheese smelly cheese stinking bishop cheese on toast. Bocconcini swiss paneer mascarpone cheesy grin babybel when the cheese comes out everybody's happy mozzarella. Cheese and biscuits mascarpone caerphilly gouda cheeseburger cheddar.
+## My Role
 
-Cheese and biscuits cheesy grin roquefort. Ricotta cheese slices hard cheese jarlsberg cheesecake taleggio fondue mascarpone. Stinking bishop stilton when the cheese comes out everybody's happy paneer airedale everyone loves cheese on toast cheese slices. Ricotta cut the cheese cheese triangles babybel cream cheese ricotta.
+Introductory text new Lorem ipsum dolor, sit amet consectetur
+adipisicing elit. Quasi aut id voluptatum alias tempore placeat unde
+sapiente autem, repellendus labore facilis, obcaecati voluptas odit
+iure enim dolorum tenetur amet laboriosam!
+
+![Homepage](/305-global-marketing.png)
