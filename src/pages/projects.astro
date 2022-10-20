@@ -3,7 +3,7 @@ import MotionSection from '../components/MotionSection'
 import ProjectGridItem from '../components/ProjectGridItem.astro'
 import Page from '../layouts/page.astro'
 
-const projects = (await Astro.glob('./project/**/*.md')).sort(
+const projects = (await Astro.glob('./projects/**/*.md')).sort(
   (a: any, b: any) =>
     new Date(b.frontmatter.createdAt).valueOf() -
     new Date(a.frontmatter.createdAt).valueOf()
@@ -13,7 +13,7 @@ const projects = (await Astro.glob('./project/**/*.md')).sort(
 <Page
   title="Portfolio page"
   description="Carlos's portfolio page"
-  heading="The following list includes personal, freelance and job projects."
+  heading="The following list includes personal, freelance and work projects."
   lang="en"
 >
   {
