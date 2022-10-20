@@ -3,13 +3,11 @@ import MotionSection from '../components/MotionSection'
 import ProjectGridItem from '../components/ProjectGridItem.astro'
 import Page from '../layouts/page.astro'
 
-const projects = (await Astro.glob('./project/**/*.md'))
-  .filter(({ frontmatter }) => !!frontmatter.publishDate)
-  .sort(
-    (a, b) =>
-      new Date(b.frontmatter.publishDate).valueOf() -
-      new Date(a.frontmatter.publishDate).valueOf()
-  )
+const projects = (await Astro.glob('./project/**/*.md')).sort(
+  (a: any, b: any) =>
+    new Date(b.frontmatter.createdAt).valueOf() -
+    new Date(a.frontmatter.createdAt).valueOf()
+)
 ---
 
 <Page

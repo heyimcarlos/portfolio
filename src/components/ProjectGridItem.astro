@@ -1,6 +1,7 @@
 ---
 import { Image } from '@astrojs/image/components'
 import Heading from './Heading'
+
 const { frontmatter, url } = Astro.props.project
 ---
 
@@ -12,7 +13,7 @@ const { frontmatter, url } = Astro.props.project
     <p class="text-base mb-4">{frontmatter.description}</p>
     <div class="relative">
       <Image
-        src={frontmatter.img}
+        src={frontmatter.thumbnail}
         alt={frontmatter.title}
         width={720}
         position="top"

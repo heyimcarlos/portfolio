@@ -2,10 +2,11 @@
 layout: ../../layouts/project.astro
 title: 305 Global Marketing
 client: Self
-href: https://305gm.com
+pageUrl: https://305gm.com
 password: 305globalmarketing
-publishDate: 2022-10-17 18:00:00
-img: 305-global-marketing.png
+thumbnail: ./305-global-marketing.png
+createdAt: 2022-10-17 18:00:00
+updatedAt: 2022-10-17 18:00:00
 description: |
   Building a multi-tenant ecommerce platform that allows thousands of users to re-sell products online.
 tags:
