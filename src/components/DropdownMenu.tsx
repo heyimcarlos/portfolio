@@ -6,7 +6,7 @@ import { SOURCE_URL, EMAIL } from '../config'
 
 const navItems = [
   { title: 'About', path: '/' },
-  { title: 'Projects', path: '/projects' },
+  // { title: 'Projects', path: '/projects' },
   { title: 'Contact', path: `mailto:${EMAIL}` }
   // { title: 'Blog', path: '/blog' }
 ]
