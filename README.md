@@ -4,7 +4,7 @@
 
 ![alt text][logo]
 
-[logo]: https://raw.githubusercontent.com/heyimcarlos/portfolio/development/public/heyimcarlos.dev-front.png "Carlos's homepage"
+[logo]: https://raw.githubusercontent.com/heyimcarlos/portfolio/development/public/heyimcarlos.dev.png "Carlos's homepage"
 
 ## Stack
 
