@@ -1,43 +1,26 @@
 ---
-import BaseHead from '../components/BaseHead.astro'
-import Footer from '../components/Footer.astro'
-import Nav from '../components/Nav.astro'
-import PortfolioPreview from '../components/PortfolioPreview.astro'
+import MotionSection from '../components/MotionSection'
+import ProjectGridItem from '../components/ProjectGridItem.astro'
+import Page from '../layouts/page.astro'
 
-const projects = (await Astro.glob('./project/**/*.md'))
-  .filter(({ frontmatter }) => !!frontmatter.publishDate)
-  .sort(
-    (a, b) =>
-      new Date(b.frontmatter.publishDate).valueOf() -
-      new Date(a.frontmatter.publishDate).valueOf()
-  )
+const projects = (await Astro.glob('./projects/**/*.md')).sort(
+  (a: any, b: any) =>
+    new Date(b.frontmatter.createdAt).valueOf() -
+    new Date(a.frontmatter.createdAt).valueOf()
+)
 ---
 
-<html lang="en">
-  <head>
-    <BaseHead
-      title="All Projects | Jeanine White"
-      description="Learn about Jeanine White's most recent projects"
-    />
-    <style>
-      .grid {
-        display: grid;
-        grid-gap: 3rem;
-      }
-      .title {
-        margin-top: 2rem;
-        margin-bottom: 2rem;
-      }
-    </style>
-  </head>
-  <body>
-    <Nav />
-    <div class="wrapper">
-      <h1 class="title text-7xl text-red-900">All Projects</h1>
-      <div class="grid">
-        {projects.map(project => <PortfolioPreview project={project} />)}
-      </div>
-    </div>
-    <Footer />
-  </body>
-</html>
+<Page
+  title="Portfolio page"
+  description="Carlos's portfolio page"
+  heading="The following list includes personal, freelance and work projects."
+  lang="en"
+>
+  {
+    projects.map((project, idx) => (
+      <MotionSection client:load delay={!idx ? 0.2 : idx / 2.5}>
+        <ProjectGridItem project={project} />
+      </MotionSection>
+    ))
+  }
+</Page>

@@ -12,8 +12,24 @@ module.exports = {
       fontFamily: {
         // @info: Adding a utility class for the font
         mplus: ["'M PLUS Rounded 1c'", 'Verdana', 'sans-serif']
+      },
+      keyframes: {
+        wiggle: {
+          '0%, 100%': { transform: 'rotate(-3deg)' },
+          '50%': { transform: 'rotate(3deg)' }
+        },
+        shake: {
+          '0%': { transform: 'translate(0rem)' },
+          '25%': { transform: 'translateX(5px)' },
+          '75%': { transform: 'translateX(-5px)' },
+          '100%': { transform: 'translate(0rem)' }
+        }
+      },
+      animation: {
+        wiggle: 'wiggle 0.2s linear 0s 1 normal none running',
+        shake: 'shake 0.2s linear 0s 1 normal none running'
       }
     }
   },
-  plugins: []
+  plugins: [require('@tailwindcss/forms')]
 }
