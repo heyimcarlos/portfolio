@@ -16,7 +16,6 @@ import ListItem from '../components/ListItem.astro'
 import GridItem from '../components/GridItem.astro'
 import Heading from '../components/Heading.js'
 import Page from '../layouts/page.astro'
-import ProjectGridItem from '../components/ProjectGridItem.astro'
 
 const projects = (await Astro.glob('./projects/**/*.md')).sort(
   (a: any, b: any) =>

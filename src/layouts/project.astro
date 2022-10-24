@@ -42,7 +42,7 @@ const { frontmatter } = Astro.props
           />
         )
       }
-      <Content>
+      <Content className="px-0 sm:px-0 max-w-[50rem]">
         <div
           class="bg-custom-teal dark:bg-zinc-700 p-3 my-6 text-center rounded-lg"
         >
@@ -57,8 +57,9 @@ const { frontmatter } = Astro.props
         <MotionSection client:load delay={0.3}>
           <slot />
         </MotionSection>
-        <span class="text-4xl"></span>
-        <span class="text-2xl"></span>
+        <span class="text-4xl w-1/2 pr-4 mb-4 sm:ml-[-10%] sm:max-w-[120%]"
+        ></span>
+        <span class="text-2xl w-[720px]"></span>
       </Content>
     </main>
   </Body>

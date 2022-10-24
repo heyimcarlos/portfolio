@@ -27,9 +27,13 @@ export default defineConfig({
           h4: 'text-lg font-bold font-mplus',
           h5: 'text-md font-bold font-mplus',
           h6: 'text-sm font-bold font-mplus',
-          p: 'indent-4 sm:text-justify mb-6',
-          img: 'border border-slate-300 dark:border-zinc-700 rounded-xl my-6',
-          a: 'underline underline-offset-2 hover:text-orange-500 decoration-orange-500'
+          p: 'sm:text-justify mb-6',
+          img: 'border border-slate-300 dark:border-zinc-700 rounded-md my-6 sm:ml-[-10%] sm:max-w-[120%]',
+          a: 'underline underline-offset-2 hover:text-orange-500 decoration-orange-500',
+          table: 'w-[55%]',
+          tr: 'mb-4',
+          th: 'text-left font-bold font-mplus',
+          td: 'text-left text-sm pr-4'
         }
       ]
     ]
