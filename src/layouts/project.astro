@@ -57,10 +57,11 @@ const { frontmatter } = Astro.props
         <MotionSection client:load delay={0.3}>
           <slot />
         </MotionSection>
-        <span class="text-4xl w-1/2 pr-4 mb-4 sm:ml-[-10%] sm:max-w-[120%]"
+        <span
+          class="text-4xl w-1/2 pr-4 mb-4 sm:ml-[-10%] sm:max-w-[120%] my-16"
         ></span>
         <span
-          class="text-2xl w-[720px] py-1 px-2 hover:text-custom-teal decoration-custom-teal"
+          class="text-2xl w-[720px] py-1 px-2 mb-8 hover:text-custom-teal decoration-custom-teal"
         ></span>
       </Content>
     </main>
