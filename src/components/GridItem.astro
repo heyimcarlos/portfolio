@@ -1,11 +1,7 @@
 ---
 import { Image } from '@astrojs/image/components'
-export interface Props {
-  thumbnail: string
-  title: string
-  href: string
-}
-const { thumbnail, title, href } = Astro.props
+import { IoChevronForward } from 'react-icons/io5/index.js'
+const { frontmatter, url } = Astro.props.project
 ---
 
 <!-- Box -->
@@ -13,8 +9,8 @@ const { thumbnail, title, href } = Astro.props
   <!-- Link box -->
   <div class="cursor-pointer relative">
     <Image
-      src={thumbnail}
-      alt={title}
+      src={frontmatter.thumbnail}
+      alt={frontmatter.title}
       position="top"
       width={720}
       aspectRatio={1.5}
@@ -23,13 +19,19 @@ const { thumbnail, title, href } = Astro.props
       class="rounded-xl min-h-full min-w-full max-h-full max-w-full"
     />
     <!-- Link overlay -->
+    <p class="mt-2">{frontmatter.title}</p>
+    <p class="text-sm">{frontmatter.description}</p>
     <a
-      href="https://305gm.com"
-      target="_blank"
-      class="static before:absolute before:cursor-pointer before:block before:top-0 before:left-0 before:z-0 before:w-full before:h-full"
+      href={url}
+      class="static hover:underline decoration-custom-teal before:absolute before:cursor-pointer before:block before:top-0 before:left-0 before:z-0 before:w-full before:h-full"
     >
-      <p class="mt-2">{title}</p>
+      <button
+        class="inline-flex underline-offset-2 appearance-none items-center justify-center select-none relative whitespace-nowrap align-middle outline-none rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-teal transition-colors"
+        >View project
+        <IoChevronForward
+          className="text-current align-middle shrink-0 leading-4 ml-2 mt-[1px] w-4 h-4"
+        />
+      </button>
     </a>
-    <p class="text-sm"><slot /></p>
   </div>
 </div>

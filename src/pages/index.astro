@@ -1,7 +1,7 @@
 ---
 import { Image } from '@astrojs/image/components'
 import {
-  // IoChevronForward,
+  IoChevronForward,
   IoLogoTwitter,
   IoLogoGithub,
   IoLogoLinkedin,
@@ -16,6 +16,12 @@ import ListItem from '../components/ListItem.astro'
 import GridItem from '../components/GridItem.astro'
 import Heading from '../components/Heading.js'
 import Page from '../layouts/page.astro'
+
+const projects = (await Astro.glob('./projects/**/*.md')).sort(
+  (a: any, b: any) =>
+    new Date(a.frontmatter.createdAt).valueOf() -
+    new Date(b.frontmatter.createdAt).valueOf()
+)
 ---
 
 <Page
@@ -46,39 +52,53 @@ import Page from '../layouts/page.astro'
     </div>
   </section>
   <MotionSection client:load delay={0.2}>
-    <Heading as="h3" variant="section-title">Work</Heading>
+    <Heading as="h3" variant="section-title">About</Heading>
     <Paragraph>
-      Hi, I’m Carlos, a passionate ex-competitive gamer turned software
+      HeyImCarlos.dev, a passionate ex-competitive gamer turned software
       developer who has always loved spending an insane amount of time gaming
       and tinkering with code.
     </Paragraph>
     <p class="my-2 sm:text-justify">
       While bootstrapping a competitive gaming career and finishing my last year
-      of business school, I was introduced to code by a cousin practicing his
-      JavaScript syntax. Little did I know that I would take HTML, CSS, and
+      of business school, I realized that finance would not be what I truly
+      envisioned for myself. That is why I decided to put my heart into finding
+      a type of fun similar to the one I got from video games in a more
+      productive area.
+    </p>
+    <p class="my-2">
+      My first experience with programming happened at my sister's wedding. A
+      cousin of mine was randomly practicing his JavaScript syntax with
+      typing.io, so I came over and was captivated by the hieroglyphs I could
+      not comprehend. Little did I know that I would take HTML, CSS, and
       JavaScript courses at Code Academy a few days later.
     </p>
-    <p class="my-2 sm:text-justify">
-      After learning as much as possible with C.A., I yearned for more. I
-      decided to attend the Software Engineering Immersive program at Fullstack
-      Academy in New York City, where I honed my skill in modern web
-      technologies such as React, Node, Express, and PostgreSQL. Soon after
-      graduating, I got my first job with a small startup that needed help
-      implementing an e-commerce platform using NextJS, React, Node, Express,
-      and MongoDB.
+    <p class="my-2">
+      After learning as much as possible with free resources, I yearned for
+      more. That is why I decided to attend the Software Engineering Immersive
+      program at Fullstack Academy in New York City, where I honed my skill in
+      modern web technologies such as React, Node, Express, and PostgreSQL.
+    </p>
+    <p class="my-2">
+      Soon after graduating, I got my first job with a small startup that needed
+      help implementing an e-commerce platform using NextJS, React, Node,
+      Express, and MongoDB.
+    </p>
+    <p class="my-2">
+      I am a good communicator and team player who enjoys working with teams
+      that are encouraging, supportive, and collaborative.
     </p>
 
-    <!-- <div class="text-center my-4">
-            <a href="/work">
-              <button
-                class="my-4 inline-flex appearance-none items-center justify-center select-none relative whitespace-nowrap align-middle outline-none leading-tight rounded-md font-semibold h-10 px-4 text-zinc-800 bg-custom-teal hover:bg-teal-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-teal transition-colors"
-                >My portfolio
-                <IoChevronForward
-                  className="text-current align-middle shrink-0 leading-4 ml-2 mt-[1px] w-4 h-4"
-                />
-              </button>
-            </a>
-          </div> -->
+    <div class="text-center my-4">
+      <a href="/projects">
+        <button
+          class="my-4 inline-flex appearance-none items-center justify-center select-none relative whitespace-nowrap align-middle outline-none leading-tight rounded-md font-semibold h-10 px-4 text-zinc-800 bg-custom-teal hover:bg-teal-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-teal transition-colors"
+          >My portfolio
+          <IoChevronForward
+            className="text-current align-middle shrink-0 leading-4 ml-2 mt-[1px] w-4 h-4"
+          />
+        </button>
+      </a>
+    </div>
   </MotionSection>
   <MotionSection client:load delay={0.4}>
     <Heading as="h3" variant="section-title">Bio</Heading>
@@ -167,15 +187,10 @@ import Page from '../layouts/page.astro'
     </ul>
   </MotionSection>
   <MotionSection client:load delay={1}>
-    <Heading as="h3" variant="section-title">Featured Work</Heading>
+    <Heading as="h3" variant="section-title">What I've been working on</Heading>
+    <p>Take a look at some of the projects I've developed.</p>
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
-      <GridItem
-        href="https://305gm.com"
-        thumbnail="../305-global-marketing.png"
-        title="305 Global Marketing"
-      >
-        E-commerce membership app (&gt;50k total users)
-      </GridItem>
+      {projects.map(p => <GridItem project={p} />)}
     </div>
   </MotionSection>
 </Page>
