@@ -27,6 +27,8 @@ export default function PasswordInput({ password, title }: Props) {
   })
 
   useEffect(() => {
+    const root = document.documentElement
+    root.classList.add('overflow-hidden')
     setIsMounted(true)
   }, [])
 
@@ -35,6 +37,8 @@ export default function PasswordInput({ password, title }: Props) {
     e.stopPropagation()
     const input = e.currentTarget.elements[0] as HTMLInputElement
     if (input.value === password) {
+      const root = document.documentElement
+      root.classList.remove('overflow-hidden')
       setIsAuth(true)
       localStorage.setItem(slugify(title), 'AUTHORIZED')
     } else {
@@ -43,7 +47,7 @@ export default function PasswordInput({ password, title }: Props) {
   }
 
   return isMounted && !isAuth ? (
-    <div className="z-50 w-full h-[calc(100%-15px)] absolute backdrop-blur-sm">
+    <div className="z-50 w-full h-screen absolute backdrop-blur-sm overflow-hidden">
       <div className="w-full min-w-full max-w-full h-full min-h-full max-h-full inline-flex justify-center items-center">
         <form onSubmit={handleSubmit}>
           <div className="relative inline-flex items-center p-6 rounded-lg shadow-xl bg-orange-50 dark:bg-custom-zinc border border-custom-teal dark:border-zinc-700">
