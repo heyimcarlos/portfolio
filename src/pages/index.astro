@@ -51,7 +51,7 @@ const projects = (await Astro.glob('./projects/**/*.md')).sort(
       />
     </div>
   </section>
-  <MotionSection client:load delay={0.2}>
+  <MotionSection client:visible delay={0.2}>
     <Heading as="h3" variant="section-title">About</Heading>
     <Paragraph className="my-2">
       While bootstrapping a competitive gaming career and finishing my last year
