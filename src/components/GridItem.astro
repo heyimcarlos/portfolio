@@ -23,10 +23,10 @@ const { frontmatter, url } = Astro.props.project
     <p class="text-sm">{frontmatter.description}</p>
     <a
       href={url}
-      class="static before:absolute before:cursor-pointer before:block before:top-0 before:left-0 before:z-0 before:w-full before:h-full"
+      class="static hover:underline decoration-custom-teal before:absolute before:cursor-pointer before:block before:top-0 before:left-0 before:z-0 before:w-full before:h-full"
     >
       <button
-        class="inline-flex appearance-none items-center justify-center select-none relative whitespace-nowrap align-middle outline-none rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-teal transition-colors"
+        class="inline-flex underline-offset-2 appearance-none items-center justify-center select-none relative whitespace-nowrap align-middle outline-none rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-teal transition-colors"
         >View project
         <IoChevronForward
           className="text-current align-middle shrink-0 leading-4 ml-2 mt-[1px] w-4 h-4"
