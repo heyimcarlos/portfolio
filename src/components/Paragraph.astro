@@ -1,1 +1,9 @@
-<p class="indent-4 sm:text-justify"><slot /></p>
+---
+export interface Props {
+  className?: string
+}
+
+const { className } = Astro.props
+---
+
+<p class={`indent-4 sm:text-justify ${className}`}><slot /></p>
