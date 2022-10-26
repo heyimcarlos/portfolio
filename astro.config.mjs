@@ -29,11 +29,12 @@ export default defineConfig({
           h6: 'text-sm font-bold font-mplus',
           p: 'sm:text-justify mb-6',
           img: 'border border-slate-300 dark:border-zinc-700 rounded-md my-6 sm:ml-[-10%] sm:max-w-[120%]',
-          a: 'underline underline-offset-2 hover:text-orange-500 decoration-orange-500',
-          table: 'w-[55%]',
+          a: 'hover:underline underline-offset-2 decoration-custom-teal',
+          table:
+            'w-[55%] border border-slate-300 dark:border-zinc-700 rounded-md p-2 my-6',
           tr: 'mb-4',
-          th: 'text-left font-bold font-mplus',
-          td: 'text-left text-sm pr-4'
+          th: 'text-left text-lg font-bold font-mplus border border-slate-300 dark:border-zinc-700 p-2',
+          td: 'text-left text-md border border-slate-300 dark:border-zinc-700 py-1 px-2  '
         }
       ]
     ]
