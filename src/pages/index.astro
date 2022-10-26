@@ -25,7 +25,7 @@ const projects = (await Astro.glob('./projects/**/*.md')).sort(
 ---
 
 <Page
-  heading="Hello I'm a full-stack developer with a passion for building!"
+  heading="Hello, I'm Carlos, an ex-competitive gamer turned developer with a passion for building!"
   description={SITE_DESCRIPTION}
   title={SITE_TITLE}
   lang="en"
@@ -53,40 +53,34 @@ const projects = (await Astro.glob('./projects/**/*.md')).sort(
   </section>
   <MotionSection client:load delay={0.2}>
     <Heading as="h3" variant="section-title">About</Heading>
-    <Paragraph>
-      HeyImCarlos.dev, a passionate ex-competitive gamer turned software
-      developer who has always loved spending an insane amount of time gaming
-      and tinkering with code.
-    </Paragraph>
-    <p class="my-2 sm:text-justify">
+    <Paragraph className="my-2">
       While bootstrapping a competitive gaming career and finishing my last year
-      of business school, I realized that finance would not be what I truly
-      envisioned for myself. That is why I decided to put my heart into finding
-      a type of fun similar to the one I got from video games in a more
+      of business school, I realized that finance would be different from what I
+      truly envisioned for myself. That is why I decided to put my heart into
+      finding a type of fun similar to the one I got from video games in a more
       productive area.
-    </p>
-    <p class="my-2">
+    </Paragraph>
+    <Paragraph className="my-2 indent-0">
       My first experience with programming happened at my sister's wedding. A
       cousin of mine was randomly practicing his JavaScript syntax with
       typing.io, so I came over and was captivated by the hieroglyphs I could
       not comprehend. Little did I know that I would take HTML, CSS, and
       JavaScript courses at Code Academy a few days later.
-    </p>
-    <p class="my-2">
+    </Paragraph>
+    <Paragraph className="my-2 indent-0">
       After learning as much as possible with free resources, I yearned for
-      more. That is why I decided to attend the Software Engineering Immersive
-      program at Fullstack Academy in New York City, where I honed my skill in
-      modern web technologies such as React, Node, Express, and PostgreSQL.
-    </p>
-    <p class="my-2">
-      Soon after graduating, I got my first job with a small startup that needed
-      help implementing an e-commerce platform using NextJS, React, Node,
-      Express, and MongoDB.
-    </p>
-    <p class="my-2">
-      I am a good communicator and team player who enjoys working with teams
-      that are encouraging, supportive, and collaborative.
-    </p>
+      more. That is why I attended the Software Engineering program at Fullstack
+      Academy in NYC, where I honed my skill in modern web technologies such as
+      React, Node, Express, and PostgreSQL.
+    </Paragraph>
+    <Paragraph className="my-2 indent-0">
+      Soon after graduating, I got a job with a small startup that needed help
+      building an e-commerce platform using NextJS, React, Node, Express, and
+      MongoDB.
+    </Paragraph>
+    <Paragraph className="my-2 indent-0">
+      I enjoy working with encouraging, supportive, and collaborative teams.
+    </Paragraph>
 
     <div class="text-center my-4">
       <a href="/projects">
@@ -133,7 +127,7 @@ const projects = (await Astro.glob('./projects/**/*.md')).sort(
   </MotionSection>
   <MotionSection client:load delay={0.6}>
     <Heading as="h3" variant="section-title">I Love</Heading>
-    <Paragraph class="indent-3">
+    <Paragraph className="indent-3">
       Surfing, Brazilian Jiu-Jitsu, Snowboarding, Music, and Gaming.
     </Paragraph>
   </MotionSection>

@@ -20,15 +20,19 @@ export default function PasswordInput({ password, title }: Props) {
     if (import.meta.env.SSR) {
       return false
     }
+    const root = document.documentElement
     if (typeof localStorage !== 'undefined' && localStorage.getItem(slug)) {
-      return localStorage.getItem(slug) === 'AUTHORIZED'
+      if (localStorage.getItem(slug) === 'AUTHORIZED') {
+        root.classList.remove('overflow-hidden')
+        return true
+      }
     }
+
+    root.classList.add('overflow-hidden')
     return false
   })
 
   useEffect(() => {
-    const root = document.documentElement
-    root.classList.add('overflow-hidden')
     setIsMounted(true)
   }, [])
 
@@ -47,7 +51,7 @@ export default function PasswordInput({ password, title }: Props) {
   }
 
   return isMounted && !isAuth ? (
-    <div className="z-50 w-full h-screen absolute backdrop-blur-sm overflow-hidden">
+    <div className="z-10 w-full h-screen absolute backdrop-blur-sm overflow-hidden">
       <div className="w-full min-w-full max-w-full h-full min-h-full max-h-full inline-flex justify-center items-center">
         <form onSubmit={handleSubmit}>
           <div className="relative inline-flex items-center p-6 rounded-lg shadow-xl bg-orange-50 dark:bg-custom-zinc border border-custom-teal dark:border-zinc-700">
