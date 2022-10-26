@@ -1,4 +1,4 @@
-import { motion, MotionConfig } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import React, { ReactNode } from 'react'
 
 type Props = {
@@ -12,16 +12,18 @@ export default function MotionSection({
   delay = 0,
   classNames
 }: Props) {
-  return (
-    <MotionConfig reducedMotion="user">
-      <motion.div
-        initial={{ y: 10, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8, delay }}
-        className={`mb-6 ${classNames}`}
-      >
-        {children}
-      </motion.div>
-    </MotionConfig>
+  const shouldReduceMotion = useReducedMotion()
+
+  return shouldReduceMotion ? (
+    <div className={`mb-6 ${classNames}`}>{children}</div>
+  ) : (
+    <motion.div
+      initial={{ y: 10, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.8, delay }}
+      className={`mb-6 ${classNames}`}
+    >
+      {children}
+    </motion.div>
   )
 }

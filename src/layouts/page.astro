@@ -4,6 +4,7 @@ import Body from '../components/Body.astro'
 import Content from '../components/Content.astro'
 import Footer from '../components/Footer.astro'
 import Header from '../components/Header.astro'
+import { MotionConfig } from 'framer-motion'
 
 export interface Props {
   lang: string
@@ -21,14 +22,16 @@ const { description, lang, title, heading } = Astro.props
   <Body>
     <Header />
     <main class="pt-[56px]">
-      <Content>
-        <div
-          class="bg-custom-teal dark:bg-zinc-700 p-3 my-6 text-center rounded-lg"
-        >
-          {heading}
-        </div>
-        <slot />
-      </Content>
+      <MotionConfig client:load reducedMotion="user">
+        <Content>
+          <div
+            class="bg-custom-teal dark:bg-zinc-700 p-3 my-6 text-center rounded-lg"
+          >
+            {heading}
+          </div>
+          <slot />
+        </Content>
+      </MotionConfig>
     </main>
   </Body>
   <Footer />
