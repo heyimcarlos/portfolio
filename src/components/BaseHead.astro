@@ -34,7 +34,7 @@ const { title, description = '', image = '/me.jpg' } = Astro.props
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={image} />
 
-<script is:inline>
+<!-- <script is:inline>
   const theme = (() => {
     if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
       return localStorage.getItem('theme')
@@ -50,4 +50,16 @@ const { title, description = '', image = '/me.jpg' } = Astro.props
   } else {
     document.documentElement.classList.add('dark')
   }
+</script> -->
+
+<script is:inline>
+  // The configured mode is stored in local storage
+  let theme = localStorage.getItem('theme') || 'light'
+  if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    theme = 'dark'
+  }
+  // theme = theme === 'dark' ? 'dark' : 'light'
+
+  // Put dark class on html tag to enable dark mode
+  document.querySelector('html').className = theme
 </script>
