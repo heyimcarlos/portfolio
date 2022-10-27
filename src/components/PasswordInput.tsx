@@ -20,15 +20,14 @@ export default function PasswordInput({ password, title }: Props) {
     if (import.meta.env.SSR) {
       return false
     }
-    const root = document.documentElement
+    const main = document.querySelector('main')
     if (typeof localStorage !== 'undefined' && localStorage.getItem(slug)) {
       if (localStorage.getItem(slug) === 'AUTHORIZED') {
-        root.classList.remove('overflow-hidden')
+        main?.classList.remove('overflow-hidden')
         return true
       }
     }
 
-    root.classList.add('overflow-hidden')
     return false
   })
 
@@ -41,8 +40,8 @@ export default function PasswordInput({ password, title }: Props) {
     e.stopPropagation()
     const input = e.currentTarget.elements[0] as HTMLInputElement
     if (input.value === password) {
-      const root = document.documentElement
-      root.classList.remove('overflow-hidden')
+      const main = document.querySelector('main')
+      main?.classList.remove('overflow-hidden')
       setIsAuth(true)
       localStorage.setItem(slugify(title), 'AUTHORIZED')
     } else {
