@@ -125,13 +125,13 @@ const projects = (await Astro.glob('./projects/**/*.md')).sort(
       a full-stack developer.
     </BioSection>
   </MotionSection>
-  <MotionSection client:visible delay={0.6}>
+  <MotionSection client:visible delay={0.4}>
     <Heading as="h3" variant="section-title">I Love</Heading>
     <Paragraph className="indent-3">
       Surfing, Brazilian Jiu-Jitsu, Snowboarding, Music, and Gaming.
     </Paragraph>
   </MotionSection>
-  <MotionSection client:visible delay={0.8}>
+  <MotionSection client:visible delay={0.5}>
     <Heading as="h3" variant="section-title">On the web</Heading>
     <ul>
       <ListItem>
@@ -180,7 +180,7 @@ const projects = (await Astro.glob('./projects/**/*.md')).sort(
       </ListItem>
     </ul>
   </MotionSection>
-  <MotionSection client:visible delay={1}>
+  <MotionSection client:visible delay={0.6}>
     <Heading as="h3" variant="section-title">What I've been working on</Heading>
     <p>Take a look at some of the projects I've developed.</p>
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
