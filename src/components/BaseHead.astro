@@ -51,14 +51,3 @@ const { title, description = '', image = '/me.jpg' } = Astro.props
     document.documentElement.classList.add('dark')
   }
 </script>
-
-<!-- <script is:inline>
-  // The configured mode is stored in local storage
-  let theme = localStorage.getItem('theme') || 'light'
-  if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-    theme = 'dark'
-  }
-
-  // Put dark class on html tag to enable dark mode
-  document.querySelector('html').className = theme
-</script> -->
