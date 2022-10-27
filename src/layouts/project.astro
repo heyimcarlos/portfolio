@@ -23,7 +23,7 @@ type Props = MarkdownLayoutProps<{
 const { frontmatter } = Astro.props
 ---
 
-<html lang="en">
+<html lang="en" class={Boolean(frontmatter.password) ? 'overflow-hidden' : ''}>
   <head>
     <BaseHead
       title={`${SITE_TITLE} | ${frontmatter.title}`}
