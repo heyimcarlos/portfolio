@@ -23,7 +23,7 @@ type Props = MarkdownLayoutProps<{
 const { frontmatter } = Astro.props
 ---
 
-<html lang="en" class={Boolean(frontmatter.password) ? 'overflow-hidden' : ''}>
+<html lang="en">
   <head>
     <BaseHead
       title={`${SITE_TITLE} | ${frontmatter.title}`}
@@ -32,7 +32,11 @@ const { frontmatter } = Astro.props
   </head>
   <Body>
     <Header />
-    <main class="pt-[56px] relative">
+    <main
+      class={`pt-[56px] relative ${
+        Boolean(frontmatter.password) ? 'overflow-hidden h-screen' : ''
+      }`}
+    >
       {
         frontmatter.password && (
           <PasswordInput
