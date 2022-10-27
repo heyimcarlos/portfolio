@@ -19,6 +19,7 @@
     "@astrojs/react": "^1.2.0",
     "@astrojs/tailwind": "^2.1.0",
     "@astrojs/vercel": "^2.2.0",
+    "@fontsource/m-plus-rounded-1c": "^4.5.10",
     "@headlessui/react": "^1.7.3",
     "@tailwindcss/forms": "^0.5.3",
     "astro": "^1.5.0",
