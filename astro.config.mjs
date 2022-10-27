@@ -28,7 +28,7 @@ export default defineConfig({
           h5: 'text-md font-bold font-mplus',
           h6: 'text-sm font-bold font-mplus',
           p: 'sm:text-justify mb-8',
-          img: 'border border-slate-300 dark:border-zinc-700 rounded-md my-6 sm:ml-[-10%] sm:max-w-[120%] my-16',
+          img: 'border border-slate-300 dark:border-zinc-700 rounded-md mb-8',
           a: 'hover:underline underline-offset-2 decoration-custom-teal',
           table:
             'w-[55%] border border-slate-300 dark:border-zinc-700 rounded-md p-2 my-6 mb-8',

@@ -16,8 +16,8 @@ type Props = MarkdownLayoutProps<{
   password: string
   tags: string[]
   pageUrl: string
-  createdAt?: string
-  updatedAt?: string
+  createdAt: string
+  updatedAt: string
 }>
 
 const { frontmatter } = Astro.props
@@ -46,7 +46,7 @@ const { frontmatter } = Astro.props
           />
         )
       }
-      <Content className="px-0 sm:px-0 max-w-[50rem]">
+      <Content className="px-0 sm:px-0 max-w-3xl">
         <div
           class="bg-custom-teal dark:bg-zinc-700 p-3 my-6 text-center rounded-lg"
         >

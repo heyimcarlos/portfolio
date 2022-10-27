@@ -23,7 +23,7 @@ export default function PasswordInput({ password, title }: Props) {
     const main = document.querySelector('main')
     if (typeof localStorage !== 'undefined' && localStorage.getItem(slug)) {
       if (localStorage.getItem(slug) === 'AUTHORIZED') {
-        main?.classList.remove('overflow-hidden')
+        main?.classList.remove('overflow-hidden', 'h-screen')
         return true
       }
     }
@@ -41,7 +41,7 @@ export default function PasswordInput({ password, title }: Props) {
     const input = e.currentTarget.elements[0] as HTMLInputElement
     if (input.value === password) {
       const main = document.querySelector('main')
-      main?.classList.remove('overflow-hidden')
+      main?.classList.remove('overflow-hidden', 'h-screen')
       setIsAuth(true)
       localStorage.setItem(slugify(title), 'AUTHORIZED')
     } else {

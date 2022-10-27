@@ -13,27 +13,21 @@ export default function MotionSection({
   classNames
 }: Props) {
   const shouldReduceMotion = useReducedMotion()
-  const [isMounted, setIsMounted] = useState(false)
 
-  useEffect(() => {
-    setIsMounted(true)
-  }, [])
-
-  return isMounted && shouldReduceMotion ? (
-    <motion.div
-      initial={{ y: 0, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0, delay: 0 }}
-      className={`mb-6 ${classNames}`}
-    >
-      {children}
-    </motion.div>
-  ) : (
+  return (
     <MotionConfig reducedMotion="user">
       <motion.div
-        initial={{ y: 10, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8, delay }}
+        initial={
+          !shouldReduceMotion ? { y: 10, opacity: 0 } : { y: 0, opacity: 0 }
+        }
+        animate={
+          !shouldReduceMotion ? { y: 0, opacity: 1 } : { y: 0, opacity: 1 }
+        }
+        transition={
+          !shouldReduceMotion
+            ? { duration: 0.8, delay }
+            : { duration: 0, delay: 0 }
+        }
         className={`mb-6 ${classNames}`}
       >
         {children}

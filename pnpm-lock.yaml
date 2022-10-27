@@ -5,6 +5,7 @@ specifiers:
   '@astrojs/react': ^1.2.0
   '@astrojs/tailwind': ^2.1.0
   '@astrojs/vercel': ^2.2.0
+  '@fontsource/m-plus-rounded-1c': ^4.5.10
   '@headlessui/react': ^1.7.3
   '@inkdropapp/live-export': ^0.1.8
   '@tailwindcss/forms': ^0.5.3
@@ -29,6 +30,7 @@ dependencies:
   '@astrojs/react': 1.2.1_5uumaiclxbdbzaqafclbf6maf4
   '@astrojs/tailwind': 2.1.1_tailwindcss@3.2.0
   '@astrojs/vercel': 2.3.1
+  '@fontsource/m-plus-rounded-1c': 4.5.10
   '@headlessui/react': 1.7.3_biqbaboplfbrettd7655fr4n2y
   '@tailwindcss/forms': 0.5.3_tailwindcss@3.2.0
   astro: 1.5.2
@@ -523,6 +525,10 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /@fontsource/m-plus-rounded-1c/4.5.10:
+    resolution: {integrity: sha512-spzDBo7ni2QyY0XaTKtu97juLq9cFgWSIQ2OpP2nAd++WCaKu1KFsobWCpSqRbBJhPXdMrbanRprcslYI6EeRg==}
+    dev: false
 
   /@headlessui/react/1.7.3_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-LGp06SrGv7BMaIQlTs8s2G06moqkI0cb0b8stgq7KZ3xcHdH3qMP+cRyV7qe5x4XEW/IGY48BW4fLesD6NQLng==}
