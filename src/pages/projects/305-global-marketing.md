@@ -3,7 +3,7 @@ pageUrl: https://305gm.com
 public: true
 password: 305gm
 createdAt: 1666207522109
-updatedAt: 1666806391884
+updatedAt: 1666898296554
 layout: ../../layouts/project.astro
 title: 305 Global Marketing
 tags:
@@ -22,7 +22,6 @@ The application's core features were required to be built from the ground up, su
 ## My Role
 As the sole developer, I was able to work on backend and frontend feature implementations, including Authentication and Authorization, Database Schema, API, and UI Component Library development. As the project grew, so did our team. Having a bigger team allowed me to delegate tasks and focus on the backend, where I built and deployed APIs, such as a wallet feature with credit, debit, and transfer functionality. 
 
-![thumbnail](/projects/305-global-marketing_thumbnail.png)
 ![shop page](/projects/305-global-marketing_shop-page.png)
 
 ![profile wallet](/projects/305-global-marketing_profile-wallet.png)
