@@ -2,17 +2,8 @@
 import MotionSection from '../components/MotionSection'
 import ProjectGridItem from '../components/ProjectGridItem.astro'
 import Page from '../layouts/page.astro'
-type Props = {
-  title: string
-  description: string
-  thumbnail: string
-  password: string
-  tags: string[]
-  pageUrl: string
-  createdAt: string
-  updatedAt: string
-}
-const projects = (await Astro.glob<Props>('./projects/**/*.md')).sort(
+import type { Project } from '../types/project'
+const projects = (await Astro.glob<Project>('./projects/**/*.md')).sort(
   (a, b) =>
     new Date(b.frontmatter.createdAt).valueOf() -
     new Date(a.frontmatter.createdAt).valueOf()
