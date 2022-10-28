@@ -7,20 +7,20 @@ import Body from '../components/Body.astro'
 import Header from '../components/Header.astro'
 import Content from '../components/Content.astro'
 import Footer from '../components/Footer.astro'
+import MoreProjectsGridItem from '../components/MoreProjectsGridItem.astro'
 import { SITE_TITLE } from '../config'
 import type { MarkdownLayoutProps } from 'astro'
-type Props = MarkdownLayoutProps<{
-  title: string
-  description: string
-  thumbnail: string
-  password: string
-  tags: string[]
-  pageUrl: string
-  createdAt: string
-  updatedAt: string
-}>
-
+import type { Project } from '../types/project'
+type Props = MarkdownLayoutProps<Project>
 const { frontmatter } = Astro.props
+
+const projects = (await Astro.glob<Project>('../pages/projects/**/*.md'))
+  .sort(
+    (a, b) =>
+      new Date(b.frontmatter.createdAt).valueOf() -
+      new Date(a.frontmatter.createdAt).valueOf()
+  )
+  .filter(p => p.frontmatter.slug !== frontmatter.slug)
 ---
 
 <html lang="en">
@@ -61,12 +61,21 @@ const { frontmatter } = Astro.props
         <MotionSection client:load delay={0.3}>
           <slot />
         </MotionSection>
-        <span
-          class="text-4xl w-1/2 pr-4 mb-4 sm:ml-[-10%] sm:max-w-[120%] my-16"
-        ></span>
-        <span
-          class="text-2xl w-[720px] py-1 px-2 mb-8 hover:text-custom-teal decoration-custom-teal"
-        ></span>
+        {
+          projects.length > 0 && (
+            <MotionSection client:visible delay={0.2} classNames="mb-8">
+              <Heading as="h2" variant="section-title" className="text-xl">
+                More Projects
+              </Heading>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {projects.map(p => (
+                  <MoreProjectsGridItem project={p} />
+                ))}
+              </div>
+            </MotionSection>
+          )
+        }
+        <span class="mb-8"></span>
       </Content>
     </main>
   </Body>

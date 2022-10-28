@@ -1,0 +1,22 @@
+---
+import { Image } from '@astrojs/image/components'
+const { frontmatter, url } = Astro.props.project
+---
+
+<div class="w-full text-center my-4">
+  <div class="cursor-pointer relative">
+    <a href={url}>
+      <Image
+        src={frontmatter.thumbnail}
+        alt={frontmatter.title}
+        position="top"
+        width={720}
+        aspectRatio={1.5}
+        decoding="async"
+        loading="lazy"
+        class="rounded-xl min-h-full min-w-full max-h-full max-w-full scale-100 hover:scale-105 transition-transform duration-300"
+      />
+      <p class="mt-2">{frontmatter.title}</p>
+    </a>
+  </div>
+</div>

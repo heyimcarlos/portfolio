@@ -1,0 +1,26 @@
+---
+import type { Project } from '../types/project'
+import GridItem from './GridItem.astro'
+import Heading from './Heading'
+import MotionSection from './MotionSection'
+type Props = {
+  slug: string
+}
+const { slug } = Astro.props
+const projects = (await Astro.glob<Project>('../pages/projects/**/*.md'))
+  .sort(
+    (a, b) =>
+      new Date(b.frontmatter.createdAt).valueOf() -
+      new Date(a.frontmatter.createdAt).valueOf()
+  )
+  .filter(p => p.frontmatter.slug !== slug)
+---
+
+<MotionSection client:visible delay={0.2}>
+  <Heading as="h2" variant="section-title" className="text-xl"
+    >More Projects</Heading
+  >
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    {projects.map(p => <GridItem project={p} />)}
+  </div>
+</MotionSection>

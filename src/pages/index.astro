@@ -16,18 +16,9 @@ import ListItem from '../components/ListItem.astro'
 import GridItem from '../components/GridItem.astro'
 import Heading from '../components/Heading.js'
 import Page from '../layouts/page.astro'
+import type { Project } from '../types/project'
 
-type Props = {
-  title: string
-  description: string
-  thumbnail: string
-  password: string
-  tags: string[]
-  pageUrl: string
-  createdAt: string
-  updatedAt: string
-}
-const projects = (await Astro.glob<Props>('./projects/**/*.md')).sort(
+const projects = (await Astro.glob<Project>('./projects/**/*.md')).sort(
   (a, b) =>
     new Date(b.frontmatter.createdAt).valueOf() -
     new Date(a.frontmatter.createdAt).valueOf()
