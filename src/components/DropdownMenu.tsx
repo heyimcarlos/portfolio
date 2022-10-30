@@ -37,9 +37,9 @@ export default function DropdownMenu() {
               {item.title}
             </DropdownMenuItem>
           ))}
-          <DropdownMenuItem href={SOURCE_URL} key="source">
+          {/* <DropdownMenuItem href={SOURCE_URL} key="source">
             Source
-          </DropdownMenuItem>
+          </DropdownMenuItem> */}
         </Menu.Items>
       </Transition>
     </Menu>

@@ -1,10 +1,9 @@
 ---
 import HeaderLink from './HeaderLink.astro'
-import { IoLogoGithub } from 'react-icons/io5/index.js'
 import ThemeToggle from './ThemeToggleButton'
 import DropdownMenu from './DropdownMenu'
 import TerminalIcon from './icons/terminal'
-import { EMAIL, SOURCE_URL } from '../config'
+import { EMAIL } from '../config'
 ---
 
 <header class="fixed w-full p-2 z-20 backdrop-blur-md">
@@ -18,16 +17,12 @@ import { EMAIL, SOURCE_URL } from '../config'
           Carlos de la Cruz
         </h2>
       </a>
-      <div class="items-center gap-6 hidden md:flex">
+      <div class="flex-1"></div>
+      <div class="items-center gap-6 mr-4 hidden md:flex">
         <HeaderLink href="/">About</HeaderLink>
         <HeaderLink href="/projects">Projects</HeaderLink>
         <HeaderLink href={`mailto:${EMAIL}`} target="_self">Contact</HeaderLink>
-        <HeaderLink href={SOURCE_URL}>
-          <IoLogoGithub />
-          Source</HeaderLink
-        >
       </div>
-      <div class="flex-1"></div>
       <ThemeToggle client:load />
       <div class="block md:hidden z-50">
         <DropdownMenu client:load />
