@@ -1,9 +1,26 @@
 ---
-import { SITE_URL } from '../config'
+import { IoLogoGithub } from 'react-icons/io5/index.js'
+import { SITE_URL, SOURCE_URL } from '../config'
 const currentYear = new Date().getFullYear()
 ---
 
 <footer class="text-sm p-4 text-center text-zinc-500">
+  <div class="flex items-center justify-center">
+    🚀 Built with&nbsp;
+    <a
+      class="underline-offset-4 decoration-2 hover:underline decoration-custom-teal"
+      href="https://astro.build"
+      target="_blank">Astro</a
+    >
+    &nbsp;|&nbsp;
+    <a
+      target="_blank"
+      href={SOURCE_URL}
+      class="inline-flex items-center underline-offset-4 decoration-2 hover:underline decoration-custom-teal"
+    >
+      <IoLogoGithub />&nbsp;Source</a
+    >
+  </div>
   &copy; {currentYear}
   <a
     class="underline-offset-4 decoration-2 hover:underline decoration-custom-teal"
