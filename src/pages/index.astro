@@ -25,23 +25,11 @@ const projects = (await Astro.glob<Project>('./projects/**/*.md')).sort(
 )
 ---
 
-<Page
-  heading="Hello, I'm Carlos, an ex-competitive gamer turned developer with a passion for building!"
-  description={SITE_DESCRIPTION}
-  title={SITE_TITLE}
-  lang="en"
->
-  <section class="md:flex">
-    <div class="grow">
-      <Heading
-        className="leading-10 text-3xl font-mplus font-bold md:leading-tight md:text-4xl"
-        as="h2"
-      >
-        Carlos de la Cruz
-      </Heading>
-      <p>Web enthusiast ( Developer / Gamer )</p>
-    </div>
-    <div class="shrink-0 mt-4 md:mt-0 md:ml-6 text-center">
+<!-- heading="" -->
+<Page description={SITE_DESCRIPTION} title={SITE_TITLE} lang="en">
+  <section class="md:flex items-center my-12">
+    <!-- flex-grow -> This property specifies how much of the remaining space in the flex container should be assigned to the item (the flex grow factor). -->
+    <div>
       <!-- aspectRatio must be included only if one dimension property is provided -->
       <Image
         src="../me.jpg"
@@ -51,7 +39,20 @@ const projects = (await Astro.glob<Project>('./projects/**/*.md')).sort(
         class="border-2 border-solid border-custom-teal max-w-[100px] inline-block rounded-full"
       />
     </div>
+    <div class="shrink-0 mt-4 md:mt-0 md:ml-6">
+      <Heading
+        className="leading-10 text-3xl font-mplus font-bold md:leading-tight md:text-4xl"
+        as="h2"
+      >
+        Carlos de la Cruz
+      </Heading>
+      <p>Web enthusiast ( Developer / Gamer )</p>
+    </div>
   </section>
+  <div class="bg-custom-teal dark:bg-zinc-700 p-3 my-6 text-center rounded-lg">
+    Hello, I'm Carlos, an ex-competitive gamer turned developer with a passion
+    for building!
+  </div>
   <MotionSection client:load delay={0.2}>
     <Heading as="h3" variant="section-title">About</Heading>
     <Paragraph className="my-2">
@@ -83,7 +84,7 @@ const projects = (await Astro.glob<Project>('./projects/**/*.md')).sort(
       I enjoy working with encouraging, supportive, and collaborative teams.
     </Paragraph>
 
-    <div class="text-center my-4">
+    <!-- <div class="text-center my-4">
       <a href="/projects">
         <button
           class="my-4 inline-flex appearance-none items-center justify-center select-none relative whitespace-nowrap align-middle outline-none leading-tight rounded-md font-semibold h-10 px-4 text-zinc-800 bg-custom-teal hover:bg-teal-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-teal transition-colors"
@@ -93,7 +94,7 @@ const projects = (await Astro.glob<Project>('./projects/**/*.md')).sort(
           />
         </button>
       </a>
-    </div>
+    </div> -->
   </MotionSection>
   <MotionSection client:load delay={0.4}>
     <Heading as="h3" variant="section-title">Bio</Heading>
