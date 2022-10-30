@@ -27,9 +27,9 @@ const projects = (await Astro.glob<Project>('./projects/**/*.md')).sort(
 
 <!-- heading="" -->
 <Page description={SITE_DESCRIPTION} title={SITE_TITLE} lang="en">
-  <section class="md:flex items-center my-12">
+  <section class="xs:flex items-center my-12">
     <!-- flex-grow -> This property specifies how much of the remaining space in the flex container should be assigned to the item (the flex grow factor). -->
-    <div>
+    <div class="text-center">
       <!-- aspectRatio must be included only if one dimension property is provided -->
       <Image
         src="../me.jpg"
@@ -39,7 +39,7 @@ const projects = (await Astro.glob<Project>('./projects/**/*.md')).sort(
         class="border-2 border-solid border-custom-teal max-w-[100px] inline-block rounded-full"
       />
     </div>
-    <div class="shrink-0 mt-4 md:mt-0 md:ml-6">
+    <div class="shrink-0 mt-4 xs:mt-0 xs:ml-6">
       <Heading
         className="leading-10 text-3xl font-mplus font-bold md:leading-tight md:text-4xl"
         as="h2"
@@ -183,7 +183,7 @@ const projects = (await Astro.glob<Project>('./projects/**/*.md')).sort(
     </ul>
   </MotionSection>
   <MotionSection client:visible delay={0.5}>
-    <Heading as="h3" variant="section-title">What I've been working on</Heading>
+    <Heading as="h3" variant="section-title">Projects</Heading>
     <p>Take a look at some of the projects I've developed.</p>
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
       {projects.map(p => <GridItem project={p} />)}

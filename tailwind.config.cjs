@@ -5,6 +5,9 @@ module.exports = {
   // @info: specify an option for the class-based dark mode
   darkMode: 'class',
   theme: {
+    screens: {
+      xs: '450px'
+    },
     extend: {
       colors: {
         'custom-teal': '#5de4c7',
