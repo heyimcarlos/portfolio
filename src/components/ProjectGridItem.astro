@@ -5,22 +5,22 @@ import Heading from './Heading'
 const { frontmatter, url } = Astro.props.project
 ---
 
-<div class="w-full my-4">
-  <div>
-    <a href={url} class="inline-block">
-      <Heading as="h1" variant="section-title">{frontmatter.title}</Heading>
-    </a>
+<div class="w-full my-8">
+  <a href={url} class="inline-block">
+    <Heading as="h1" variant="section-title">{frontmatter.title}</Heading>
+  </a>
+  <div class="relative shadow-xl overflow-hidden rounded-2xl">
     <p class="text-base mb-4">{frontmatter.description}</p>
-    <div class="relative">
+    <div class="hover:scale-125 transition-all duration-500">
       <Image
         src={frontmatter.thumbnail}
         alt={frontmatter.title}
         width={720}
         position="top"
-        aspectRatio={1.5}
+        aspectRatio={1.7}
         decoding="async"
         loading="lazy"
-        class="rounded-xl"
+        class="rounded-xl min-h-full min-w-full max-h-full max-w-full border border-slate-300 dark:border-zinc-700"
       />
       <!-- opacity overlay -->
       <a
@@ -28,7 +28,7 @@ const { frontmatter, url } = Astro.props.project
         class="absolute cursor-default top-0 left-0 w-full h-full flex justify-center items-center flex-col rounded-md hover:bg-opacity-30 dark:hover:bg-opacity-40 hover:bg-orange-50 dark:hover:bg-custom-zinc transition-all duration-500 [&>button]:hover:opacity-100"
       >
         <button
-          class="opacity-0 font-mplus rounded-md border border-zinc-400 dark:border-zinc-700 px-2 py-2 text-sm font-medium shadow-sm hover:bg-custom-teal dark:hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-custom-teal focus:ring-offset-2 focus:ring-offset-gray-100 transition-all"
+          class="opacity-0 font-mplus rounded-md border border-zinc-400 dark:border-zinc-700 px-2 py-2 text-sm font-medium shadow-sm hover:bg-custom-teal dark:hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-custom-teal focus:ring-offset-2 focus:ring-offset-gray-100 transition-all scale-100"
           >Inspect</button
         >
       </a>
