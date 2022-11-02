@@ -20,7 +20,9 @@ const { description, lang, title } = Astro.props
   </head>
   <Body>
     <Header />
-    <main class="pt-[56px]">
+    <main
+      class="pt-[56px] dark:bg-[url('/pattern.svg')] dark:bg-no-repeat dark:bg-top dark:bg-[length:120rem]"
+    >
       <Content>
         <slot />
       </Content>
