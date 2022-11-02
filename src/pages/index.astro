@@ -1,7 +1,7 @@
 ---
 import { Image } from '@astrojs/image/components'
 import {
-  IoChevronForward,
+  // IoChevronForward,
   IoLogoTwitter,
   IoLogoGithub,
   IoLogoLinkedin,
@@ -25,7 +25,6 @@ const projects = (await Astro.glob<Project>('./projects/**/*.md')).sort(
 )
 ---
 
-<!-- heading="" -->
 <Page description={SITE_DESCRIPTION} title={SITE_TITLE} lang="en">
   <section class="xs:flex items-center my-12">
     <!-- flex-grow -> This property specifies how much of the remaining space in the flex container should be assigned to the item (the flex grow factor). -->
