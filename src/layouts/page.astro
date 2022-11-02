@@ -11,8 +11,7 @@ export interface Props {
   description: string
   heading?: string
 }
-const { description, lang, title, heading } = Astro.props
-console.log('hello world testing astrovim:')
+const { description, lang, title } = Astro.props
 ---
 
 <html lang={lang}>
@@ -25,7 +24,7 @@ console.log('hello world testing astrovim:')
       <Content>
         <slot />
       </Content>
+      <Footer />
     </main>
   </Body>
-  <Footer />
 </html>
