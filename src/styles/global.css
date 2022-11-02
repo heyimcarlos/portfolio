@@ -11,7 +11,7 @@ body {
 
 /* pattern */
 main {
-  background-image: url('../../public/pattern.svg');
+  background-image: url('/pattern.svg');
   background-repeat: no-repeat;
   background-position: top;
   background-size: 120rem;

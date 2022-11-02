@@ -45,13 +45,12 @@ const projects = (await Astro.glob<Project>('./projects/**/*.md')).sort(
       >
         Carlos de la Cruz
       </Heading>
-      <p>Web enthusiast ( Developer / Gamer )</p>
+      <p>
+        Hello, I'm an ex-competitive gamer turned developer with a passion for
+        building!
+      </p>
     </div>
   </section>
-  <div class="bg-custom-teal dark:bg-zinc-700 p-3 my-6 text-center rounded-lg">
-    Hello, I'm Carlos, an ex-competitive gamer turned developer with a passion
-    for building!
-  </div>
   <MotionSection client:load delay={0.2}>
     <Heading as="h3" variant="section-title">About</Heading>
     <Paragraph className="my-2">
