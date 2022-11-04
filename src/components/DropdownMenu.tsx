@@ -16,7 +16,7 @@ export default function DropdownMenu() {
     <Menu as="div" className="relative inline-block text-left pr-2 sm:pr-0">
       <div>
         <Menu.Button
-          className="inline-flex justify-center rounded-md border border-zinc-400  dark:border-zinc-700 px-2 py-2 text-sm font-medium shadow-sm hover:bg-custom-teal dark:hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-custom-teal focus:ring-offset-2 focus:ring-offset-gray-100 transition-all"
+          className="inline-flex justify-center rounded-md border border-zinc-400  dark:border-zinc-700 px-2 py-2 text-sm font-medium shadow-sm hover:bg-zinc-400 dark:hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-zinc-400 dark:focus:ring-custom-teal focus:ring-offset-2 focus:ring-offset-gray-100 transition-all"
           aria-label="menu"
         >
           <IoMenu className="w-5 h-5" />

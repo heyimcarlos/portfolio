@@ -36,7 +36,7 @@ const projects = (await Astro.glob<Project>('./projects/**/*.md')).sort(
         alt="Profile Image"
         width={720}
         aspectRatio={1}
-        class="border-2 border-solid border-custom-teal max-w-[100px] inline-block rounded-full"
+        class="border-2 border-solid border-custom-blue dark:border-custom-teal max-w-[100px] inline-block rounded-full"
       />
     </div>
     <!-- flex-shrink determines if the elements inside the div should shrink and break to another line if the container has no available space. -->
@@ -109,7 +109,7 @@ const projects = (await Astro.glob<Project>('./projects/**/*.md')).sort(
     <BioSection>
       <BioYear>2019</BioYear>
       Graduated from the <a
-        class="text-custom-teal"
+        class="text-custom-blue dark:text-custom-teal"
         href="https://www.pucmm.edu.do/"
         >Mother and Teacher Pontifical Catholic University
       </a>with a bachelor&apos;s degree in Business Administration(B.B.A).
@@ -118,7 +118,7 @@ const projects = (await Astro.glob<Project>('./projects/**/*.md')).sort(
       <BioYear>2020</BioYear>
       <a
         href="https://drive.google.com/file/d/1WreG-vngtZtpPZUGnIdLN4it6vsYv79V/view"
-        class="text-custom-teal ml-1">Completed</a
+        class="text-custom-blue dark:text-custom-teal ml-1">Completed</a
       > the program<a
         href="https://www.fullstackacademy.com/programs/coding-bootcamp"
       >
@@ -127,8 +127,10 @@ const projects = (await Astro.glob<Project>('./projects/**/*.md')).sort(
     </BioSection>
     <BioSection>
       <BioYear>2020 to 2022</BioYear>
-      Worked at <a class="text-custom-teal" href="https://305gm.com/">305GM</a> as
-      a full-stack developer.
+      Worked at <a
+        class="text-custom-blue dark:text-custom-teal"
+        href="https://305gm.com/">305GM</a
+      > as a full-stack developer.
     </BioSection>
   </MotionSection>
   <MotionSection client:visible delay={0.3}>
@@ -144,7 +146,7 @@ const projects = (await Astro.glob<Project>('./projects/**/*.md')).sort(
         <a
           href={`mailto:${EMAIL}`}
           target="_self"
-          class="underline-offset-[6px] decoration-2 hover:underline decoration-custom-teal"
+          class="underline-offset-[6px] decoration-2 hover:underline decoration-custom-blue dark:decoration-custom-teal"
         >
           <button class="inline-flex items-center"
             ><IoMail className="mr-2" /> me@heyimcarlos.dev</button
@@ -155,7 +157,7 @@ const projects = (await Astro.glob<Project>('./projects/**/*.md')).sort(
         <a
           href="https://github.com/heyimcarlos"
           target="_blank"
-          class="underline-offset-[6px] decoration-2 hover:underline decoration-custom-teal"
+          class="underline-offset-[6px] decoration-2 hover:underline decoration-custom-blue dark:decoration-custom-teal"
         >
           <button class="inline-flex items-center"
             ><IoLogoGithub className="mr-2" /> @heyimcarlos</button
@@ -166,7 +168,7 @@ const projects = (await Astro.glob<Project>('./projects/**/*.md')).sort(
         <a
           href="https://twitter.com/heyimcarlos_dev"
           target="_blank"
-          class="underline-offset-[6px] decoration-2 hover:underline decoration-custom-teal"
+          class="underline-offset-[6px] decoration-2 hover:underline decoration-custom-blue dark:decoration-custom-teal"
         >
           <button class="inline-flex items-center"
             ><IoLogoTwitter className="mr-2" /> @heyimcarlos_dev</button
@@ -177,7 +179,7 @@ const projects = (await Astro.glob<Project>('./projects/**/*.md')).sort(
         <a
           href="https://linkedin.com/in/carlos-dev/"
           target="_blank"
-          class="underline-offset-[6px] decoration-2 hover:underline decoration-custom-teal"
+          class="underline-offset-[6px] decoration-2 hover:underline decoration-custom-blue dark:decoration-custom-teal"
         >
           <button class="inline-flex items-center"
             ><IoLogoLinkedin className="mr-2" /> @carlos-dev</button
