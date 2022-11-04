@@ -16,7 +16,7 @@ export default function Heading({
 }: Props) {
   const variantClasses =
     variant === 'section-title'
-      ? 'font-mplus font-bold text-xl mb-4 mt-3 leading-[1.33] md:leading-tight underline underline-offset-[6px] decoration-4 decoration-custom-blue  dark:decoration-zinc-600'
+      ? 'font-mplus font-bold text-xl mb-4 mt-3 leading-[1.33] md:leading-tight underline underline-offset-[6px] decoration-4 decoration-zinc-400 dark:decoration-custom-teal dark:decoration-zinc-600'
       : ''
   const heading = React.createElement(as, {
     className: ` ${variantClasses}

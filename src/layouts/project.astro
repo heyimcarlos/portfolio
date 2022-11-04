@@ -48,11 +48,15 @@ const projects = (await Astro.glob<Project>('../pages/projects/**/*.md'))
       }
       <Content className="px-0 sm:px-0 max-w-3xl">
         <div
-          class="bg-custom-teal dark:bg-zinc-700 p-3 my-6 text-center rounded-lg"
+          class="bg-zinc-300 dark:bg-zinc-700 p-3 my-6 text-center rounded-lg"
         >
           <MotionSection client:load delay={0.15} classNames="mb-0">
             <a href={frontmatter.pageUrl} class="inline-block">
-              <Heading as="h1" variant="section-title" className="no-underline">
+              <Heading
+                as="h1"
+                variant="section-title"
+                className="no-underline mt-4"
+              >
                 {frontmatter.title}
               </Heading>
             </a>
@@ -75,7 +79,7 @@ const projects = (await Astro.glob<Project>('../pages/projects/**/*.md'))
             </MotionSection>
           )
         }
-        <span class="mb-8"></span>
+        <span class="mb-8 decoration-zinc-300"></span>
       </Content>
     </main>
   </Body>

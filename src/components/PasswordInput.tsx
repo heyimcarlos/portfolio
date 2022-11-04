@@ -49,7 +49,7 @@ export default function PasswordInput({ password, title }: Props) {
     <div className="z-10 w-full h-screen absolute backdrop-blur-sm">
       <div className="w-full min-w-full max-w-full h-full min-h-full max-h-full inline-flex justify-center items-center">
         <form onSubmit={handleSubmit}>
-          <div className="relative inline-flex items-center p-6 rounded-lg shadow-xl bg-orange-50 dark:bg-custom-zinc border border-custom-teal dark:border-zinc-700">
+          <div className="relative inline-flex items-center p-6 rounded-lg shadow-xl bg-orange-50 dark:bg-custom-zinc border border-custom-blue dark:border-zinc-700">
             <input
               type="password"
               name="password"
@@ -59,7 +59,7 @@ export default function PasswordInput({ password, title }: Props) {
                 isError
                   ? 'border transition-all duration-500 border-red-500 animate-shake'
                   : 'border-0',
-                'p-2 rounded-md text-lg  shadow bg-zinc-50 dark:bg-zinc-700 focus:ring-2 focus:ring-custom-teal dark:focus:ring-zinc-300 focus:outline-8'
+                'p-2 rounded-md text-lg  shadow bg-zinc-50 dark:bg-zinc-700 focus:ring-2 focus:ring-custom-blue dark:focus:ring-zinc-300 focus:outline-8'
               )}
               placeholder="Enter password"
               aria-invalid="true"
@@ -74,7 +74,7 @@ export default function PasswordInput({ password, title }: Props) {
               </div>
             )}
             <button type="submit">
-              <FaLock className="w-6 h-6 ml-4 text-current text-custom-teal dark:text-zinc-300" />
+              <FaLock className="w-6 h-6 ml-4 text-current text-custom-blue dark:text-zinc-300" />
             </button>
           </div>
         </form>

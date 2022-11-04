@@ -57,7 +57,7 @@ const projects = (await Astro.glob<Project>('./projects/**/*.md')).sort(
       </Heading>
     </div>
   </section>
-  <MotionSection client:load delay={0.2}>
+  <MotionSection client:load delay={0.2} classNames="mb-8">
     <Heading as="h3" variant="section-title">About</Heading>
     <Paragraph className="my-2">
       While bootstrapping a competitive gaming career and finishing my last year
@@ -85,7 +85,9 @@ const projects = (await Astro.glob<Project>('./projects/**/*.md')).sort(
       MongoDB.
     </Paragraph>
     <Paragraph className="my-2 indent-0">
-      I enjoy working with encouraging, supportive, and collaborative teams.
+      I enjoy working with encouraging, supportive, and collaborative teams. In
+      my free time, you'll find me Surfing, going for blue belt in Brazilian
+      Jiu-Jitsu, Snowboarding, listening to music, or Gaming.
     </Paragraph>
 
     <!-- <div class="text-center my-4">
@@ -100,7 +102,7 @@ const projects = (await Astro.glob<Project>('./projects/**/*.md')).sort(
       </a>
     </div> -->
   </MotionSection>
-  <MotionSection client:load delay={0.4}>
+  <MotionSection client:load delay={0.4} classNames="mb-8">
     <Heading as="h3" variant="section-title">Bio</Heading>
     <BioSection>
       <BioYear>1995</BioYear>
@@ -133,13 +135,7 @@ const projects = (await Astro.glob<Project>('./projects/**/*.md')).sort(
       > as a full-stack developer.
     </BioSection>
   </MotionSection>
-  <MotionSection client:visible delay={0.3}>
-    <Heading as="h3" variant="section-title">I Love</Heading>
-    <Paragraph className="indent-3">
-      Surfing, Brazilian Jiu-Jitsu, Snowboarding, Music, and Gaming.
-    </Paragraph>
-  </MotionSection>
-  <MotionSection client:visible delay={0.4}>
+  <MotionSection client:visible delay={0.4} classNames="mb-8">
     <Heading as="h3" variant="section-title">On the web</Heading>
     <ul>
       <ListItem>
