@@ -11,7 +11,8 @@ module.exports = {
       },
       colors: {
         'custom-teal': '#5de4c7',
-        'custom-zinc': '#252b37'
+        'custom-zinc': '#252b37',
+        'custom-blue': '#0069C2'
       },
       fontFamily: {
         // @info: Adding a utility class for the font
