@@ -57,7 +57,7 @@ const projects = (await Astro.glob<Project>('./projects/**/*.md')).sort(
       </Heading>
     </div>
   </section>
-  <MotionSection client:load delay={0.2}>
+  <MotionSection client:load delay={0.2} classNames="mb-8">
     <Heading as="h3" variant="section-title">About</Heading>
     <Paragraph className="my-2 indent-4">
       While bootstrapping a competitive gaming career and finishing my last year
@@ -102,7 +102,7 @@ const projects = (await Astro.glob<Project>('./projects/**/*.md')).sort(
       </a>
     </div> -->
   </MotionSection>
-  <MotionSection client:load delay={0.4}>
+  <MotionSection client:load delay={0.4} classNames="mb-8">
     <Heading as="h3" variant="section-title">Bio</Heading>
     <BioSection>
       <BioYear>1995</BioYear>
@@ -135,7 +135,7 @@ const projects = (await Astro.glob<Project>('./projects/**/*.md')).sort(
       > as a full-stack developer.
     </BioSection>
   </MotionSection>
-  <MotionSection client:visible delay={0.4}>
+  <MotionSection client:visible delay={0.4} classNames="mb-8">
     <Heading as="h3" variant="section-title">On the web</Heading>
     <ul>
       <ListItem>
