@@ -5,8 +5,10 @@ import Page from '../layouts/page.astro'
 import type { Project } from '../types/project'
 const projects = (await Astro.glob<Project>('./projects/**/*.md')).sort(
   (a, b) =>
-    new Date(b.frontmatter.createdAt).valueOf() -
+    new Date(b.frontmatter.createdAt).valueOf() >
     new Date(a.frontmatter.createdAt).valueOf()
+      ? 1
+      : -1
 )
 ---
 

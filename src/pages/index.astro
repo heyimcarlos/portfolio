@@ -18,11 +18,14 @@ import Heading from '../components/Heading.js'
 import Page from '../layouts/page.astro'
 import type { Project } from '../types/project'
 
-const projects = (await Astro.glob<Project>('./projects/**/*.md')).sort(
-  (a, b) =>
-    new Date(b.frontmatter.createdAt).valueOf() -
+const projects = (await Astro.glob<Project>('./projects/**/*.md'))
+  .sort((a, b) =>
+    new Date(b.frontmatter.createdAt).valueOf() >
     new Date(a.frontmatter.createdAt).valueOf()
-)
+      ? 1
+      : -1
+  )
+  .slice(0, 2)
 ---
 
 <!-- nice text container --><!-- <div class="bg-custom-teal dark:bg-zinc-700 p-3 my-6 text-center rounded-lg"/> -->
