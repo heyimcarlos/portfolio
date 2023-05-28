@@ -65,6 +65,4 @@ Ntornos recently launched, marking a significant milestone in our journey. With 
 
 ## Lessons Learned
 
-This project helped me solidify the knowledge I gained at [Fullstack Academy](https://fullstackacademy.com). I learned how to host a backend on [AWS EC2](https://aws.amazon.com/) with many production-ready APIs, such as [file uploading](https://www.npmjs.com/package/multer) and email server, and an interactive front end with [Next.js](https://nextjs.org) and [React](https://reactjs.org). I also learned how to work with a team and communicate with clients remotely.
-
 Working on this project was an enriching experience that further solidified my technical skills and enhanced my ability to deliver production-ready solutions. I honed my proficiency in building backends using [Prisma](https://prisma.io) and [MySQL](https://planetscale.com) and developing UI using [Next.js](https://nextjs.org) and [tRPC](https://trpc.io). This project underlined effective communication in delivering a high-quality product and handling the dynamic nature of software development.
