@@ -3,7 +3,7 @@ import HeaderLink from './HeaderLink.astro'
 import ThemeToggle from './ThemeToggleButton'
 import DropdownMenu from './DropdownMenu'
 import TerminalIcon from './icons/terminal'
-import { EMAIL } from '../config'
+import { EMAIL, CHAT_APP_URL } from '../config'
 ---
 
 <header class="fixed w-full p-2 z-20 backdrop-blur-md">
@@ -22,6 +22,7 @@ import { EMAIL } from '../config'
         <HeaderLink href="/">About</HeaderLink>
         <HeaderLink href="/projects">Projects</HeaderLink>
         <HeaderLink href={`mailto:${EMAIL}`} target="_self">Contact</HeaderLink>
+        <HeaderLink href={CHAT_APP_URL} target="_self">Chat App</HeaderLink>
       </div>
       <div class="block md:hidden z-50">
         <DropdownMenu client:load />
