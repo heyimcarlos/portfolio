@@ -11,15 +11,15 @@ slug: ntornos
 thumbnail: /projects/ntornos-map.png
 ---
 
-**Ntornos** is a real estate platform that makes finding and managing properties easy and efficient, thanks to an interactive map and user-friendly tools. It's designed to work across the globe, making it a game-changer in the property market.is an multi tenant e-commerce platform that allows users to build a fully customizable franchise store from which they can buy and sell products to earn discounts, commissions, and bonuses.
+**Ntornos** is a real estate platform that makes finding and managing properties easy and efficient, thanks to an interactive map and user-friendly tools. It's designed to work across the globe, making it a game-changer in the property market.
 
 ## Core Features
 
-The application's features were developed from scratch, including an innovative interactive map, an area-specific property search, a unique color-coded property marker system based on market duration, a single view application for efficient property browsing, a comprehensive agent dashboard for property management, and a globally adaptable system for currency and language preferences.
+The application's features were developed from scratch, including an innovative interactive map, anarea-specific property search, a unique color-coded property marker system based on market duration, a single view application for efficient property browsing, a comprehensive agent dashboard for property management, and a globally adaptable system for currency and language preferences.
 
 ## My Role
 
-As an Engineer for this product, I shaped both frontend and backend aspects. I contributed to the frontend by developing an innovative interactive map, while my primary role was constructing the backend from scratch. I created a database using PlanetScale, a MySQL provider, and Prisma ORM. I also built APIs using tRPC and introduced a feature for automatically converting currencies and languages based on user preferences. These responsibilities were pivotal in enhancing Ntornos' scalability, efficiency, and UX.
+As an Engineer for this product, I shaped both frontend and backend aspects. I contributed to the frontend by developing an innovative interactive map, while my primary role was constructing the backend from scratch. I created a database using PlanetScale, a MySQL provider, and Prisma ORM. I alsobuilt APIs using tRPC and introduced a feature for automatically converting currencies and languages based on user preferences. These responsibilities were pivotal in enhancing Ntornos' scalability, efficiency, and UX.
 
 ![shop page](/projects/ntornos-map.png)
 
