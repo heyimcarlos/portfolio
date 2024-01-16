@@ -37,6 +37,14 @@ export default function DropdownMenu() {
                             {item.title}
                         </DropdownMenuItem>
                     ))}
+                    <a
+                        href="https://drive.usercontent.google.com/uc?id=1Peno1PhUBY4W5sTntIGi0IUQlRUY0gPC&export=download"
+                    >
+                        <button
+                            className="rounded-md w-full border-t border-zinc-400 dark:border-zinc-700 px-2 py-2 text-sm font-medium shadow-sm hover:bg-zinc-400 dark:hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-custom-blue focus:ring-offset-2 focus:ring-offset-gray-100 transition-all scale-100"
+                        >Download Resume</button
+                        >
+                    </a>
                 </Menu.Items>
             </Transition>
         </Menu>
