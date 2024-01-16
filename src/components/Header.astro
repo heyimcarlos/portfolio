@@ -18,11 +18,19 @@ import { EMAIL, CHAT_APP_URL } from '../config'
         </h2>
       </a>
       <div class="flex-1"></div>
-      <div class="items-center gap-6 mr-4 hidden md:flex">
+      <div class="items-center gap-5 mr-0 hidden md:flex">
         <HeaderLink href="/">About</HeaderLink>
         <HeaderLink href="/projects">Projects</HeaderLink>
         <HeaderLink href={`mailto:${EMAIL}`} target="_self">Contact</HeaderLink>
         <HeaderLink href={CHAT_APP_URL} target="_self">Chat App</HeaderLink>
+        <a
+          href="https://drive.usercontent.google.com/uc?id=1Peno1PhUBY4W5sTntIGi0IUQlRUY0gPC&export=download"
+        >
+          <button
+            class="rounded-md border border-zinc-400 dark:border-zinc-700 px-2 py-2 text-sm font-medium shadow-sm hover:bg-zinc-400 dark:hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-custom-blue focus:ring-offset-2 focus:ring-offset-gray-100 transition-all scale-100"
+            >Download Resume</button
+          >
+        </a>
       </div>
       <div class="block md:hidden z-50">
         <DropdownMenu client:load />
