@@ -24,7 +24,10 @@ import { EMAIL, CHAT_APP_URL } from '../config'
         <HeaderLink href={`mailto:${EMAIL}`} target="_self">Contact</HeaderLink>
         <HeaderLink href={CHAT_APP_URL} target="_self">Chat App</HeaderLink>
         <a
-          href="https://drive.usercontent.google.com/uc?id=1Peno1PhUBY4W5sTntIGi0IUQlRUY0gPC&export=download"
+          href={`https://drive.usercontent.google.com/uc?id=${
+            import.meta.env.GOOGLE_DRIVE_RESUME_ID ??
+            import.meta.env.PUBLIC_GOOGLE_DRIVE_RESUME_ID
+          }&export=download`}
         >
           <button
             class="rounded-md border border-zinc-400 dark:border-zinc-700 px-2 py-2 text-sm font-medium shadow-sm hover:bg-zinc-400 dark:hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-custom-blue focus:ring-offset-2 focus:ring-offset-gray-100 transition-all scale-100"
