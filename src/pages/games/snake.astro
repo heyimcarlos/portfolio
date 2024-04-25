@@ -36,11 +36,6 @@ import MotionSection from '../../components/MotionSection'
     ></canvas>
     <script>
       import init from '../../wasm/snake.js'
-      window.addEventListener('keydown', function (e) {
-        if (e.key.startsWith('Arrow')) {
-          e.preventDefault()
-        }
-      })
       init().catch(console.error)
     </script>
   </MotionSection>
