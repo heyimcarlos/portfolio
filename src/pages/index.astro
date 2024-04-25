@@ -1,5 +1,4 @@
 ---
-import { Image } from '@astrojs/image/components'
 import {
   // IoChevronForward,
   IoLogoTwitter,
@@ -17,6 +16,7 @@ import GridItem from '../components/GridItem.astro'
 import Heading from '../components/Heading.js'
 import Page from '../layouts/page.astro'
 import type { Project } from '../types/project'
+import { Image } from 'astro:assets'
 
 const projects = (await Astro.glob<Project>('./projects/**/*.md'))
   .sort((a, b) =>
@@ -31,14 +31,12 @@ const projects = (await Astro.glob<Project>('./projects/**/*.md'))
 <!-- nice text container --><!-- <div class="bg-custom-teal dark:bg-zinc-700 p-3 my-6 text-center rounded-lg"/> -->
 <Page description={SITE_DESCRIPTION} title={SITE_TITLE} lang="en">
   <section class="xs:flex items-center my-12">
-    <!-- flex-grow -> This property specifies how much of the remaining space in the flex container should be assigned to the item (the flex grow factor). -->
     <div class="text-center">
-      <!-- aspectRatio must be included only if one dimension property is provided -->
       <Image
-        src="../me.jpg"
+        src="/me.jpg"
         alt="Profile Image"
         width={720}
-        aspectRatio={1}
+        height={500}
         class="border-2 border-solid border-custom-blue dark:border-custom-teal max-w-[100px] inline-block rounded-full"
       />
     </div>

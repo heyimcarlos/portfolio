@@ -1,9 +1,9 @@
 import { motion, MotionConfig, useReducedMotion } from 'framer-motion'
-import React, { ReactNode } from 'react'
+import React from 'react'
 
 type Props = {
   delay?: number
-  children: ReactNode
+  children: React.ReactNode
   classNames?: string
 }
 
