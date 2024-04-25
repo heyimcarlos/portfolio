@@ -1,5 +1,6 @@
 ---
-import { Image } from '@astrojs/image/components'
+import { Image } from "astro:assets"
+
 const { frontmatter, url } = Astro.props.project
 ---
 
@@ -11,7 +12,7 @@ const { frontmatter, url } = Astro.props.project
         alt={frontmatter.title}
         position="top"
         width={720}
-        aspectRatio={1.5}
+        <!-- aspectRatio={1.5} -->
         decoding="async"
         loading="lazy"
         class="rounded-xl min-h-full min-w-full max-h-full max-w-full scale-100 hover:scale-105 transition-transform duration-300"

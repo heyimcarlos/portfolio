@@ -1,0 +1,47 @@
+---
+import Page from '../../layouts/page.astro'
+import { SITE_DESCRIPTION, SITE_TITLE } from '../../config'
+import Heading from '../../components/Heading'
+import MotionSection from '../../components/MotionSection'
+---
+
+<Page description={SITE_DESCRIPTION} title={SITE_TITLE} lang="en">
+  <section class="xs:flex items-center justify-center mb-4 mt-6">
+    <div class="shrink-1 mt-2 xs:mt-0">
+      <Heading
+        className="leading-10 text-xl font-mplus font-bold md:leading-tight md:text-2xl"
+        as="h3"
+      >
+        Snake - Built with
+        <a
+          href="https://www.rust-lang.org/"
+          class="text-custom-blue dark:text-custom-teal"
+        >
+          Rust</a
+        >
+        and
+        <a
+          href="https://bevyengine.org"
+          class="text-custom-blue dark:text-custom-teal"
+        >
+          Bevy ECS</a
+        >
+      </Heading>
+    </div>
+  </section>
+  <MotionSection client:load delay={0.2} classNames="mb-0 text-center">
+    <canvas
+      id="snake-canvas"
+      class="border-2 border-solid border-custom-blue dark:border-custom-teal inline-block"
+    ></canvas>
+    <script>
+      import init from '../../wasm/snake.js'
+      window.addEventListener('keydown', function (e) {
+        if (e.key.startsWith('Arrow')) {
+          e.preventDefault()
+        }
+      })
+      init().catch(console.error)
+    </script>
+  </MotionSection>
+</Page>

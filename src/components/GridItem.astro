@@ -1,5 +1,5 @@
 ---
-import { Image } from '@astrojs/image/components'
+import { Image } from 'astro:assets'
 import { IoChevronForward } from 'react-icons/io5/index.js'
 const { frontmatter, url } = Astro.props.project
 ---
@@ -11,12 +11,11 @@ const { frontmatter, url } = Astro.props.project
     <Image
       src={frontmatter.thumbnail}
       alt={frontmatter.title}
-      position="top"
       width={720}
-      aspectRatio={1.5}
+      height={500}
       decoding="async"
       loading="lazy"
-      class="rounded-xl min-h-full min-w-full max-h-full max-w-full"
+      class="rounded-xl min-h-full h-64 min-w-full max-h-full max-w-full"
     />
     <!-- Link overlay -->
     <p class="mt-2">{frontmatter.title}</p>

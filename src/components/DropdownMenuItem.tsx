@@ -1,10 +1,10 @@
-import React, { ReactNode } from 'react'
+import React from 'react'
 import { Menu } from '@headlessui/react'
 import { classNames } from '../lib/utils'
 
 type Props = {
   href: string
-  children: ReactNode
+  children: React.ReactNode
 }
 
 export default function DropdownMenuItem({ children, href }: Props) {
