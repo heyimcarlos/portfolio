@@ -26,3 +26,9 @@ body {
                 height: 515px !important;
         }
 }
+
+@media (max-width: 400px) {
+        #snake-canvas  {
+                height: 485px !important;
+        }
+}
