@@ -8,3 +8,27 @@ body {
   text-rendering: optimizeLegibility;
   overflow-wrap: break-word;
 }
+
+#snake-canvas {
+    width: 100% !important;
+    max-width: 750px !important;
+}
+
+
+@media (max-width: 739px) {
+        #snake-canvas  {
+                height: 620px !important;
+        }
+}
+
+@media (max-width: 500px) {
+        #snake-canvas  {
+                height: 515px !important;
+        }
+}
+
+@media (max-width: 400px) {
+        #snake-canvas  {
+                height: 475px !important;
+        }
+}

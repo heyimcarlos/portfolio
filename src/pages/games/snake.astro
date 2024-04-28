@@ -1,47 +1,61 @@
 ---
-import Page from '../../layouts/page.astro'
-import { SITE_DESCRIPTION, SITE_TITLE } from '../../config'
 import Heading from '../../components/Heading'
 import MotionSection from '../../components/MotionSection'
+import Body from '../../components/Body.astro'
+import Header from '../../components/Header.astro'
+import BaseHead from '../../components/BaseHead.astro'
+import { SITE_TITLE } from '../../config.ts'
 ---
 
-<Page description={SITE_DESCRIPTION} title={SITE_TITLE} lang="en">
-  <section class="xs:flex items-center justify-center mb-4 mt-6">
-    <div class="shrink-1 mt-2 xs:mt-0">
-      <Heading
-        className="leading-10 text-xl font-mplus font-bold md:leading-tight md:text-2xl"
-        as="h3"
-      >
-        Snake - Built with
-        <a
-          href="https://www.rust-lang.org/"
-          class="text-custom-blue dark:text-custom-teal"
-        >
-          Rust</a
-        >
-        and
-        <a
-          href="https://bevyengine.org"
-          class="text-custom-blue dark:text-custom-teal"
-        >
-          Bevy ECS</a
-        >
-      </Heading>
-    </div>
-  </section>
-  <MotionSection client:load delay={0.2} classNames="mb-0 text-center">
-    <canvas
-      id="snake-canvas"
-      class="border-2 border-solid border-custom-blue dark:border-custom-teal inline-block"
-    ></canvas>
-    <script>
-      import init from '../../wasm/snake.js'
-      window.addEventListener('keydown', function (e) {
-        if (e.key.startsWith('Arrow')) {
-          e.preventDefault()
-        }
-      })
-      init().catch(console.error)
-    </script>
-  </MotionSection>
-</Page>
+<html lang={'en'}>
+  <head>
+    <BaseHead
+      title={`${SITE_TITLE} | Snake Game`}
+      description={'Snake.rs is a game built with Rust and Bevy ECS'}
+    />
+  </head>
+  <Body>
+    <Header />
+    <main
+      class="pt-[56px] dark:bg-[url('/pattern.svg')] dark:bg-no-repeat dark:bg-top dark:bg-[length:120rem]"
+    >
+      <article class={`mx-auto w-11/12 max-w-3xl`}>
+        <section class="xs:flex items-center justify-center mb-4 mt-6">
+          <div class="shrink-1 mt-2 xs:mt-0">
+            <Heading
+              className="leading-10 text-xl font-mplus font-bold md:leading-tight md:text-2xl"
+              as="h3"
+            >
+              Snake - Built with
+              <a
+                href="https://www.rust-lang.org/"
+                class="text-custom-blue dark:text-custom-teal"
+              >
+                Rust</a
+              >
+              and
+              <a
+                href="https://bevyengine.org"
+                class="text-custom-blue dark:text-custom-teal"
+              >
+                Bevy ECS</a
+              >
+            </Heading>
+          </div>
+        </section>
+        <MotionSection client:load delay={0.2} classNames="mb-0 text-center">
+          <canvas
+            id="snake-canvas"
+            width="600"
+            height="600"
+            class="border-2 border-solid border-custom-blue dark:border-custom-teal inline-block"
+          ></canvas>
+          <script>
+            import init from '../../wasm/snake.js'
+            init().catch(console.error)
+          </script>
+        </MotionSection>
+      </article>
+    </main>
+  </Body>
+</html>
