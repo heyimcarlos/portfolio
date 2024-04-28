@@ -18,6 +18,6 @@ body {
 
 @media (max-width: 640px) {
         #snake-canvas  {
-                height: 525px !important;
+                height: 550px !important;
         }
 }
