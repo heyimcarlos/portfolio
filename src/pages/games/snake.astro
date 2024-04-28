@@ -32,16 +32,38 @@ import MotionSection from '../../components/MotionSection'
   <MotionSection client:load delay={0.2} classNames="mb-0 text-center">
     <canvas
       id="snake-canvas"
+      width="600"
+      height="600"
+      style="width: 100% !important; max-width: 750px; height: auto;"
       class="border-2 border-solid border-custom-blue dark:border-custom-teal inline-block"
     ></canvas>
     <script>
       import init from '../../wasm/snake.js'
-      window.addEventListener('keydown', function (e) {
-        if (e.key.startsWith('Arrow')) {
-          e.preventDefault()
-        }
-      })
-      init().catch(console.error)
+      // window.addEventListener('keydown', function (e) {
+      // if (e.key.startsWith('Arrow')) {
+      //   e.preventDefault()
+      // }
+      // })
+      // const canvas = document.getElementById('snake-canvas')
+      // function resizeCanvas() {
+      //   if (!canvas) return
+      //   // Apply the width in percentage and control height accordingly
+      //   canvas.style.width = '100%'
+      //   console.dir(canvas)
+      //   // canvas.width = canvas.offsetWidth
+      //   // canvas.height = canvas.offsetHeight // Adjust this line if you maintain a specific aspect ratio
+      // }
+
+      // window.addEventListener('resize', resizeCanvas)
+
+      init()
+        .then(() => {
+          // if (!canvas) return
+          // console.log('RUNNING')
+          // canvas.style.width = '100%'
+          // resizeCanvas()
+        })
+        .catch(console.error)
     </script>
   </MotionSection>
 </Page>

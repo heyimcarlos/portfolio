@@ -8,3 +8,9 @@ body {
   text-rendering: optimizeLegibility;
   overflow-wrap: break-word;
 }
+
+#snake-canvas {
+    width: 100% !important;
+    max-width: 750px !important;
+    /* height: auto !important; */
+}
