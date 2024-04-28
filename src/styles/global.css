@@ -13,4 +13,5 @@ body {
     width: 100% !important;
     max-width: 750px !important;
     /* height: auto !important; */
+    min-height: 600px !important;
 }
