@@ -1,17 +1,18 @@
 ---
-import Page from '../../layouts/page.astro'
-import { SITE_DESCRIPTION, SITE_TITLE } from '../../config'
 import Heading from '../../components/Heading'
 import MotionSection from '../../components/MotionSection'
 import Body from '../../components/Body.astro'
 import Header from '../../components/Header.astro'
 import BaseHead from '../../components/BaseHead.astro'
+import { SITE_TITLE } from '../../config.ts'
 ---
 
-<!-- <Page description={SITE_DESCRIPTION} title={SITE_TITLE} lang="en"> -->
 <html lang={'en'}>
   <head>
-    <BaseHead title={'Snake Game'} description={'A great game'} />
+    <BaseHead
+      title={`${SITE_TITLE} | Snake Game`}
+      description={'Snake.rs is a game built with Rust and Bevy ECS'}
+    />
   </head>
   <Body>
     <Header />
@@ -51,35 +52,10 @@ import BaseHead from '../../components/BaseHead.astro'
           ></canvas>
           <script>
             import init from '../../wasm/snake.js'
-            // window.addEventListener('keydown', function (e) {
-            // if (e.key.startsWith('Arrow')) {
-            //   e.preventDefault()
-            // }
-            // })
-            // const canvas = document.getElementById('snake-canvas')
-            // function resizeCanvas() {
-            //   if (!canvas) return
-            //   // Apply the width in percentage and control height accordingly
-            //   canvas.style.width = '100%'
-            //   console.dir(canvas)
-            //   // canvas.width = canvas.offsetWidth
-            //   // canvas.height = canvas.offsetHeight // Adjust this line if you maintain a specific aspect ratio
-            // }
-
-            // window.addEventListener('resize', resizeCanvas)
-
-            init()
-              .then(() => {
-                // if (!canvas) return
-                // console.log('RUNNING')
-                // canvas.style.width = '100%'
-                // resizeCanvas()
-              })
-              .catch(console.error)
+            init().catch(console.error)
           </script>
         </MotionSection>
       </article>
     </main>
   </Body>
-  <!-- </Page> -->
 </html>
