@@ -12,7 +12,7 @@
     "live-import": "node --experimental-vm-modules ./src/lib/import.mjs"
   },
   "description": "My personal portfolio",
-  "author": "Carlos de la Cruz<carlos.cruz1500@gmail.com>",
+  "author": "Carlos de la Cruz<carlos.cruzta@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "@astrojs/react": "^3.3.1",
