@@ -1,19 +1,10 @@
 ---
-import type { Project } from '../types/project'
+import { getCollection } from 'astro:content'
 import GridItem from './GridItem.astro'
 import Heading from './Heading'
 import MotionSection from './MotionSection'
-type Props = {
-  slug: string
-}
-const { slug } = Astro.props
-const projects = (await Astro.glob<Project>('../pages/projects/**/*.md'))
-  .sort(
-    (a, b) =>
-      new Date(b.frontmatter.createdAt).valueOf() -
-      new Date(a.frontmatter.createdAt).valueOf()
-  )
-  .filter(p => p.frontmatter.slug !== slug)
+
+const projects = await getCollection('projects')
 ---
 
 <MotionSection client:visible delay={0.2}>

@@ -1,13 +1,12 @@
 import { glob } from "astro/loaders";
 
 import { z, defineCollection } from "astro:content";
-// pattern: '**/[^_]*.md', base: "./src/blog"
 const games = defineCollection({
     loader: glob({ pattern: '**/[^_]*.astro', base: './src/pages/games' })
 });
 
 const projects = defineCollection({
-    loader: glob({ pattern: '**/[^_]*.md', base: './src/pages/projects' }),
+    loader: glob({ pattern: '**/[^_]*.md', base: './src/blog' }),
     schema: z.object({
         pageUrl: z.string().optional(),
         public: z.boolean().optional(),
