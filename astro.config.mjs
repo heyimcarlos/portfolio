@@ -1,50 +1,50 @@
 import { defineConfig } from 'astro/config'
 import tailwind from '@astrojs/tailwind'
 import react from '@astrojs/react'
-import vercel from '@astrojs/vercel/serverless'
+import vercel from '@astrojs/vercel'
 import addClasses from 'rehype-add-classes'
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://heyimcarlos.dev/',
-  integrations: [
-    tailwind(),
-    react({
-      include: ['**/react/*']
-    })
-  ],
-  scopedStyleStrategy: 'where',
-  build: {
-    inlineStylesheets: 'never'
-  },
-  markdown: {
-    extendDefaultPlugins: true,
-    rehypePlugins: [
-      [
-        addClasses,
-        {
-          h1: 'text-4xl font-bold font-mplus',
-          h2: 'font-mplus font-bold text-xl mb-6 mt-3 leading-[1.33] md:leading-tight underline underline-offset-[6px] decoration-4 decoration-zinc-400 dark:decoration-zinc-600',
-          h3: 'text-xl font-bold font-mplus',
-          h4: 'text-lg font-bold font-mplus',
-          h5: 'text-md font-bold font-mplus',
-          h6: 'text-sm font-bold font-mplus',
-          p: 'sm:text-justify mb-8',
-          img: 'border border-slate-300 dark:border-zinc-700 rounded-md mb-8',
-          a: 'hover:underline underline-offset-2 decoration-custom-blue dark:decoration-custom-teal',
-          table:
-            'w-[55%] border border-slate-300 dark:border-zinc-700 rounded-md p-2 my-6 mb-8',
-          tr: 'mb-4',
-          th: 'text-left text-lg font-bold font-mplus border border-slate-300 dark:border-zinc-700 p-2',
-          td: 'text-left text-md border border-slate-300 dark:border-zinc-700 py-1 px-2  '
+    site: 'https://heyimcarlos.dev/',
+    integrations: [
+        tailwind(),
+        react({
+            include: ['**/react/*']
+        })
+    ],
+    scopedStyleStrategy: 'where',
+    build: {
+        inlineStylesheets: 'never'
+    },
+    markdown: {
+        extendDefaultPlugins: true,
+        rehypePlugins: [
+            [
+                addClasses,
+                {
+                    h1: 'text-4xl font-bold font-mplus',
+                    h2: 'font-mplus font-bold text-xl mb-6 mt-3 leading-[1.33] md:leading-tight underline underline-offset-[6px] decoration-4 decoration-zinc-400 dark:decoration-zinc-600',
+                    h3: 'text-xl font-bold font-mplus',
+                    h4: 'text-lg font-bold font-mplus',
+                    h5: 'text-md font-bold font-mplus',
+                    h6: 'text-sm font-bold font-mplus',
+                    p: 'sm:text-justify mb-8',
+                    img: 'border border-slate-300 dark:border-zinc-700 rounded-md mb-8',
+                    a: 'hover:underline underline-offset-2 decoration-custom-blue dark:decoration-custom-teal',
+                    table:
+                        'w-[55%] border border-slate-300 dark:border-zinc-700 rounded-md p-2 my-6 mb-8',
+                    tr: 'mb-4',
+                    th: 'text-left text-lg font-bold font-mplus border border-slate-300 dark:border-zinc-700 p-2',
+                    td: 'text-left text-md border border-slate-300 dark:border-zinc-700 py-1 px-2  '
+                }
+            ]
+        ]
+    },
+    output: 'server',
+    adapter: vercel({
+        webAnalytics: {
+            enabled: true
         }
-      ]
-    ]
-  },
-  output: 'server',
-  adapter: vercel({
-    webAnalytics: {
-      enabled: true
-    }
-  })
+    })
 })

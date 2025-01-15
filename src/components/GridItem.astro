@@ -1,7 +1,7 @@
 ---
 import { Image } from 'astro:assets'
 import { IoChevronForward } from 'react-icons/io5/index.js'
-const { frontmatter, url } = Astro.props.project
+const { id, data } = Astro.props.project
 ---
 
 <!-- Box -->
@@ -9,8 +9,8 @@ const { frontmatter, url } = Astro.props.project
   <!-- Link box -->
   <div class="cursor-pointer relative">
     <Image
-      src={frontmatter.thumbnail}
-      alt={frontmatter.title}
+      src={data.thumbnail}
+      alt={data.title}
       width={720}
       height={500}
       decoding="async"
@@ -18,10 +18,10 @@ const { frontmatter, url } = Astro.props.project
       class="rounded-xl min-h-full h-64 min-w-full max-h-full max-w-full"
     />
     <!-- Link overlay -->
-    <p class="mt-2">{frontmatter.title}</p>
-    <p class="text-sm">{frontmatter.description}</p>
+    <p class="mt-2">{data.title}</p>
+    <p class="text-sm">{data.description}</p>
     <a
-      href={url}
+      href={`/projects/${id}/`}
       class="static hover:underline decoration-custom-blue dark:decoration-custom-teal before:absolute before:cursor-pointer before:block before:top-0 before:left-0 before:z-0 before:w-full before:h-full"
     >
       <button
