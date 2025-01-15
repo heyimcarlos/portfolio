@@ -1,6 +1,5 @@
 ---
 import {
-  // IoChevronForward,
   IoLogoTwitter,
   IoLogoGithub,
   IoLogoLinkedin,
@@ -17,15 +16,12 @@ import Heading from '../components/Heading.js'
 import Page from '../layouts/page.astro'
 import type { Project } from '../types/project'
 import { Image } from 'astro:assets'
+import { getCollection } from 'astro:content'
+import type { MarkdownLayoutProps } from 'astro'
 
-const projects = (await Astro.glob<Project>('./projects/**/*.md'))
-  .sort((a, b) =>
-    new Date(b.frontmatter.createdAt).valueOf() >
-    new Date(a.frontmatter.createdAt).valueOf()
-      ? 1
-      : -1
-  )
-  .slice(0, 2)
+type Props = MarkdownLayoutProps<Project>
+
+const projects = await getCollection('projects')
 ---
 
 <!-- nice text container --><!-- <div class="bg-custom-teal dark:bg-zinc-700 p-3 my-6 text-center rounded-lg"/> -->
@@ -151,6 +147,14 @@ const projects = (await Astro.glob<Project>('./projects/**/*.md'))
       >
         Software Engineering Technology</a
       > at <a href="https://www.centennialcollege.ca">Centennial College</a>
+    </BioSection>
+    <BioSection>
+      <BioYear>2024 to <span class="pl-0">present</span></BioYear>
+      Working at <a
+        href="https://www.centennialcollege.ca"
+        class="text-custom-blue dark:text-custom-teal">Centennial College</a
+      > as a Lead Software Developer & Coordinator of the Open Educational Resources
+      (OER) Lab.
     </BioSection>
   </MotionSection>
   <MotionSection client:visible delay={0.4} classNames="mb-8">

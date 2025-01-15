@@ -1,0 +1,25 @@
+---
+export const prerender = true
+
+import { getCollection, render } from 'astro:content'
+import ProjectLayout from '../../layouts/project.astro'
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects')
+  return projects.map(project => ({
+    params: { slug: project.id },
+    props: { project }
+  }))
+}
+
+const { project } = Astro.props
+if (!project) {
+  throw new Error('Project not found')
+}
+
+const { Content } = await render(project)
+---
+
+<ProjectLayout frontmatter={project.data}>
+  <Content />
+</ProjectLayout>
