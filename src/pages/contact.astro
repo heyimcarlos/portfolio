@@ -8,16 +8,16 @@ const sent = params.get('sent') === '1';
 const errorParam = params.get('error');
 
 const LINKS: ContactLink[] = [
-  { label: 'email', value: 'carlos@heyimcarlos.dev', href: 'mailto:carlos@heyimcarlos.dev' },
+  { label: 'email', value: 'carlos.cruzta@gmail.com', href: 'mailto:carlos.cruzta@gmail.com' },
   { label: 'github', value: '@heyimcarlos', href: 'https://github.com/heyimcarlos' },
-  { label: 'linkedin', value: '/in/heyimcarlos', href: 'https://www.linkedin.com/in/heyimcarlos' },
-  { label: 'twitter / x', value: '@heyimcarlos', href: 'https://x.com/heyimcarlos' },
+  { label: 'linkedin', value: '/in/carlos-dev', href: 'https://www.linkedin.com/in/carlos-dev' },
+  { label: 'twitter / x', value: '@heyimcarlos_dev', href: 'https://x.com/heyimcarlos_dev' },
 ];
 ---
 
 <Layout
   title="Contact — Carlos"
-  description="Get in touch. Job opportunity, weird side project, or just a 'hey' — reply in less than 48 hours."
+  description="Get in touch. Job opportunity, weird side project, or just a 'hey' — reply in less than 12 hours."
   active="contact"
 >
   <section class="hero">
@@ -47,7 +47,7 @@ const LINKS: ContactLink[] = [
         )
       }
       <ContactForm
-        action="mailto:carlos@heyimcarlos.dev"
+        action="mailto:carlos.cruzta@gmail.com"
         method="POST"
         enctype="text/plain"
       />
