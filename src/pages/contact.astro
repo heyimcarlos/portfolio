@@ -1,0 +1,142 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ContactForm from '../components/ContactForm.astro';
+import ContactLinks, { type ContactLink } from '../components/ContactLinks.astro';
+
+const params = Astro.url.searchParams;
+const sent = params.get('sent') === '1';
+const errorParam = params.get('error');
+
+const LINKS: ContactLink[] = [
+  { label: 'email', value: 'carlos@heyimcarlos.dev', href: 'mailto:carlos@heyimcarlos.dev' },
+  { label: 'github', value: '@heyimcarlos', href: 'https://github.com/heyimcarlos' },
+  { label: 'linkedin', value: '/in/heyimcarlos', href: 'https://www.linkedin.com/in/heyimcarlos' },
+  { label: 'twitter / x', value: '@heyimcarlos', href: 'https://x.com/heyimcarlos' },
+];
+---
+
+<Layout
+  title="Contact — Carlos"
+  description="Get in touch. Job opportunity, weird side project, or just a 'hey' — reply in less than 48 hours."
+  active="contact"
+>
+  <section class="hero">
+    <span class="eyebrow">CORRESPONDENCE</span>
+    <h1 class="h1">
+      <em>Write</em> to me<span class="dot">.</span>
+    </h1>
+    <p class="pitch">
+      Job opportunity, weird side project, or just a "hey" — all welcome. Reply in &lt; 48h.
+    </p>
+  </section>
+
+  <section class="split">
+    <div class="col">
+      {
+        sent && (
+          <div class="banner success" role="status">
+            message delivered. reply in &lt; 48h.
+          </div>
+        )
+      }
+      {
+        errorParam && (
+          <div class="banner error" role="alert">
+            something broke — try again or email directly.
+          </div>
+        )
+      }
+      <ContactForm
+        action="mailto:carlos@heyimcarlos.dev"
+        method="POST"
+        enctype="text/plain"
+      />
+    </div>
+    <div class="col">
+      <ContactLinks links={LINKS} />
+    </div>
+  </section>
+</Layout>
+
+<style>
+  section {
+    border-bottom: 3px solid var(--zine-ink);
+  }
+
+  .eyebrow {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    opacity: 0.6;
+    margin-bottom: 10px;
+  }
+
+  em {
+    font-style: italic;
+    font-weight: 500;
+  }
+
+  .dot {
+    color: var(--zine-accent);
+  }
+
+  .hero {
+    padding: 72px 32px 56px;
+    text-align: center;
+  }
+
+  .h1 {
+    max-width: 900px;
+    margin: 0 auto;
+    font-weight: 700;
+    letter-spacing: -3.5px;
+    line-height: 0.92;
+    font-size: clamp(48px, 9vw, 96px);
+  }
+
+  .pitch {
+    max-width: 500px;
+    margin: 24px auto 0;
+    font-size: 16px;
+    line-height: 1.6;
+    opacity: 0.85;
+  }
+
+  .split {
+    padding: 48px 32px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .col {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .banner {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    padding: 10px 14px;
+    border: 2px solid var(--zine-ink);
+  }
+
+  .banner.success {
+    background: var(--zine-accent);
+  }
+
+  .banner.error {
+    background: var(--zine-paper);
+  }
+
+  @media (max-width: 768px) {
+    .split {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

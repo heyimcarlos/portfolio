@@ -1,0 +1,94 @@
+---
+---
+
+<section class="subscribe">
+  <span class="sub-eyebrow">SUBSCRIBE</span>
+  <h3 class="sub-title">
+    New post, <em>roughly once a month.</em>
+  </h3>
+  <form class="sub-form" action="/api/subscribe" method="post">
+    <input
+      class="sub-input"
+      type="email"
+      name="email"
+      required
+      placeholder="you@somewhere.com"
+      aria-label="Email address"
+    />
+    <button class="sub-submit" type="submit">Subscribe →</button>
+  </form>
+</section>
+
+<style>
+  .subscribe {
+    padding: 40px 32px;
+    background: var(--zine-accent);
+    text-align: center;
+    border-bottom: 3px solid var(--zine-ink);
+  }
+
+  .sub-eyebrow {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    opacity: 0.7;
+    margin-bottom: 10px;
+  }
+
+  .sub-title {
+    margin: 0 0 20px;
+    font-weight: 700;
+    letter-spacing: -1px;
+    line-height: 1;
+    font-size: clamp(24px, 4vw, 32px);
+  }
+
+  .sub-title em {
+    font-style: italic;
+    font-weight: 500;
+  }
+
+  .sub-form {
+    display: flex;
+    align-items: stretch;
+    max-width: 480px;
+    margin: 0 auto;
+    border: 3px solid var(--zine-ink);
+    background: var(--zine-paper);
+  }
+
+  .sub-input {
+    flex: 1;
+    padding: 12px 14px;
+    border: 0;
+    background: transparent;
+    font-family: 'Caveat', cursive;
+    font-size: 16px;
+    color: var(--zine-ink);
+    outline: none;
+  }
+
+  .sub-input::placeholder {
+    opacity: 0.5;
+  }
+
+  .sub-submit {
+    background: var(--zine-ink);
+    color: var(--zine-paper);
+    border: 0;
+    padding: 12px 22px;
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.3px;
+    cursor: pointer;
+  }
+
+  @media (max-width: 480px) {
+    .sub-form {
+      flex-direction: column;
+    }
+  }
+</style>
