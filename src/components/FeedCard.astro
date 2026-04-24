@@ -1,0 +1,130 @@
+---
+import Tag from './Tag.astro';
+import FormattedDate from './FormattedDate.astro';
+
+export type FeedItem = {
+  kind: 'project' | 'blog';
+  title: string;
+  date: Date | string;
+  desc: string;
+  meta: string[];
+  href: string;
+  cta: string;
+};
+
+interface Props {
+  item: FeedItem;
+}
+
+const { item } = Astro.props;
+
+const pillLabel = item.kind === 'blog' ? '✎ blog post' : '◉ project';
+const pillClass = item.kind === 'blog' ? 'pill pill-bg' : 'pill pill-accent';
+const dateValue = item.date instanceof Date ? item.date : new Date(item.date);
+const dateValid = !Number.isNaN(dateValue.getTime());
+---
+
+<a class="feed-card" href={item.href}>
+  <div class="top">
+    <span class={pillClass}>{pillLabel}</span>
+    <span class="date">
+      {dateValid ? <FormattedDate date={dateValue} /> : item.date}
+    </span>
+  </div>
+  <h3 class="title">{item.title}</h3>
+  <p class="excerpt">{item.desc}</p>
+  <div class="footer">
+    <div class="meta">
+      {item.meta.map((m) => <Tag variant="bg">{m}</Tag>)}
+    </div>
+    <span class="cta">{item.cta}</span>
+  </div>
+</a>
+
+<style>
+  .feed-card {
+    background: var(--zine-paper);
+    color: var(--zine-ink);
+    border: 3px solid var(--zine-ink);
+    box-shadow: 6px 6px 0 var(--zine-ink);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    transition:
+      transform 120ms ease,
+      box-shadow 120ms ease;
+  }
+
+  .feed-card:hover {
+    transform: translate(2px, 2px);
+    box-shadow: 4px 4px 0 var(--zine-ink);
+  }
+
+  .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+  }
+
+  .pill {
+    border: 1.5px solid var(--zine-ink);
+    padding: 2px 8px;
+    font-weight: 700;
+    line-height: 1.4;
+  }
+
+  .pill-bg {
+    background: var(--zine-bg);
+  }
+
+  .pill-accent {
+    background: var(--zine-accent);
+  }
+
+  .date {
+    opacity: 0.65;
+  }
+
+  .title {
+    margin: 0 0 10px;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    line-height: 1.15;
+  }
+
+  .excerpt {
+    margin: 0 0 16px;
+    font-size: 14px;
+    line-height: 1.6;
+    opacity: 0.9;
+    flex-grow: 1;
+  }
+
+  .footer {
+    border-top: 1.5px dashed var(--zine-ink);
+    padding-top: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
+  .cta {
+    font-weight: 700;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+</style>

@@ -1,0 +1,135 @@
+---
+type Active = 'home' | 'work' | 'blog' | 'about' | 'contact';
+
+interface Props {
+  active: Active;
+}
+
+const { active } = Astro.props;
+
+const items: { key: Active; label: string; href: string }[] = [
+  { key: 'home', label: 'home', href: '/' },
+  { key: 'work', label: 'work', href: '/projects' },
+  { key: 'blog', label: 'blog', href: '/blog' },
+  { key: 'about', label: 'about', href: '/about' },
+  { key: 'contact', label: 'contact', href: '/contact' },
+];
+---
+
+<nav class="zine-nav">
+  <a class="brand" href="/" aria-label="heyimcarlos.dev home">
+    <span class="monogram">C</span>
+    <span class="stack">
+      <span class="wordmark">heyimcarlos.dev</span>
+      <span class="issue">
+        issue №06 · spring 2026 · <span class="rb-dot-live" aria-hidden="true"></span> open
+      </span>
+    </span>
+  </a>
+  <ul class="menu">
+    {
+      items.map((item) => (
+        <li>
+          <a
+            href={item.href}
+            class:list={['menu-item', { active: item.key === active }]}
+            aria-current={item.key === active ? 'page' : undefined}
+          >
+            {item.label}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>
+
+<style>
+  .zine-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 32px;
+    background: var(--zine-paper);
+    border-bottom: 3px solid var(--zine-ink);
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .monogram {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 2.5px solid var(--zine-ink);
+    background: var(--zine-accent);
+    color: var(--zine-ink);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 16px;
+  }
+
+  .stack {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+  }
+
+  .wordmark {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+  }
+
+  .issue {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    opacity: 0.6;
+    margin-top: -2px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .menu {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin: 0;
+    padding: 0;
+  }
+
+  .menu-item {
+    font-size: 13px;
+    font-weight: 600;
+    padding: 6px 14px;
+    border: 2px solid transparent;
+    line-height: 1;
+    display: inline-block;
+  }
+
+  .menu-item.active {
+    background: var(--zine-accent);
+    border-color: var(--zine-ink);
+  }
+
+  @media (max-width: 640px) {
+    .zine-nav {
+      flex-direction: column;
+      align-items: stretch;
+      padding: 14px 20px;
+      gap: 10px;
+    }
+
+    .menu {
+      overflow-x: auto;
+      justify-content: flex-start;
+    }
+  }
+</style>

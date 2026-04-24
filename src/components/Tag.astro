@@ -1,0 +1,19 @@
+---
+interface Props {
+  variant?: 'bg' | 'paper' | 'accent';
+  class?: string;
+}
+
+const { variant = 'paper', class: className } = Astro.props;
+
+const classes = [
+  'rb-tag',
+  variant === 'bg' && 'rb-tag--bg',
+  variant === 'accent' && 'rb-tag--accent',
+  className,
+]
+  .filter(Boolean)
+  .join(' ');
+---
+
+<span class={classes}><slot /></span>

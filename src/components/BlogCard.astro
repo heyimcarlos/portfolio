@@ -1,0 +1,102 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import FormattedDate from './FormattedDate.astro';
+import Tag from './Tag.astro';
+
+interface Props {
+  post: CollectionEntry<'blog'> & {
+    data: CollectionEntry<'blog'>['data'] & {
+      tag?: string;
+      readTime?: string;
+    };
+  };
+  index: number;
+}
+
+const { post, index } = Astro.props;
+const tag = (post.data as { tag?: string }).tag ?? 'essay';
+const readTime = (post.data as { readTime?: string }).readTime ?? '5 min';
+const indexLabel = `№${String(index + 2).padStart(2, '0')}`;
+const href = `/blog/${post.id}`;
+---
+
+<article class="blog-card">
+  <div class="top">
+    <Tag variant="accent" class="kind">{tag}</Tag>
+    <span class="index">{indexLabel}</span>
+  </div>
+  <h3 class="title"><a href={href}>{post.data.title}</a></h3>
+  <p class="excerpt">{post.data.description}</p>
+  <div class="footer">
+    <FormattedDate date={post.data.pubDate} />
+    <a class="more" href={href}>{readTime} →</a>
+  </div>
+</article>
+
+<style>
+  .blog-card {
+    background: var(--zine-paper);
+    border: 3px solid var(--zine-ink);
+    box-shadow: 6px 6px 0 var(--zine-ink);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+
+  .top :global(.kind) {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 500;
+    text-transform: uppercase;
+    border-width: 1.5px;
+  }
+
+  .index {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    opacity: 0.7;
+  }
+
+  .title {
+    margin: 0 0 10px;
+    font-size: 19px;
+    font-weight: 700;
+    letter-spacing: -0.4px;
+    line-height: 1.15;
+  }
+
+  .title a {
+    color: inherit;
+  }
+
+  .excerpt {
+    margin: 0 0 14px;
+    font-size: 13px;
+    line-height: 1.55;
+    opacity: 0.85;
+    flex-grow: 1;
+  }
+
+  .footer {
+    border-top: 1.5px dashed var(--zine-ink);
+    padding-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    opacity: 0.7;
+  }
+
+  .more {
+    color: inherit;
+    font-weight: 500;
+  }
+</style>

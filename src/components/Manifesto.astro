@@ -1,0 +1,61 @@
+---
+interface Props {
+  phrases?: string[];
+}
+
+const { phrases = ['SMALL TEAMS', 'BIG SHIPS', 'BORING SYSTEMS', 'WEIRD PRODUCTS'] } = Astro.props;
+---
+
+<section class="manifesto">
+  <div class="row">
+    {
+      phrases.map((phrase, i) => (
+        <>
+          <span class="phrase">{phrase}</span>
+          {i < phrases.length - 1 && (
+            <span class="sep" aria-hidden="true">
+              ✦
+            </span>
+          )}
+        </>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .manifesto {
+    background: var(--zine-ink);
+    color: var(--zine-bg);
+    padding: 24px 32px;
+    border-bottom: 3px solid var(--zine-ink);
+  }
+
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+  }
+
+  .phrase {
+    font-weight: 700;
+    font-size: 30px;
+    letter-spacing: -1px;
+  }
+
+  .sep {
+    color: var(--zine-accent);
+    font-size: 24px;
+  }
+
+  @media (max-width: 768px) {
+    .row {
+      gap: 16px;
+    }
+    .phrase {
+      font-size: 18px;
+    }
+  }
+</style>

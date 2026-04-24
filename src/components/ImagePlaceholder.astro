@@ -1,0 +1,107 @@
+---
+interface Props {
+  label: string;
+  aspect?: string;
+  variant?: 'quad' | 'rows' | 'plain';
+  fill?: 'paper' | 'accent' | 'bg';
+  class?: string;
+}
+
+const { label, aspect = '4/3', variant = 'plain', fill = 'paper', class: className } = Astro.props;
+
+const fillColor =
+  fill === 'accent'
+    ? 'var(--zine-accent)'
+    : fill === 'bg'
+      ? 'var(--zine-bg)'
+      : 'var(--zine-paper)';
+---
+
+<div
+  class:list={['rb-ph', 'ph-wrap', className]}
+  style={`aspect-ratio:${aspect};background:${fillColor};`}
+>
+  {
+    variant === 'quad' && (
+      <div class="inner quad" aria-hidden="true">
+        <span class="cell paper" />
+        <span class="cell ink" />
+        <span class="cell ink" />
+        <span class="cell paper" />
+      </div>
+    )
+  }
+  {
+    variant === 'rows' && (
+      <div class="inner rows" aria-hidden="true">
+        <span class="band paper" />
+        <span class="band ink" />
+        <span class="band paper" />
+      </div>
+    )
+  }
+  <span class="rb-ph-label">{label}</span>
+</div>
+
+<style>
+  .ph-wrap {
+    display: block;
+  }
+
+  .inner {
+    position: absolute;
+    inset: 16px;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  @media (min-width: 768px) {
+    .inner {
+      inset: 24px;
+    }
+  }
+
+  .inner.quad {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 0;
+    border: 2px solid var(--zine-ink);
+  }
+
+  .inner.quad .cell {
+    display: block;
+    border: 1px solid var(--zine-ink);
+  }
+
+  .inner.quad .cell.paper {
+    background: var(--zine-paper);
+  }
+
+  .inner.quad .cell.ink {
+    background: var(--zine-ink);
+  }
+
+  .inner.rows {
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+    border: 2px solid var(--zine-ink);
+  }
+
+  .inner.rows .band {
+    display: block;
+    border-bottom: 2px solid var(--zine-ink);
+  }
+
+  .inner.rows .band:last-child {
+    border-bottom: 0;
+  }
+
+  .inner.rows .band.paper {
+    background: var(--zine-paper);
+  }
+
+  .inner.rows .band.ink {
+    background: var(--zine-ink);
+  }
+</style>

@@ -1,0 +1,45 @@
+---
+interface Props {
+  items: string[];
+  active?: string;
+  param?: string;
+  basePath?: string;
+  hrefFor?: (value: string) => string;
+}
+
+const { items, active, param = 'filter', basePath, hrefFor } = Astro.props;
+const path = basePath ?? Astro.url.pathname;
+
+const buildHref = (value: string) => {
+  if (hrefFor) return hrefFor(value);
+  if (value === 'all' || value === '') return path;
+  const params = new URLSearchParams();
+  params.set(param, value);
+  return `${path}?${params.toString()}`;
+};
+---
+
+<div class="chips">
+  {
+    items.map((item) => {
+      const isActive = (active ?? 'all') === item;
+      return (
+        <a
+          href={buildHref(item)}
+          class:list={['rb-btn', 'rb-btn--sm', { 'rb-btn--primary': isActive }]}
+        >
+          {item}
+        </a>
+      );
+    })
+  }
+</div>
+
+<style>
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+  }
+</style>

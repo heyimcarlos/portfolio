@@ -1,0 +1,85 @@
+---
+interface Props {
+  eyebrow: string;
+  title?: string;
+  trailing?: boolean;
+  as?: 'h1' | 'h2';
+  align?: 'center' | 'left';
+  class?: string;
+}
+
+const {
+  eyebrow,
+  title,
+  trailing = true,
+  as: Heading = 'h2',
+  align = 'center',
+  class: className,
+} = Astro.props;
+---
+
+<header class:list={['section-header', `align-${align}`, className]}>
+  <span class="eyebrow">{eyebrow}</span>
+  <Heading class:list={['headline', { trailing }]}>
+    {title ? <Fragment set:html={title} /> : <slot />}
+  </Heading>
+  {
+    Astro.slots.has('subtitle') && (
+      <p class="subtitle">
+        <slot name="subtitle" />
+      </p>
+    )
+  }
+</header>
+
+<style>
+  .section-header {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .align-center {
+    text-align: center;
+    align-items: center;
+  }
+
+  .align-left {
+    text-align: left;
+    align-items: flex-start;
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 2px;
+    opacity: 0.7;
+  }
+
+  .headline {
+    margin: 0;
+    font-weight: 700;
+    letter-spacing: -2px;
+    line-height: 1;
+    font-size: clamp(36px, 6vw, 52px);
+  }
+
+  .headline.trailing::after {
+    content: '.';
+    color: var(--zine-accent);
+  }
+
+  .headline :global(em) {
+    font-style: italic;
+    font-weight: 500;
+  }
+
+  .subtitle {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.6;
+    opacity: 0.85;
+    max-width: 620px;
+  }
+</style>

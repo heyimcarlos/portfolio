@@ -1,0 +1,97 @@
+---
+import ImagePlaceholder from './ImagePlaceholder.astro';
+import Tag from './Tag.astro';
+
+export type ProjectCardData = {
+  slug: string;
+  title: string;
+  year: string | number;
+  summary: string;
+  stack: string[];
+  href?: string;
+  cover?: string;
+};
+
+interface Props {
+  project: ProjectCardData;
+  index: number;
+}
+
+const { project, index } = Astro.props;
+const href = project.href ?? `/projects/${project.slug}`;
+const indexLabel = `№${String(index).padStart(2, '0')} / ${project.year}`;
+---
+
+<article class="proj">
+  <a class="cover" href={href} aria-label={project.title}>
+    <ImagePlaceholder
+      variant="quad"
+      aspect="4/3"
+      fill="accent"
+      label={`${project.slug}.png`}
+    />
+  </a>
+  <div class="row">
+    <h3 class="title"><a href={href}>{project.title}</a></h3>
+    <span class="index">{indexLabel}</span>
+  </div>
+  <p class="summary">{project.summary}</p>
+  <div class="stack">
+    {project.stack.map((tech) => <Tag variant="bg">{tech}</Tag>)}
+  </div>
+</article>
+
+<style>
+  .proj {
+    background: var(--zine-paper);
+    border: 3px solid var(--zine-ink);
+    box-shadow: 6px 6px 0 var(--zine-ink);
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .cover {
+    display: block;
+  }
+
+  .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 10px;
+  }
+
+  .title {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    line-height: 1.15;
+  }
+
+  .title a {
+    color: inherit;
+  }
+
+  .index {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    opacity: 0.6;
+    white-space: nowrap;
+  }
+
+  .summary {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.55;
+    min-height: 40px;
+  }
+
+  .stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+</style>
