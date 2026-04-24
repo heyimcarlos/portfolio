@@ -18,11 +18,11 @@ const items: { key: Active; label: string; href: string }[] = [
 
 <nav class="zine-nav">
   <a class="brand" href="/" aria-label="heyimcarlos.dev home">
-    <span class="monogram">C</span>
+    <img class="monogram" src="/apple-touch-icon.png" alt="" width="34" height="34" />
     <span class="stack">
       <span class="wordmark">heyimcarlos.dev</span>
       <span class="issue">
-        issue №06 · spring 2026 · <span class="rb-dot-live" aria-hidden="true"></span> open
+        spring 2026 · <span class="rb-dot-live" aria-hidden="true"></span> open
       </span>
     </span>
   </a>
@@ -66,12 +66,8 @@ const items: { key: Active; label: string; href: string }[] = [
     border-radius: 50%;
     border: 2.5px solid var(--zine-ink);
     background: var(--zine-accent);
-    color: var(--zine-ink);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
-    font-size: 16px;
+    display: block;
+    object-fit: cover;
   }
 
   .stack {
