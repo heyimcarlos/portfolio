@@ -1,0 +1,153 @@
+---
+import TimelineCard from './TimelineCard.astro';
+
+export type TimelineEvent = {
+  year: string;
+  place?: string;
+  role: string;
+  org?: string;
+  desc: string;
+  type: 'work' | 'edu' | 'life';
+  current?: boolean;
+};
+
+interface Props {
+  events: TimelineEvent[];
+}
+
+const { events } = Astro.props;
+---
+
+<div class="timeline">
+  <span class="rail" aria-hidden="true"></span>
+  {
+    events.map((event, i) => {
+      const align = i % 2 === 0 ? 'left' : 'right';
+      return (
+        <div class="row">
+          <div class="col left">
+            {align === 'left' && <TimelineCard event={event} align="left" />}
+          </div>
+          <div class="col center">
+            <span class:list={['node', { current: event.current }]} aria-hidden="true" />
+          </div>
+          <div class="col right">
+            {align === 'right' && <TimelineCard event={event} align="right" />}
+          </div>
+        </div>
+      );
+    })
+  }
+  <div class="endcap-row">
+    <span class="endcap">· to be continued ·</span>
+  </div>
+</div>
+
+<style>
+  .timeline {
+    position: relative;
+    max-width: 880px;
+    margin: 0 auto;
+  }
+
+  .rail {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--zine-ink);
+    transform: translateX(-50%);
+  }
+
+  .row {
+    display: grid;
+    grid-template-columns: 1fr 40px 1fr;
+    align-items: start;
+    margin-bottom: 20px;
+    min-height: 60px;
+  }
+
+  .col.left {
+    padding-right: 28px;
+    text-align: right;
+  }
+
+  .col.right {
+    padding-left: 28px;
+    text-align: left;
+  }
+
+  .col.center {
+    display: flex;
+    justify-content: center;
+    padding-top: 14px;
+  }
+
+  .node {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 2.5px solid var(--zine-ink);
+    background: var(--zine-paper);
+    display: block;
+    position: relative;
+    z-index: 1;
+  }
+
+  .node.current {
+    width: 22px;
+    height: 22px;
+    background: var(--zine-accent);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--zine-accent) 33%, transparent);
+  }
+
+  .endcap-row {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    margin-top: 16px;
+  }
+
+  .endcap {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    background: var(--zine-paper);
+    border: 2px solid var(--zine-ink);
+    padding: 4px 10px;
+    position: relative;
+    z-index: 1;
+  }
+
+  @media (max-width: 768px) {
+    .rail {
+      left: 20px;
+      transform: none;
+    }
+
+    .row {
+      grid-template-columns: 40px 1fr;
+    }
+
+    .col.left {
+      display: none;
+    }
+
+    .col.center {
+      grid-column: 1;
+      justify-content: flex-start;
+    }
+
+    .col.right {
+      grid-column: 2;
+      padding-left: 28px;
+      text-align: left;
+    }
+
+    .row :global(.tl-card) {
+      margin-left: 0;
+    }
+  }
+</style>

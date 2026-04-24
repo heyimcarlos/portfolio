@@ -1,63 +1,338 @@
 ---
-import AboutHeroImage from '../assets/blog-placeholder-about.jpg';
-import Layout from '../layouts/BlogPost.astro';
+import Layout from '../layouts/Layout.astro';
+import Timeline, { type TimelineEvent } from '../components/Timeline.astro';
+import Tag from '../components/Tag.astro';
+
+const TIMELINE_EVENTS: TimelineEvent[] = [
+  {
+    year: '1995',
+    place: 'Santo Domingo, DO',
+    role: 'Born',
+    type: 'life',
+    desc: 'Started life in the Dominican Republic — internet cafés, street basketball, and an early obsession with competitive anything.',
+  },
+  {
+    year: '2019',
+    place: 'Santiago, DO',
+    role: 'B.B.A. Business Administration',
+    org: 'Pontifical Catholic University (PUCMM)',
+    type: 'edu',
+    desc: 'Graduated business school. Realized finance was not it. Started eyeing a different kind of problem-solving.',
+  },
+  {
+    year: '2020',
+    place: 'New York, NY',
+    role: 'Software Engineering Immersive',
+    org: 'Fullstack Academy',
+    type: 'edu',
+    desc: 'Completed the bootcamp — React, Node, Express, PostgreSQL. First time code felt as addictive as video games.',
+  },
+  {
+    year: '2020 — 2022',
+    place: 'Remote',
+    role: 'Full-Stack Developer',
+    org: '305 Global Marketing',
+    type: 'work',
+    desc: 'Shipped the 305GM e-commerce platform and an internal ops dashboard on Next.js + Mongo. Cut order time by ~40%.',
+  },
+  {
+    year: '2022 — 2023',
+    place: 'Remote',
+    role: 'SDE II',
+    org: 'Exactera',
+    type: 'work',
+    desc: 'Built ML-powered tooling for transfer-pricing workflows. Learned to write code I would not be embarrassed by six months later.',
+  },
+  {
+    year: '2023 — now',
+    place: 'Toronto, CA',
+    role: 'B.Eng. Software Engineering Tech',
+    org: 'Centennial College',
+    type: 'edu',
+    desc: 'Back in school, part-time, while working full-time. Because the compiler never stops teaching.',
+  },
+  {
+    year: '2024 — now',
+    place: 'Toronto, CA',
+    role: 'Lead Software Developer & Coordinator',
+    org: 'Centennial OER Lab',
+    type: 'work',
+    current: true,
+    desc: 'Leading engineering on open educational tools for 12k+ students. Type-safe, small team, high-leverage. Current chapter.',
+  },
+];
+
+const STACK: { category: string; items: string[] }[] = [
+  { category: 'Languages', items: ['TypeScript', 'JS', 'Python', 'Go', 'Rust'] },
+  { category: 'Frontend', items: ['React', 'Next', 'Astro', 'Tailwind'] },
+  { category: 'Backend', items: ['Node', 'Postgres', 'Prisma', 'Redis'] },
+  { category: 'Infra', items: ['Vercel', 'AWS', 'Docker', 'GH Actions'] },
+];
 ---
 
 <Layout
-	title="About Me"
-	description="Lorem ipsum dolor sit amet"
-	pubDate={new Date('August 08 2021')}
-	heroImage={AboutHeroImage}
+  title="About — Carlos"
+  description="Dominican-Canadian full-stack developer. Came for the gaming, stayed for the compiler. Lead engineer at Centennial OER Lab."
+  active="about"
 >
-	<p>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-		labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo
-		viverra. Adipiscing enim eu turpis egestas pretium. Euismod elementum nisi quis eleifend quam
-		adipiscing. In hac habitasse platea dictumst vestibulum. Sagittis purus sit amet volutpat. Netus
-		et malesuada fames ac turpis egestas. Eget magna fermentum iaculis eu non diam phasellus
-		vestibulum lorem. Varius sit amet mattis vulputate enim. Habitasse platea dictumst quisque
-		sagittis. Integer quis auctor elit sed vulputate mi. Dictumst quisque sagittis purus sit amet.
-	</p>
+  <section class="origins">
+    <span class="eyebrow">CHAPTER 01 · ORIGINS</span>
+    <h1 class="h1">
+      I came for the gaming, <em>stayed</em> for the compiler<span class="dot">.</span>
+    </h1>
+    <div class="prose">
+      <p>
+        Santo Domingo, DR. I spent my teens in internet cafés trying to go pro at Counter-Strike. I
+        was decent. Not pro. Sponsorship money dried up, I got older, and at a family wedding a
+        cousin told me, "you should learn to code."
+      </p>
+      <p>
+        One bootcamp, three jobs, and a move to Toronto later, I lead engineering at the <mark
+          >Centennial OER Lab</mark
+        > — building open tools for students who can't afford textbooks.
+      </p>
+      <p>
+        Outside the screen: BJJ (blue belt, forever), surfing, building silly things. This site is
+        one of them.
+      </p>
+    </div>
+  </section>
 
-	<p>
-		Morbi tristique senectus et netus. Id semper risus in hendrerit gravida rutrum quisque non
-		tellus. Habitasse platea dictumst quisque sagittis purus sit amet. Tellus molestie nunc non
-		blandit massa. Cursus vitae congue mauris rhoncus. Accumsan tortor posuere ac ut. Fringilla urna
-		porttitor rhoncus dolor. Elit ullamcorper dignissim cras tincidunt lobortis. In cursus turpis
-		massa tincidunt dui ut ornare lectus. Integer feugiat scelerisque varius morbi enim nunc.
-		Bibendum neque egestas congue quisque egestas diam. Cras ornare arcu dui vivamus arcu felis
-		bibendum. Dignissim suspendisse in est ante in nibh mauris. Sed tempus urna et pharetra pharetra
-		massa massa ultricies mi.
-	</p>
+  <section class="timeline-section">
+    <span class="eyebrow">CHAPTER 02 · THE TIMELINE</span>
+    <h2 class="h2">
+      The long <em>way</em> here<span class="dot">.</span>
+    </h2>
+    <p class="subtitle">~31 years · 4 cities · 1 reasonably consistent career</p>
+    <Timeline events={TIMELINE_EVENTS} />
+  </section>
 
-	<p>
-		Mollis nunc sed id semper risus in. Convallis a cras semper auctor neque. Diam sit amet nisl
-		suscipit. Lacus viverra vitae congue eu consequat ac felis donec. Egestas integer eget aliquet
-		nibh praesent tristique magna sit amet. Eget magna fermentum iaculis eu non diam. In vitae
-		turpis massa sed elementum. Tristique et egestas quis ipsum suspendisse ultrices. Eget lorem
-		dolor sed viverra ipsum. Vel turpis nunc eget lorem dolor sed viverra. Posuere ac ut consequat
-		semper viverra nam. Laoreet suspendisse interdum consectetur libero id faucibus. Diam phasellus
-		vestibulum lorem sed risus ultricies tristique. Rhoncus dolor purus non enim praesent elementum
-		facilisis. Ultrices tincidunt arcu non sodales neque. Tempus egestas sed sed risus pretium quam
-		vulputate. Viverra suspendisse potenti nullam ac tortor vitae purus faucibus ornare. Fringilla
-		urna porttitor rhoncus dolor purus non. Amet dictum sit amet justo donec enim.
-	</p>
+  <section class="stack-section">
+    <span class="eyebrow">CHAPTER 03 · THE STACK</span>
+    <h2 class="h2 stack-title">
+      Tools of the <em>trade</em><span class="dot">.</span>
+    </h2>
+    <div class="stack-grid">
+      {
+        STACK.map((group) => (
+          <div class="stack-card">
+            <div class="stack-label">{group.category}</div>
+            <div class="stack-tags">
+              {group.items.map((item) => (
+                <Tag variant="bg">{item}</Tag>
+              ))}
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </section>
 
-	<p>
-		Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Tortor posuere ac ut consequat semper
-		viverra. Tellus mauris a diam maecenas sed enim ut sem viverra. Venenatis urna cursus eget nunc
-		scelerisque viverra mauris in. Arcu ac tortor dignissim convallis aenean et tortor at. Curabitur
-		gravida arcu ac tortor dignissim convallis aenean et tortor. Egestas tellus rutrum tellus
-		pellentesque eu. Fusce ut placerat orci nulla pellentesque dignissim enim sit amet. Ut enim
-		blandit volutpat maecenas volutpat blandit aliquam etiam. Id donec ultrices tincidunt arcu. Id
-		cursus metus aliquam eleifend mi.
-	</p>
-
-	<p>
-		Tempus quam pellentesque nec nam aliquam sem. Risus at ultrices mi tempus imperdiet. Id porta
-		nibh venenatis cras sed felis eget velit. Ipsum a arcu cursus vitae. Facilisis magna etiam
-		tempor orci eu lobortis elementum. Tincidunt dui ut ornare lectus sit. Quisque non tellus orci
-		ac. Blandit libero volutpat sed cras. Nec tincidunt praesent semper feugiat nibh sed pulvinar
-		proin gravida. Egestas integer eget aliquet nibh praesent tristique magna.
-	</p>
+  <section class="meta-strip">
+    <div class="meta-grid">
+      <div class="meta-cell">
+        <div class="meta-label">loc.</div>
+        <div class="meta-value">Toronto, CA</div>
+      </div>
+      <div class="meta-cell">
+        <div class="meta-label">orig.</div>
+        <div class="meta-value">Santo Domingo, DO</div>
+      </div>
+      <div class="meta-cell">
+        <div class="meta-label">tz</div>
+        <div class="meta-value">EST · UTC-5</div>
+      </div>
+      <div class="meta-cell">
+        <div class="meta-label">status</div>
+        <div class="meta-value status-value">
+          <span class="rb-dot-live"></span> open to roles
+        </div>
+      </div>
+    </div>
+  </section>
 </Layout>
+
+<style>
+  section {
+    border-bottom: 3px solid var(--zine-ink);
+  }
+
+  .eyebrow {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    opacity: 0.6;
+    margin-bottom: 8px;
+  }
+
+  em {
+    font-style: italic;
+    font-weight: 500;
+  }
+
+  .dot {
+    color: var(--zine-accent);
+  }
+
+  .origins {
+    padding: 64px 32px 48px;
+    text-align: center;
+  }
+
+  .h1 {
+    max-width: 820px;
+    margin: 0 auto;
+    font-weight: 700;
+    letter-spacing: -2.4px;
+    line-height: 0.95;
+    font-size: clamp(38px, 6vw, 68px);
+  }
+
+  .prose {
+    max-width: 720px;
+    margin: 28px auto 0;
+    font-size: 16px;
+    line-height: 1.7;
+    text-align: left;
+  }
+
+  .prose p {
+    margin: 0 0 16px;
+  }
+
+  .prose mark {
+    background: var(--zine-accent);
+    color: inherit;
+    padding: 0 3px;
+  }
+
+  .timeline-section {
+    padding: 56px 32px 48px;
+    text-align: center;
+  }
+
+  .timeline-section .eyebrow {
+    margin-bottom: 6px;
+  }
+
+  .h2 {
+    margin: 0;
+    font-weight: 700;
+    letter-spacing: -1.6px;
+    line-height: 1;
+    font-size: clamp(28px, 5vw, 44px);
+    margin-bottom: 8px;
+  }
+
+  .subtitle {
+    margin: 0 0 32px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    opacity: 0.6;
+  }
+
+  .stack-section {
+    padding: 48px 32px;
+    text-align: center;
+  }
+
+  .stack-title {
+    letter-spacing: -1.5px;
+    font-size: clamp(28px, 4.5vw, 40px);
+    margin-bottom: 28px;
+  }
+
+  .stack-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    max-width: 880px;
+    margin: 0 auto;
+    text-align: left;
+  }
+
+  .stack-card {
+    background: var(--zine-paper);
+    border: 2.5px solid var(--zine-ink);
+    box-shadow: 4px 4px 0 var(--zine-ink);
+    padding: 14px 16px;
+  }
+
+  .stack-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .stack-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .meta-strip {
+    padding: 36px 32px;
+    text-align: center;
+  }
+
+  .meta-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    max-width: 720px;
+    margin: 0 auto;
+    font-family: var(--font-mono);
+    font-size: 11px;
+  }
+
+  .meta-cell {
+    border: 2px solid var(--zine-ink);
+    padding: 10px 12px;
+    background: var(--zine-paper);
+    text-align: left;
+  }
+
+  .meta-label {
+    opacity: 0.6;
+    margin-bottom: 4px;
+  }
+
+  .meta-value {
+    font-weight: 700;
+  }
+
+  .status-value {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  @media (max-width: 1024px) {
+    .stack-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .meta-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .stack-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .meta-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

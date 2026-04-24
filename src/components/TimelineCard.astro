@@ -1,0 +1,134 @@
+---
+import type { TimelineEvent } from './Timeline.astro';
+
+interface Props {
+  event: TimelineEvent;
+  align: 'left' | 'right';
+}
+
+const { event, align } = Astro.props;
+
+const typeLabel =
+  event.type === 'edu' ? 'education' : event.type === 'work' ? 'work' : 'life';
+const pillLabel = event.current ? `${typeLabel} · now` : typeLabel;
+const pillAccent = event.type === 'work';
+---
+
+<div class:list={['tl-card', `align-${align}`]}>
+  <span class="stub" aria-hidden="true"></span>
+  <div class="top">
+    <span class:list={['pill', { accent: pillAccent }]}>{pillLabel}</span>
+    <span class="year">{event.year}</span>
+  </div>
+  <div class="role">{event.role}</div>
+  {
+    event.org ? (
+      <div class="meta">
+        <span>{event.org}</span>
+        {event.place && <span class="place"> · {event.place}</span>}
+      </div>
+    ) : (
+      event.place && <div class="place-only">{event.place}</div>
+    )
+  }
+  <p class="desc">{event.desc}</p>
+</div>
+
+<style>
+  .tl-card {
+    display: inline-block;
+    max-width: 380px;
+    text-align: left;
+    background: var(--zine-paper);
+    border: 2.5px solid var(--zine-ink);
+    box-shadow: 5px 5px 0 var(--zine-ink);
+    padding: 14px 16px;
+    position: relative;
+  }
+
+  .stub {
+    position: absolute;
+    top: 22px;
+    width: 28px;
+    height: 2px;
+    background: var(--zine-ink);
+  }
+
+  .align-right .stub {
+    left: -28px;
+  }
+
+  .align-left .stub {
+    right: -28px;
+  }
+
+  .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+
+  .pill {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border: 1.5px solid var(--zine-ink);
+    background: var(--zine-bg);
+  }
+
+  .pill.accent {
+    background: var(--zine-accent);
+  }
+
+  .year {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    opacity: 0.85;
+  }
+
+  .role {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    line-height: 1.2;
+  }
+
+  .meta {
+    font-size: 13px;
+    font-weight: 500;
+    opacity: 0.85;
+    margin-top: 2px;
+  }
+
+  .meta .place {
+    opacity: 0.6;
+  }
+
+  .place-only {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    opacity: 0.6;
+    margin-top: 2px;
+  }
+
+  .desc {
+    font-size: 13px;
+    line-height: 1.55;
+    margin: 10px 0 0;
+    opacity: 0.9;
+  }
+
+  @media (max-width: 768px) {
+    .align-left .stub,
+    .align-right .stub {
+      left: -28px;
+      right: auto;
+    }
+  }
+</style>
