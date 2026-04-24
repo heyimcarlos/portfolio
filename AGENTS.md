@@ -15,10 +15,12 @@
 - **Keep index updated:** When creating new specs or implementation plans, add an entry to `specs/README.md`.
 
 ## Building with Bun
-
 - **Build:** `bun build`
-- **Run:** `bun dev`
-- **Test:** `bun test`
+- **Install dependencies:** `bun install`
+- **Start dev server:** `bun dev`
+- **Preview build:** `bun preview`
+- **Run Astro CLI commands:** `bun astro ...` (e.g., `bun astro add`, `bun astro check`)
+- **Get help with Astro CLI:** `bun astro -- --help`
 
 ## Code Style
 - No `any` types unless absolutely necessary
