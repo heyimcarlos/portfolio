@@ -18,7 +18,9 @@ const FILTERS = ['all', 'essay', 'notes', 'case-study', 'life'];
 const hrefFor = (value: string) =>
   value === 'all' ? '/blog/' : `/blog/filter/${value}/`;
 
-const all = await getCollection('blog');
+const all = await getCollection('blog', ({ data }) =>
+  import.meta.env.PROD ? !data.draft : true,
+);
 
 const withReadTime = all.map((post) => ({
   ...post,

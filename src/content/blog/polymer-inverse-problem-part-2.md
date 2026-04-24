@@ -5,6 +5,7 @@ pubDate: 'Apr 24 2026'
 tag: notes
 heroImage: '../../assets/blog-placeholder-3.jpg'
 featured: true
+draft: true
 ---
 # The Boring Model Won: Building a Forward Model for Polymer Properties
 

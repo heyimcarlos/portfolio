@@ -6,7 +6,9 @@ import FeedCard, { type FeedItem } from '../components/FeedCard.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 
 const projectEntries = await getCollection('projects');
-const blogEntries = await getCollection('blog');
+const blogEntries = await getCollection('blog', ({ data }) =>
+  import.meta.env.PROD ? !data.draft : true,
+);
 
 const projectItems: FeedItem[] = projectEntries.map((p) => ({
   kind: 'project',

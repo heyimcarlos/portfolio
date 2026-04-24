@@ -4,7 +4,9 @@ import BlogPost from '../../layouts/BlogPost.astro';
 import { computeReadTime } from '../../lib/readTime';
 
 export async function getStaticPaths() {
-	const posts = await getCollection('blog');
+	const posts = await getCollection('blog', ({ data }) =>
+		import.meta.env.PROD ? !data.draft : true,
+	);
 	const sorted = [...posts].sort(
 		(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 	);
