@@ -1,49 +1,269 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
-import Header from '../components/Header.astro';
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import Button from '../components/Button.astro';
+import FeedCard, { type FeedItem } from '../components/FeedCard.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+
+const projectEntries = await getCollection('projects');
+const blogEntries = await getCollection('blog');
+
+const projectItems: FeedItem[] = projectEntries.map((p) => ({
+  kind: 'project',
+  title: p.data.title,
+  date: p.data.updatedDate ?? new Date(Number(p.data.year), 0, 1),
+  desc: p.data.description,
+  meta: p.data.stack.slice(0, 3),
+  href: `/projects/${p.id}`,
+  cta: 'View project →',
+}));
+
+const blogItems: FeedItem[] = blogEntries.map((b) => ({
+  kind: 'blog',
+  title: b.data.title,
+  date: b.data.pubDate,
+  desc: b.data.excerpt ?? b.data.description,
+  meta: [b.data.tag, b.data.readTime].filter((v): v is string => Boolean(v)),
+  href: `/blog/${b.id}`,
+  cta: 'Read post →',
+}));
+
+const toTime = (d: Date | string) => (d instanceof Date ? d.getTime() : new Date(d).getTime());
+
+const items: FeedItem[] = [...projectItems, ...blogItems]
+  .sort((a, b) => toTime(b.date) - toTime(a.date))
+  .slice(0, 4);
 ---
 
-<!doctype html>
-<html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-	</head>
-	<body>
-		<Header />
-		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This template
-				serves as a lightweight, minimally-styled starting point for anyone looking to build a personal
-				website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to
-				<a href="https://docs.astro.build/">read the docs</a>
-				or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out
-				<a href="https://github.com/Charca/astro-blog-template">astro-blog-template</a>
-				by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
-		</main>
-		<Footer />
-	</body>
-</html>
+<Layout title={SITE_TITLE} description={SITE_DESCRIPTION} active="home">
+  <section class="hero">
+    <div class="eyebrow">
+      <span class="rule"></span>
+      <span class="label">Issue №06 · Spring 2026</span>
+      <span class="rule"></span>
+    </div>
+    <h1 class="title">
+      Carlos builds <em>weird little</em> web things<span class="dot">.</span>
+    </h1>
+    <p class="lede">
+      A Dominican-Canadian full-stack dev, ex-competitive gamer, lifelong tinkerer. Currently leading
+      engineering at <mark>Centennial OER Lab</mark>.
+    </p>
+    <div class="cta-row">
+      <Button href="/projects" variant="primary">Read the projects →</Button>
+      <Button href="/resume.pdf">Grab résumé</Button>
+    </div>
+  </section>
+
+  <section class="feed">
+    <div class="feed-inner">
+      <span class="feed-eyebrow">LATEST DISPATCHES</span>
+      <h2 class="feed-title">Recently <em>published</em>.</h2>
+      <p class="feed-subtitle">
+        latest / 0{items.length} &nbsp;·&nbsp; new posts and project updates, ordered by date
+      </p>
+      <div class="feed-grid">
+        {items.map((item) => <FeedCard item={item} />)}
+      </div>
+      <div class="feed-cta">
+        <Button href="/projects" variant="primary">All projects →</Button>
+        <Button href="/blog">All posts →</Button>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact-cta">
+    <span class="cta-eyebrow">LAST PAGE · GET IN TOUCH</span>
+    <h2 class="cta-title">Let's make <em>something weird.</em></h2>
+    <p class="cta-body">
+      Full-time, contract, or just a fun idea — my inbox is open. I read everything.
+    </p>
+    <div class="cta-grid">
+      <Button href="mailto:carlos@heyimcarlos.dev">carlos@heyimcarlos.dev ↗</Button>
+      <Button href="https://github.com/heyimcarlos">github.com/heyimcarlos ↗</Button>
+      <Button href="https://www.linkedin.com/in/heyimcarlos">/in/heyimcarlos ↗</Button>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  section {
+    border-bottom: 3px solid var(--zine-ink);
+  }
+
+  .hero {
+    padding: 72px 32px 56px;
+    text-align: center;
+    background: var(--zine-bg);
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+  }
+
+  .eyebrow .rule {
+    display: inline-block;
+    width: 40px;
+    height: 2px;
+    background: var(--zine-ink);
+  }
+
+  .title {
+    max-width: 820px;
+    margin: 0 auto;
+    font-weight: 700;
+    letter-spacing: -3.5px;
+    line-height: 0.95;
+    font-size: clamp(44px, 8vw, 88px);
+  }
+
+  .title em {
+    font-style: italic;
+    font-weight: 500;
+  }
+
+  .title .dot {
+    color: var(--zine-accent);
+  }
+
+  .lede {
+    max-width: 560px;
+    margin: 22px auto 28px;
+    font-size: 17px;
+    line-height: 1.6;
+  }
+
+  .lede mark {
+    background: var(--zine-accent);
+    color: inherit;
+    padding: 0 4px;
+  }
+
+  .cta-row {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .feed {
+    padding: 56px 32px;
+    text-align: center;
+    background: var(--zine-bg);
+  }
+
+  .feed-inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .feed-eyebrow {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    opacity: 0.6;
+    margin-bottom: 6px;
+  }
+
+  .feed-title {
+    margin: 0;
+    font-weight: 700;
+    letter-spacing: -2px;
+    line-height: 1;
+    font-size: clamp(34px, 5.5vw, 52px);
+  }
+
+  .feed-title em {
+    font-style: italic;
+    font-weight: 500;
+  }
+
+  .feed-subtitle {
+    margin: 8px 0 32px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    opacity: 0.6;
+  }
+
+  .feed-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    text-align: left;
+  }
+
+  @media (max-width: 640px) {
+    .feed-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .feed-cta {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    margin-top: 28px;
+    flex-wrap: wrap;
+  }
+
+  .contact-cta {
+    padding: 64px 32px;
+    background: var(--zine-accent);
+    text-align: center;
+  }
+
+  .cta-eyebrow {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    opacity: 0.7;
+    margin-bottom: 10px;
+  }
+
+  .cta-title {
+    margin: 0;
+    font-weight: 700;
+    letter-spacing: -2.4px;
+    line-height: 0.95;
+    font-size: clamp(40px, 7vw, 64px);
+  }
+
+  .cta-title em {
+    font-style: italic;
+    font-weight: 500;
+  }
+
+  .cta-body {
+    max-width: 520px;
+    margin: 18px auto 28px;
+    font-size: 16px;
+    line-height: 1.6;
+    opacity: 0.9;
+  }
+
+  .cta-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  @media (max-width: 640px) {
+    .cta-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
