@@ -1,0 +1,153 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import FilterChips from './FilterChips.astro';
+import ProjectCard from './ProjectCard.astro';
+
+interface Props {
+  active: string;
+}
+
+const { active } = Astro.props;
+
+const FILTERS = ['all', 'web', 'oss', 'side-quests', '2024', '2023'];
+const CATEGORIES = new Set(['web', 'oss', 'side-quests']);
+
+const hrefFor = (value: string) =>
+  value === 'all' ? '/projects/' : `/projects/filter/${value}/`;
+
+const all = await getCollection('projects');
+
+const matches = (p: CollectionEntry<'projects'>, filter: string) => {
+  if (filter === 'all') return true;
+  if (CATEGORIES.has(filter)) return p.data.category === filter;
+  return p.data.year === filter;
+};
+
+const sorted = all
+  .filter((p) => matches(p, active))
+  .sort((a, b) => {
+    if (a.data.featured !== b.data.featured) return a.data.featured ? -1 : 1;
+    if (a.data.year !== b.data.year) return a.data.year < b.data.year ? 1 : -1;
+    return (a.data.order ?? 0) - (b.data.order ?? 0);
+  });
+---
+
+<Layout
+  title="Projects — Carlos"
+  description="Six projects across agencies, startups, and late nights."
+  active="work"
+>
+  <section class="hero">
+    <span class="eyebrow">THE BACK CATALOG</span>
+    <h1 class="title">
+      Everything <em>I've</em> shipped<span class="dot">.</span>
+    </h1>
+    <p class="lede">
+      Six projects across agencies, startups, and late nights. Some broke prod, all taught me
+      something.
+    </p>
+    <FilterChips items={FILTERS} active={active} hrefFor={hrefFor} />
+  </section>
+
+  <section class="grid-section">
+    <div class="grid">
+      {
+        sorted.map((p, i) => (
+          <ProjectCard
+            project={{
+              slug: p.id,
+              title: p.data.title,
+              year: p.data.year,
+              summary: p.data.description,
+              stack: p.data.stack,
+            }}
+            index={i + 1}
+          />
+        ))
+      }
+    </div>
+    {sorted.length === 0 && <p class="empty">No projects match this filter — yet.</p>}
+  </section>
+</Layout>
+
+<style>
+  section {
+    border-bottom: 3px solid var(--zine-ink);
+  }
+
+  .hero {
+    padding: 64px 32px 32px;
+    text-align: center;
+    background: var(--zine-bg);
+  }
+
+  .eyebrow {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    opacity: 0.7;
+    margin-bottom: 14px;
+  }
+
+  .title {
+    margin: 0 auto;
+    max-width: 880px;
+    font-weight: 700;
+    letter-spacing: -2.5px;
+    line-height: 0.95;
+    font-size: clamp(40px, 6.5vw, 72px);
+  }
+
+  .title em {
+    font-style: italic;
+    font-weight: 500;
+  }
+
+  .title .dot {
+    color: var(--zine-accent);
+  }
+
+  .lede {
+    max-width: 520px;
+    margin: 18px auto 24px;
+    font-size: 15px;
+    line-height: 1.6;
+    opacity: 0.85;
+  }
+
+  .grid-section {
+    padding: 36px 32px;
+    background: var(--zine-bg);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  @media (max-width: 1024px) {
+    .grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .empty {
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    opacity: 0.7;
+    margin-top: 24px;
+  }
+</style>

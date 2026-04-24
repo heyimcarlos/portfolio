@@ -1,0 +1,389 @@
+---
+import { type CollectionEntry, getCollection, render } from 'astro:content';
+import { Image } from 'astro:assets';
+import Layout from '../../layouts/Layout.astro';
+import Button from '../../components/Button.astro';
+import Tag from '../../components/Tag.astro';
+import ImagePlaceholder from '../../components/ImagePlaceholder.astro';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  const sorted = [...projects].sort((a, b) => {
+    if (a.data.featured !== b.data.featured) return a.data.featured ? -1 : 1;
+    if (a.data.year !== b.data.year) return a.data.year < b.data.year ? 1 : -1;
+    return (a.data.order ?? 0) - (b.data.order ?? 0);
+  });
+  return sorted.map((project, i) => ({
+    params: { slug: project.id },
+    props: { project, sorted, index: i },
+  }));
+}
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  sorted: CollectionEntry<'projects'>[];
+  index: number;
+}
+
+const { project, sorted, index } = Astro.props;
+const { Content } = await render(project);
+const { data } = project;
+
+const total = sorted.length;
+const prev = total > 1 ? sorted[(index - 1 + total) % total] : null;
+const next = total > 1 ? sorted[(index + 1) % total] : null;
+---
+
+<Layout title={`${data.title} — Carlos`} description={data.description} active="work">
+  <section class="back">
+    <a class="back-link" href="/projects/">← all projects</a>
+    <span class="counter">№{String(index + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}</span>
+  </section>
+
+  <section class="header">
+    <span class="eyebrow">{data.category} · {data.year}</span>
+    <h1 class="title">{data.title}</h1>
+    <p class="lede">{data.description}</p>
+    <div class="stack">
+      {data.stack.map((s) => <Tag variant="bg">{s}</Tag>)}
+    </div>
+    {
+      (data.url || data.repo) && (
+        <div class="ctas">
+          {data.url && (
+            <Button href={data.url} variant="primary">
+              Visit ↗
+            </Button>
+          )}
+          {data.repo && <Button href={data.repo}>Source ↗</Button>}
+        </div>
+      )
+    }
+    <div class="cover">
+      {
+        data.cover ? (
+          <Image src={data.cover} alt={data.title} class="cover-img" />
+        ) : (
+          <ImagePlaceholder variant="quad" aspect="16/9" fill="accent" label={`${project.id}.png`} />
+        )
+      }
+    </div>
+  </section>
+
+  <section class="meta">
+    <div class="meta-grid">
+      <div class="cell"><span class="k">role</span><span class="v">{data.role ?? '—'}</span></div>
+      <div class="cell"><span class="k">year</span><span class="v">{data.year}</span></div>
+      <div class="cell"><span class="k">stack</span><span class="v">{data.stack.length} techs</span></div>
+      <div class="cell"><span class="k">status</span><span class="v">{data.status}</span></div>
+    </div>
+  </section>
+
+  <section class="body">
+    <article class="prose">
+      <Content />
+    </article>
+  </section>
+
+  {
+    (prev || next) && (
+      <section class="navp">
+        <a class="navp-cell" href={prev ? `/projects/${prev.id}/` : '#'}>
+          <span class="navp-k">← Previous</span>
+          <span class="navp-v">{prev?.data.title ?? ''}</span>
+        </a>
+        <a class="navp-cell right" href={next ? `/projects/${next.id}/` : '#'}>
+          <span class="navp-k">Next →</span>
+          <span class="navp-v">{next?.data.title ?? ''}</span>
+        </a>
+      </section>
+    )
+  }
+</Layout>
+
+<style>
+  section {
+    border-bottom: 3px solid var(--zine-ink);
+  }
+
+  .back {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 32px;
+    background: var(--zine-paper);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    opacity: 0.85;
+  }
+
+  .back-link {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .back-link:hover {
+    text-decoration: underline;
+  }
+
+  .counter {
+    opacity: 0.7;
+    text-transform: none;
+    letter-spacing: 0;
+  }
+
+  .header {
+    padding: 48px 32px 32px;
+    background: var(--zine-bg);
+    text-align: center;
+  }
+
+  .eyebrow {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    opacity: 0.6;
+    margin-bottom: 14px;
+  }
+
+  .title {
+    margin: 0 auto;
+    max-width: 820px;
+    font-weight: 700;
+    letter-spacing: -2.4px;
+    line-height: 0.95;
+    font-size: clamp(40px, 6.2vw, 68px);
+  }
+
+  .lede {
+    max-width: 620px;
+    margin: 18px auto 22px;
+    font-size: 17px;
+    line-height: 1.6;
+    opacity: 0.9;
+  }
+
+  .stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    justify-content: center;
+  }
+
+  .ctas {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 18px;
+    flex-wrap: wrap;
+  }
+
+  .cover {
+    max-width: 880px;
+    margin: 32px auto 0;
+    aspect-ratio: 16 / 9;
+    border: 3px solid var(--zine-ink);
+    box-shadow: 8px 8px 0 var(--zine-ink);
+    overflow: hidden;
+    background: var(--zine-paper);
+  }
+
+  .cover :global(.rb-ph) {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: auto !important;
+  }
+
+  .cover-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .meta {
+    padding: 28px 32px;
+    background: var(--zine-paper);
+  }
+
+  .meta-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .cell {
+    border: 2px solid var(--zine-ink);
+    padding: 10px 12px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .cell .k {
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    opacity: 0.6;
+  }
+
+  .cell .v {
+    font-weight: 700;
+  }
+
+  @media (max-width: 640px) {
+    .meta-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .body {
+    padding: 48px 32px;
+    background: var(--zine-bg);
+  }
+
+  .prose {
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .prose :global(p) {
+    font-size: 16px;
+    line-height: 1.7;
+    margin: 0 0 18px;
+  }
+
+  .prose :global(h2) {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.8px;
+    margin: 32px 0 12px;
+  }
+
+  .prose :global(h2:first-of-type)::after {
+    content: '.';
+    color: var(--zine-accent);
+  }
+
+  .prose :global(h3) {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.4px;
+    margin: 24px 0 8px;
+  }
+
+  .prose :global(ul),
+  .prose :global(ol) {
+    font-size: 16px;
+    line-height: 1.7;
+    padding-left: 22px;
+    margin: 0 0 18px;
+  }
+
+  .prose :global(code) {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    background: var(--zine-bg);
+    border: 2px solid var(--zine-ink);
+    padding: 1px 5px;
+  }
+
+  .prose :global(pre) {
+    background: var(--zine-paper);
+    border: 3px solid var(--zine-ink);
+    box-shadow: 6px 6px 0 var(--zine-ink);
+    padding: 16px;
+    font-size: 13px;
+    line-height: 1.55;
+    overflow-x: auto;
+    margin: 0 0 22px;
+  }
+
+  .prose :global(pre code) {
+    background: transparent;
+    border: 0;
+    padding: 0;
+    font-size: inherit;
+  }
+
+  .prose :global(blockquote) {
+    border-left: 6px solid var(--zine-accent);
+    padding-left: 16px;
+    font-style: italic;
+    opacity: 0.9;
+    margin: 0 0 18px;
+  }
+
+  .prose :global(img) {
+    display: block;
+    width: 100%;
+    border: 3px solid var(--zine-ink);
+    box-shadow: 6px 6px 0 var(--zine-ink);
+    margin: 12px 0 22px;
+  }
+
+  .navp {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    background: var(--zine-paper);
+  }
+
+  .navp-cell {
+    padding: 24px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    color: inherit;
+    text-decoration: none;
+    border-right: 3px solid var(--zine-ink);
+  }
+
+  .navp-cell.right {
+    border-right: 0;
+    text-align: right;
+    align-items: flex-end;
+  }
+
+  .navp-k {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    opacity: 0.6;
+  }
+
+  .navp-v {
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: -0.3px;
+  }
+
+  .navp-cell:hover .navp-v {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 640px) {
+    .navp {
+      grid-template-columns: 1fr;
+    }
+    .navp-cell {
+      border-right: 0;
+      border-bottom: 3px solid var(--zine-ink);
+    }
+    .navp-cell:last-child {
+      border-bottom: 0;
+    }
+    .navp-cell.right {
+      text-align: left;
+      align-items: flex-start;
+    }
+  }
+</style>

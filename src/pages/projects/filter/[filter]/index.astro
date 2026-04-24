@@ -1,0 +1,17 @@
+---
+import ProjectsIndex from '../../../../components/ProjectsIndex.astro';
+
+export function getStaticPaths() {
+  return [
+    { params: { filter: 'web' } },
+    { params: { filter: 'oss' } },
+    { params: { filter: 'side-quests' } },
+    { params: { filter: '2024' } },
+    { params: { filter: '2023' } },
+  ];
+}
+
+const { filter } = Astro.params;
+---
+
+<ProjectsIndex active={filter!} />
