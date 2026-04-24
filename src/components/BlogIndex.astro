@@ -1,0 +1,191 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import BlogCard from './BlogCard.astro';
+import FeaturedBlogCard from './FeaturedBlogCard.astro';
+import FilterChips from './FilterChips.astro';
+import SubscribeStrip from './SubscribeStrip.astro';
+import { computeReadTime } from '../lib/readTime';
+
+interface Props {
+  active: string;
+}
+
+const { active } = Astro.props;
+
+const FILTERS = ['all', 'essay', 'notes', 'case-study', 'life'];
+
+const hrefFor = (value: string) =>
+  value === 'all' ? '/blog/' : `/blog/filter/${value}/`;
+
+const all = await getCollection('blog');
+
+const withReadTime = all.map((post) => ({
+  ...post,
+  data: {
+    ...post.data,
+    readTime: computeReadTime(post.body, post.data.readTime),
+  },
+}));
+
+const sorted = withReadTime.sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+
+type Post = (typeof sorted)[number];
+
+const matches = (p: Post, filter: string) =>
+  filter === 'all' ? true : p.data.tag === filter;
+
+const visible = sorted.filter((p) => matches(p, active));
+
+const featured: Post | undefined =
+  visible.find((p) => p.data.featured) ?? visible[0];
+
+const rest: Post[] = visible.filter((p) => p.id !== featured?.id);
+---
+
+<Layout
+  title="Blog — Carlos"
+  description="Short essays, build notes, and the occasional rant."
+  active="blog"
+>
+  <section class="hero">
+    <span class="eyebrow">COLUMN · THE MARGINALIA</span>
+    <h1 class="title">
+      Things I <em>wrote</em> down<span class="dot">.</span>
+    </h1>
+    <p class="lede">
+      Short essays, build notes, and the occasional rant. Updated whenever I survive a deploy worth
+      writing about.
+    </p>
+    <FilterChips items={FILTERS} active={active} hrefFor={hrefFor} />
+  </section>
+
+  {
+    featured && (
+      <section class="featured-section">
+        <FeaturedBlogCard
+          post={featured as CollectionEntry<'blog'>}
+          tag={featured.data.tag}
+          readTime={featured.data.readTime ?? '5 min'}
+        />
+      </section>
+    )
+  }
+
+  <section class="grid-section">
+    {
+      rest.length > 0 && (
+        <div class="divider">· also in this issue ·</div>
+      )
+    }
+    <div class="grid">
+      {rest.map((p, i) => <BlogCard post={p as CollectionEntry<'blog'>} index={i} />)}
+    </div>
+    {visible.length === 0 && <p class="empty">No posts match this filter — yet.</p>}
+  </section>
+
+  <SubscribeStrip />
+</Layout>
+
+<style>
+  section {
+    border-bottom: 3px solid var(--zine-ink);
+  }
+
+  .hero {
+    padding: 64px 32px 32px;
+    text-align: center;
+    background: var(--zine-bg);
+  }
+
+  .eyebrow {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    opacity: 0.7;
+    margin-bottom: 14px;
+  }
+
+  .title {
+    margin: 0 auto;
+    max-width: 880px;
+    font-weight: 700;
+    letter-spacing: -2.5px;
+    line-height: 0.95;
+    font-size: clamp(40px, 7vw, 72px);
+  }
+
+  .title em {
+    font-style: italic;
+    font-weight: 500;
+  }
+
+  .title .dot {
+    color: var(--zine-accent);
+  }
+
+  .lede {
+    max-width: 520px;
+    margin: 18px auto 24px;
+    font-size: 15px;
+    line-height: 1.6;
+    opacity: 0.85;
+  }
+
+  .featured-section {
+    padding: 40px 32px;
+    background: var(--zine-bg);
+  }
+
+  .featured-section :global(.featured) {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .grid-section {
+    padding: 8px 32px 40px;
+    background: var(--zine-bg);
+  }
+
+  .divider {
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    opacity: 0.6;
+    margin: 24px 0 20px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  @media (max-width: 1024px) {
+    .grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .empty {
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    opacity: 0.7;
+    margin-top: 24px;
+  }
+</style>

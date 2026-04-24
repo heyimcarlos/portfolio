@@ -1,0 +1,126 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import Button from './Button.astro';
+import FormattedDate from './FormattedDate.astro';
+import ImagePlaceholder from './ImagePlaceholder.astro';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+  tag?: string;
+  readTime?: string;
+}
+
+const { post, tag = 'essay', readTime = '8 min' } = Astro.props;
+const href = `/blog/${post.id}`;
+---
+
+<article class="featured">
+  <div class="cover">
+    <ImagePlaceholder
+      variant="rows"
+      aspect="auto"
+      fill="accent"
+      label={`${post.id}.png`}
+    />
+  </div>
+  <div class="body">
+    <div class="meta">
+      <span class="pill">★ Featured</span>
+      <span class="dots">
+        {tag} · <FormattedDate date={post.data.pubDate} /> · {readTime}
+      </span>
+    </div>
+    <h2 class="title"><a href={href}>{post.data.title}</a></h2>
+    <p class="excerpt">{post.data.description}</p>
+    <div class="cta">
+      <Button href={href} variant="primary">Read post →</Button>
+    </div>
+  </div>
+</article>
+
+<style>
+  .featured {
+    background: var(--zine-paper);
+    border: 3px solid var(--zine-ink);
+    box-shadow: 8px 8px 0 var(--zine-ink);
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+  }
+
+  .cover {
+    border-right: 3px solid var(--zine-ink);
+    min-height: 240px;
+    display: flex;
+  }
+
+  .cover :global(.rb-ph) {
+    flex: 1;
+    min-height: 240px;
+  }
+
+  .body {
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 14px;
+  }
+
+  .meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .pill {
+    background: var(--zine-accent);
+    border: 2px solid var(--zine-ink);
+    padding: 2px 8px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .dots {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    opacity: 0.75;
+    letter-spacing: 1px;
+  }
+
+  .title {
+    margin: 0;
+    font-size: clamp(28px, 4vw, 38px);
+    font-weight: 700;
+    letter-spacing: -1.2px;
+    line-height: 1.05;
+  }
+
+  .title a {
+    color: inherit;
+  }
+
+  .excerpt {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.6;
+    opacity: 0.9;
+  }
+
+  .cta {
+    align-self: flex-start;
+  }
+
+  @media (max-width: 768px) {
+    .featured {
+      grid-template-columns: 1fr;
+    }
+    .cover {
+      border-right: 0;
+      border-bottom: 3px solid var(--zine-ink);
+    }
+  }
+</style>

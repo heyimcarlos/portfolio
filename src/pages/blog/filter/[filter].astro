@@ -1,0 +1,16 @@
+---
+import BlogIndex from '../../../components/BlogIndex.astro';
+
+export async function getStaticPaths() {
+  return [
+    { params: { filter: 'essay' } },
+    { params: { filter: 'notes' } },
+    { params: { filter: 'case-study' } },
+    { params: { filter: 'life' } },
+  ];
+}
+
+const { filter } = Astro.params;
+---
+
+<BlogIndex active={filter!} />
