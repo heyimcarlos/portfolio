@@ -9,15 +9,31 @@ const TIMELINE_EVENTS: TimelineEvent[] = [
     place: 'Santo Domingo, DO',
     role: 'Born',
     type: 'life',
-    desc: 'Started life in the Dominican Republic — internet cafés, street basketball, and an early obsession with competitive anything.',
+    desc: 'Sports, gaming, and an early obsession with competitive anything.',
+  },
+  {
+    year: '2014 — 2019',
+    place: 'Web',
+    role: 'Esports Live Streamer',
+    org: 'Twitch',
+    type: 'edu',
+    desc: 'Competitive gaming livestream with a community of 200+ viewers.',
   },
   {
     year: '2019',
-    place: 'Santiago, DO',
+    place: 'Santo Domingo, DO',
     role: 'B.B.A. Business Administration',
     org: 'Pontifical Catholic University (PUCMM)',
     type: 'edu',
-    desc: 'Graduated business school. Realized finance was not it. Started eyeing a different kind of problem-solving.',
+    desc: 'Graduated business school.',
+  },
+  {
+    year: '2019',
+    place: 'Santo Domingo, DO',
+    role: 'Analyst',
+    org: 'ScotiaBank',
+    type: 'work',
+    desc: 'Realized finance was not it. Started eyeing a different kind of problem-solving.',
   },
   {
     year: '2020',
@@ -25,7 +41,7 @@ const TIMELINE_EVENTS: TimelineEvent[] = [
     role: 'Software Engineering Immersive',
     org: 'Fullstack Academy',
     type: 'edu',
-    desc: 'Completed the bootcamp — React, Node, Express, PostgreSQL. First time code felt as addictive as video games.',
+    desc: 'Completed the bootcamp — React, Node, Express, PostgreSQL. First time code felt addictive.',
   },
   {
     year: '2020 — 2022',
@@ -33,7 +49,7 @@ const TIMELINE_EVENTS: TimelineEvent[] = [
     role: 'Full-Stack Developer',
     org: '305 Global Marketing',
     type: 'work',
-    desc: 'Shipped the 305GM e-commerce platform and an internal ops dashboard on Next.js + Mongo. Cut order time by ~40%.',
+    desc: 'Shipped a multi-tenant e-commerce platform and an ops dashboard on Next.js + AWS + PostgreSQL + Mongo. ~250k annual revenue.',
   },
   {
     year: '2022 — 2023',
@@ -41,38 +57,54 @@ const TIMELINE_EVENTS: TimelineEvent[] = [
     role: 'SDE II',
     org: 'Exactera',
     type: 'work',
-    desc: 'Built ML-powered tooling for transfer-pricing workflows. Learned to write code I would not be embarrassed by six months later.',
+    desc: 'Implemented ML-powered vector search at scale.',
   },
   {
-    year: '2023 — now',
+    year: '2023 — 2026',
     place: 'Toronto, CA',
-    role: 'B.Eng. Software Engineering Tech',
+    role: 'Software Engineering Technology - AI (AdvDip)',
     org: 'Centennial College',
     type: 'edu',
-    desc: 'Back in school, part-time, while working full-time. Because the compiler never stops teaching.',
+    desc: 'Full-time student, two part-time jobs. GPA 4.4/4.5. Member of the Engineerging Student Association. Math tutor. Scholarship recipient.',
   },
   {
-    year: '2024 — now',
+    year: '2024',
     place: 'Toronto, CA',
     role: 'Lead Software Developer & Coordinator',
     org: 'Centennial OER Lab',
     type: 'work',
-    current: true,
-    desc: 'Leading engineering on open educational tools for 12k+ students. Type-safe, small team, high-leverage. Current chapter.',
+    desc: 'Led engineering on open educational tools for 12k+ students. Type-safe, small team, high-leverage.',
+  },
+  {
+    year: '2025 — 2026',
+    place: 'Toronto, CA',
+    role: 'Fullstack Software Engineer',
+    org: 'Xello',
+    type: 'work',
+    desc: 'Major contributor to "The Real Game" — a career exploration tool used by millions of students.',
+  },
+  {
+    year: '2026',
+    place: 'Toronto, CA',
+    role: 'Machine Learning Engineer',
+    org: 'TI Automotive',
+    type: 'work',
+    desc: 'Built an Inverse model-based Reinforcement Learning model to predict polymer blends from OEM specs, now a tool used by Lab Techs.',
   },
 ];
 
 const STACK: { category: string; items: string[] }[] = [
   { category: 'Languages', items: ['TypeScript', 'JS', 'Python', 'Go', 'Rust'] },
-  { category: 'Frontend', items: ['React', 'Next', 'Astro', 'Tailwind'] },
-  { category: 'Backend', items: ['Node', 'Postgres', 'Prisma', 'Redis'] },
-  { category: 'Infra', items: ['Vercel', 'AWS', 'Docker', 'GH Actions'] },
+  { category: 'Frontend', items: ['React', 'Next', 'Astro', 'Tailwind', 'Angular'] },
+  { category: 'Backend', items: ['Node', 'Postgres', 'MySQL', 'Redis', 'FastAPI', 'tokio'] },
+  { category: 'Infra', items: ['Vercel', 'AWS', 'Docker', 'GH Actions', 'circleci', 'terraform', 'huggingface', 'n8n'] },
+  { category: 'ML', items: ['pytorch', 'harness engineering', 'context engineering', 'LLM fine-tuning', 'LoRA'] },
 ];
 ---
 
 <Layout
   title="About — Carlos"
-  description="Dominican-Canadian full-stack developer. Came for the gaming, stayed for the compiler. Lead engineer at Centennial OER Lab."
+  description="Dominican software engineer. Came for the gaming, stayed for the compiler."
   active="about"
 >
   <section class="origins">
@@ -82,18 +114,18 @@ const STACK: { category: string; items: string[] }[] = [
     </h1>
     <div class="prose">
       <p>
-        Santo Domingo, DR. I spent my teens in internet cafés trying to go pro at Counter-Strike. I
-        was decent. Not pro. Sponsorship money dried up, I got older, and at a family wedding a
-        cousin told me, "you should learn to code."
+        I spent my teens trying to go pro at SOCOM, Counter-Strike, and later Fortnite. I made it.
+        Then I tried finance, and it wasn't it — I wanted work where the output scaled with the
+        effort. At a family wedding, a cousin said, "you should learn to code."
       </p>
       <p>
-        One bootcamp, three jobs, and a move to Toronto later, I lead engineering at the <mark
-          >Centennial OER Lab</mark
-        > — building open tools for students who can't afford textbooks.
+        One bootcamp, a software engineering degree, a move to Toronto, and a few jobs later, I'm
+        focused on <mark>AI engineering and machine learning</mark> — retrieval systems,
+        Reinforcement Learning, and the unglamorous plumbing that makes models useful in
+        production.
       </p>
       <p>
-        Outside the screen: BJJ (blue belt, forever), surfing, building silly things. This site is
-        one of them.
+      Outside the screen: BJJ (blue belt, forever), snowboarding, surfing, building silly things. This site is one of them.
       </p>
     </div>
   </section>
