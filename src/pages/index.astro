@@ -1,272 +1,364 @@
 ---
 import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
-import Button from '../components/Button.astro';
-import FeedCard, { type FeedItem } from '../components/FeedCard.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import { computeReadTime } from '../lib/readTime';
 
-const projectEntries = await getCollection('projects');
+const projects = (await getCollection('projects')).sort((a, b) => {
+  if (a.data.featured !== b.data.featured) return a.data.featured ? -1 : 1;
+  if (a.data.year !== b.data.year) return a.data.year < b.data.year ? 1 : -1;
+  return (a.data.order ?? 0) - (b.data.order ?? 0);
+});
+
 const blogEntries = await getCollection('blog', ({ data }) =>
   import.meta.env.PROD ? !data.draft : true,
 );
 
-const projectItems: FeedItem[] = projectEntries.map((p) => ({
-  kind: 'project',
-  title: p.data.title,
-  date: p.data.updatedDate ?? new Date(Number(p.data.year), 0, 1),
-  desc: p.data.description,
-  meta: p.data.stack.slice(0, 3),
-  href: `/projects/${p.id}`,
-  cta: 'View project →',
-}));
+const recentPosts = blogEntries
+  .map((p) => ({ ...p, readTime: computeReadTime(p.body, p.data.readTime) }))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 5);
 
-const blogItems: FeedItem[] = blogEntries.map((b) => ({
-  kind: 'blog',
-  title: b.data.title,
-  date: b.data.pubDate,
-  desc: b.data.excerpt ?? b.data.description,
-  meta: [b.data.tag, b.data.readTime].filter((v): v is string => Boolean(v)),
-  href: `/blog/${b.id}`,
-  cta: 'Read post →',
-}));
-
-const toTime = (d: Date | string) => (d instanceof Date ? d.getTime() : new Date(d).getTime());
-
-const items: FeedItem[] = [...projectItems, ...blogItems]
-  .sort((a, b) => toTime(b.date) - toTime(a.date))
-  .slice(0, 4);
+const formatDate = (d: Date) =>
+  `${d.getFullYear()} · ${String(d.getMonth() + 1).padStart(2, '0')}`;
 ---
 
 <Layout title={SITE_TITLE} description={SITE_DESCRIPTION} active="home">
-  <section class="hero">
-    <div class="eyebrow">
-      <span class="rule"></span>
-      <span class="label">Spring 2026</span>
-      <span class="rule"></span>
-    </div>
-    <h1 class="title">
-      Carlos builds <em>weird little</em> web things<span class="dot">.</span>
-    </h1>
-    <p class="lede">
-      A Dominican software engineer, ex-competitive gamer, lifelong tinkerer. Training polymer
-      ML models, shipping full-stack apps, and looking for my next problem in
-      <mark>AI engineering</mark>.
-    </p>
-    <div class="cta-row">
-      <Button href="/projects" variant="primary">Read the projects →</Button>
-      <Button href="/resume.pdf">Grab résumé</Button>
-    </div>
-  </section>
-
-  <section class="feed">
-    <div class="feed-inner">
-      <span class="feed-eyebrow">LATEST DISPATCHES</span>
-      <h2 class="feed-title">Recently <em>published</em>.</h2>
-      <p class="feed-subtitle">
-        latest / 0{items.length} &nbsp;·&nbsp; new posts and project updates, ordered by date
+  <header class="qm-page-head home-head">
+    <h1 class="qm-h1 home-h1">Carlos Cruz <em>— software engineer.</em></h1>
+    <div class="qm-lead home-lead">
+      <p>
+        I build software, mostly around <b>AI and machine learning</b>. Right now I'm shipping
+        an inverse-reinforcement-learning model that predicts polymer blends at <b>TI Automotive</b>
+        — it lives in production with lab technicians.
       </p>
-      <div class="feed-grid">
-        {items.map((item) => <FeedCard item={item} />)}
-      </div>
-      <div class="feed-cta">
-        <Button href="/projects" variant="primary">All projects →</Button>
-        <Button href="/blog">All posts →</Button>
-      </div>
+      <p>
+        Before that, I worked on a career-exploration tool for millions of students at Xello,
+        led engineering at Centennial's OER Lab, and built ML-powered vector search at Exactera.
+        I'm Dominican, based in Toronto, and open to roles.
+      </p>
     </div>
-  </section>
+    <div class="qm-meta">
+      <span><b>Toronto, CA</b></span>
+      <span>EST · UTC−5</span>
+      <span>orig. Santo Domingo, DO</span>
+      <span>
+        <a href="/about" class="meta-link">more about me →</a>
+      </span>
+    </div>
+  </header>
 
-  <section class="contact-cta">
-    <span class="cta-eyebrow">LAST PAGE · GET IN TOUCH</span>
-    <h2 class="cta-title">Let's make <em>something weird.</em></h2>
-    <p class="cta-body">
-      Full-time, contract, or just a fun idea — my inbox is open. I read everything.
-    </p>
-    <div class="cta-grid">
-      <Button href="mailto:carlos.cruzta@gmail.com">carlos.cruzta@gmail.com ↗</Button>
-      <Button href="https://github.com/heyimcarlos">github.com/heyimcarlos ↗</Button>
-      <Button href="https://www.linkedin.com/in/carlos-dev">/in/carlos-dev ↗</Button>
+  {
+    recentPosts.length > 0 && (
+      <>
+        <div class="qm-list-head">
+          <h2>Recent writing</h2>
+          <a href="/blog" class="qm-more">all essays →</a>
+        </div>
+        <div>
+          {recentPosts.map((w) => (
+            <a href={`/blog/${w.id}`} class="qm-post">
+              <span class="qm-post-date">{formatDate(w.data.pubDate)}</span>
+              <div>
+                <h3 class="qm-post-title">{w.data.title}</h3>
+                <p class="qm-post-summary">{w.data.excerpt ?? w.data.description}</p>
+              </div>
+              <span class="qm-post-read">{w.readTime}</span>
+            </a>
+          ))}
+        </div>
+      </>
+    )
+  }
+
+  <h2 class="qm-block-h2">Selected work</h2>
+  <div>
+    {
+      projects.map((p, i) => (
+        <a href={`/projects/${p.id}`} class="qm-proj">
+          <span class="qm-proj-num">№ {String(i + 1).padStart(2, '0')}</span>
+          <div>
+            <h3 class="qm-proj-title">{p.data.title}</h3>
+            <p class="qm-proj-brief">{p.data.description}</p>
+            <div class="qm-proj-stack">{p.data.stack.join(' · ')}</div>
+          </div>
+          <div class="qm-proj-meta">
+            <span><b>{p.data.year}</b></span>
+            <span>{p.data.role ?? p.data.category}</span>
+            <span>{p.data.status}</span>
+          </div>
+        </a>
+      ))
+    }
+  </div>
+
+  <h2 class="qm-block-h2">Get in touch</h2>
+  <div class="qm-contact">
+    <h3>Let's build <em>something useful.</em></h3>
+    <div class="qm-links">
+      <a href="mailto:carlos.cruzta@gmail.com"><span>email</span>carlos.cruzta@gmail.com</a>
+      <a href="https://github.com/heyimcarlos"><span>github</span>github.com/heyimcarlos</a>
+      <a href="https://www.linkedin.com/in/carlos-dev"><span>linkedin</span>/in/carlos-dev</a>
+      <a href="/resume.pdf"><span>résumé</span>resume.pdf</a>
     </div>
-  </section>
+  </div>
 </Layout>
 
 <style>
-  section {
-    border-bottom: 3px solid var(--zine-ink);
+  .home-head {
+    margin-bottom: 96px;
+    padding-top: 24px;
   }
 
-  .hero {
-    padding: 72px 32px 56px;
-    text-align: center;
-    background: var(--zine-bg);
+  .home-h1 {
+    font-size: clamp(34px, 3.6vw, 48px);
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    line-height: 1.08;
+    margin: 0 0 36px;
+    max-width: 22ch;
   }
 
-  .eyebrow {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    font-family: var(--font-mono);
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-bottom: 20px;
+  .home-lead {
+    max-width: 60ch;
+    font-size: 19px;
+    line-height: 1.65;
   }
 
-  .eyebrow .rule {
-    display: inline-block;
-    width: 40px;
-    height: 2px;
-    background: var(--zine-ink);
+  .home-lead p {
+    margin: 0 0 16px;
   }
 
-  .title {
-    max-width: 820px;
-    margin: 0 auto;
-    font-weight: 700;
-    letter-spacing: -3.5px;
-    line-height: 0.95;
-    font-size: clamp(44px, 8vw, 88px);
+  .home-lead p:last-child {
+    margin: 0;
   }
 
-  .title em {
-    font-style: italic;
+  .home-lead b {
+    color: var(--fg);
     font-weight: 500;
   }
 
-  .title .dot {
-    color: var(--zine-accent);
+  .qm-meta {
+    display: flex;
+    gap: 32px;
+    margin-top: 36px;
+    font-size: 13px;
+    color: var(--fg-3);
+    flex-wrap: wrap;
   }
 
-  .lede {
-    max-width: 560px;
-    margin: 22px auto 28px;
-    font-size: 17px;
-    line-height: 1.6;
+  .qm-meta b {
+    color: var(--fg);
+    font-weight: 500;
   }
 
-  .lede mark {
-    background: var(--zine-accent);
+  .meta-link {
+    color: var(--fg-2);
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 1px;
+    transition:
+      color 0.2s,
+      border-color 0.2s;
+  }
+
+  .meta-link:hover {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+
+  .qm-post {
+    display: grid;
+    grid-template-columns: 110px 1fr 80px;
+    gap: 32px;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--rule);
+    align-items: baseline;
     color: inherit;
-    padding: 0 4px;
+    text-decoration: none;
+    transition: padding-left 0.25s;
   }
 
-  .cta-row {
-    display: flex;
-    gap: 12px;
-    justify-content: center;
-    flex-wrap: wrap;
+  .qm-post:hover {
+    padding-left: 12px;
   }
 
-  .feed {
-    padding: 56px 32px;
-    text-align: center;
-    background: var(--zine-bg);
+  .qm-post:hover .qm-post-title {
+    color: var(--accent);
   }
 
-  .feed-inner {
-    max-width: 900px;
-    margin: 0 auto;
+  .qm-post-date {
+    font-size: 13px;
+    color: var(--fg-3);
+    font-variant-numeric: tabular-nums;
   }
 
-  .feed-eyebrow {
-    display: block;
-    font-family: var(--font-mono);
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    opacity: 0.6;
-    margin-bottom: 6px;
+  .qm-post-title {
+    font-size: 22px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    color: var(--fg);
+    margin: 0 0 8px;
+    transition: color 0.2s;
   }
 
-  .feed-title {
+  .qm-post-summary {
+    font-size: 14px;
+    color: var(--fg-2);
     margin: 0;
-    font-weight: 700;
-    letter-spacing: -2px;
-    line-height: 1;
-    font-size: clamp(34px, 5.5vw, 52px);
+    max-width: 60ch;
+    line-height: 1.55;
   }
 
-  .feed-title em {
-    font-style: italic;
+  .qm-post-read {
+    font-size: 13px;
+    color: var(--fg-3);
+    text-align: right;
+  }
+
+  .qm-proj {
+    display: grid;
+    grid-template-columns: 60px 1fr 220px;
+    gap: 32px;
+    align-items: baseline;
+    padding: 36px 0;
+    border-bottom: 1px solid var(--rule);
+    color: inherit;
+    text-decoration: none;
+    transition: padding-left 0.25s;
+  }
+
+  .qm-proj:hover {
+    padding-left: 12px;
+  }
+
+  .qm-proj:hover .qm-proj-title {
+    color: var(--accent);
+  }
+
+  .qm-proj-num {
+    font-size: 13px;
+    color: var(--fg-3);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .qm-proj-title {
+    font-size: 28px;
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    line-height: 1.15;
+    margin: 0 0 10px;
+    transition: color 0.2s;
+    color: var(--fg);
+  }
+
+  .qm-proj-brief {
+    font-size: 15px;
+    color: var(--fg-2);
+    margin: 0 0 14px;
+    max-width: 56ch;
+    line-height: 1.55;
+  }
+
+  .qm-proj-stack {
+    font-size: 12px;
+    color: var(--fg-3);
+  }
+
+  .qm-proj-meta {
+    font-size: 13px;
+    color: var(--fg-3);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: flex-end;
+    text-align: right;
+  }
+
+  .qm-proj-meta b {
+    color: var(--fg-2);
     font-weight: 500;
   }
 
-  .feed-subtitle {
-    margin: 8px 0 32px;
-    font-family: var(--font-mono);
-    font-size: 11px;
-    opacity: 0.6;
-  }
-
-  .feed-grid {
+  .qm-contact {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    text-align: left;
+    grid-template-columns: 1fr auto;
+    gap: 64px;
+    align-items: end;
+    margin-top: 48px;
   }
 
-  @media (max-width: 640px) {
-    .feed-grid {
-      grid-template-columns: 1fr;
-    }
+  .qm-contact h3 {
+    font-size: clamp(40px, 5vw, 56px);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    margin: 0;
+    max-width: 14ch;
   }
 
-  .feed-cta {
+  .qm-contact h3 em {
+    color: var(--fg-2);
+    font-style: normal;
+    font-weight: 400;
+  }
+
+  .qm-links {
     display: flex;
+    flex-direction: column;
     gap: 14px;
-    justify-content: center;
-    margin-top: 28px;
-    flex-wrap: wrap;
+    align-items: flex-end;
   }
 
-  .contact-cta {
-    padding: 64px 32px;
-    background: var(--zine-accent);
-    text-align: center;
-  }
-
-  .cta-eyebrow {
-    display: block;
-    font-family: var(--font-mono);
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    opacity: 0.7;
-    margin-bottom: 10px;
-  }
-
-  .cta-title {
-    margin: 0;
-    font-weight: 700;
-    letter-spacing: -2.4px;
-    line-height: 0.95;
-    font-size: clamp(40px, 7vw, 64px);
-  }
-
-  .cta-title em {
-    font-style: italic;
-    font-weight: 500;
-  }
-
-  .cta-body {
-    max-width: 520px;
-    margin: 18px auto 28px;
-    font-size: 16px;
-    line-height: 1.6;
-    opacity: 0.9;
-  }
-
-  .cta-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+  .qm-links a {
+    font-size: 15px;
+    color: var(--fg-2);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
     gap: 12px;
-    max-width: 720px;
-    margin: 0 auto;
+    transition: color 0.2s;
   }
 
-  @media (max-width: 640px) {
-    .cta-grid {
+  .qm-links a:hover {
+    color: var(--accent);
+  }
+
+  .qm-links a span {
+    font-size: 11px;
+    color: var(--fg-3);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    min-width: 60px;
+  }
+
+  @media (max-width: 720px) {
+    .qm-post {
+      grid-template-columns: 90px 1fr;
+    }
+    .qm-post-read {
+      grid-column: 2;
+      text-align: left;
+      color: var(--fg-3);
+    }
+    .qm-proj {
+      grid-template-columns: 40px 1fr;
+    }
+    .qm-proj-meta {
+      grid-column: 2;
+      align-items: flex-start;
+      text-align: left;
+      flex-direction: row;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .qm-contact {
       grid-template-columns: 1fr;
+      gap: 32px;
+      align-items: flex-start;
+    }
+    .qm-links {
+      align-items: flex-start;
     }
   }
 </style>

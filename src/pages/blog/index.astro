@@ -1,5 +1,121 @@
 ---
-import BlogIndex from '../../components/BlogIndex.astro';
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import { computeReadTime } from '../../lib/readTime';
+
+const all = await getCollection('blog', ({ data }) =>
+  import.meta.env.PROD ? !data.draft : true,
+);
+
+const posts = all
+  .map((p) => ({ ...p, readTime: computeReadTime(p.body, p.data.readTime) }))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const formatDate = (d: Date) =>
+  `${d.getFullYear()} · ${String(d.getMonth() + 1).padStart(2, '0')}`;
+
+const count = posts.length;
 ---
 
-<BlogIndex active="all" />
+<Layout
+  title="Writing — Carlos"
+  description="Short pieces about ML in production, retrieval at scale, and how generalists keep mattering."
+  active="blog"
+>
+  <header class="qm-page-head">
+    <span class="qm-page-tag">writing · {count} {count === 1 ? 'essay' : 'essays'}</span>
+    <h1 class="qm-h1">Notes on <em>building things.</em></h1>
+    <p class="qm-lead">
+      Short pieces about ML in production, retrieval at scale, and how generalists keep mattering.
+    </p>
+  </header>
+
+  <div class="qm-list-head">
+    <h2>All essays</h2>
+    <span class="qm-count">{count} {count === 1 ? 'post' : 'posts'}</span>
+  </div>
+
+  <div>
+    {
+      posts.map((w) => (
+        <a href={`/blog/${w.id}`} class="qm-post">
+          <span class="qm-post-date">{formatDate(w.data.pubDate)}</span>
+          <div>
+            <h3 class="qm-post-title">{w.data.title}</h3>
+            <p class="qm-post-summary">{w.data.excerpt ?? w.data.description}</p>
+          </div>
+          <span class="qm-post-read">{w.readTime}</span>
+        </a>
+      ))
+    }
+    {posts.length === 0 && <p class="qm-empty">Nothing published yet.</p>}
+  </div>
+</Layout>
+
+<style>
+  .qm-post {
+    display: grid;
+    grid-template-columns: 110px 1fr 80px;
+    gap: 32px;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--rule);
+    align-items: baseline;
+    color: inherit;
+    text-decoration: none;
+    transition: padding-left 0.25s;
+  }
+
+  .qm-post:hover {
+    padding-left: 12px;
+  }
+
+  .qm-post:hover .qm-post-title {
+    color: var(--accent);
+  }
+
+  .qm-post-date {
+    font-size: 13px;
+    color: var(--fg-3);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .qm-post-title {
+    font-size: 22px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    color: var(--fg);
+    margin: 0 0 8px;
+    transition: color 0.2s;
+  }
+
+  .qm-post-summary {
+    font-size: 14px;
+    color: var(--fg-2);
+    margin: 0;
+    max-width: 60ch;
+    line-height: 1.55;
+  }
+
+  .qm-post-read {
+    font-size: 13px;
+    color: var(--fg-3);
+    text-align: right;
+  }
+
+  .qm-empty {
+    margin: 32px 0 0;
+    color: var(--fg-3);
+    font-size: 14px;
+  }
+
+  @media (max-width: 720px) {
+    .qm-post {
+      grid-template-columns: 90px 1fr;
+    }
+    .qm-post-read {
+      grid-column: 2;
+      text-align: left;
+    }
+  }
+</style>

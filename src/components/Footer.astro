@@ -1,48 +1,22 @@
 ---
-interface Props {
-  next?: { label?: string; href?: string };
-}
-
-const { next } = Astro.props;
+const year = new Date().getFullYear();
 ---
 
-<footer class="zine-footer">
-  <span>heyimcarlos.dev</span>
-  <span class="middle">printed on the internet · © carlos</span>
-  {
-    next?.href ? (
-      <a href={next.href}>{next.label ?? 'turn page →'}</a>
-    ) : (
-      <span>{next?.label ?? 'turn page →'}</span>
-    )
-  }
+<footer class="qm-footer">
+  <span>© carlos · {year}</span>
+  <span>typeset in Geist</span>
 </footer>
 
 <style>
-  .zine-footer {
+  .qm-footer {
+    margin-top: 120px;
+    padding-top: 28px;
+    border-top: 1px solid var(--rule);
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    font-size: 12px;
+    color: var(--fg-3);
     gap: 16px;
-    padding: 14px 32px;
-    background: var(--zine-paper);
-    border-top: 3px solid var(--zine-ink);
-    font-family: var(--font-mono);
-    font-size: 10px;
-    opacity: 0.7;
-  }
-
-  @media (max-width: 640px) {
-    .zine-footer {
-      padding: 12px 20px;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .middle {
-      order: 3;
-      flex-basis: 100%;
-      text-align: center;
-    }
+    flex-wrap: wrap;
   }
 </style>

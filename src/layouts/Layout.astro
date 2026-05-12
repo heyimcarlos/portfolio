@@ -7,7 +7,7 @@ import Footer from '../components/Footer.astro';
 interface Props {
   title: string;
   description?: string;
-  active: 'home' | 'work' | 'blog' | 'about' | 'contact';
+  active?: 'home' | 'work' | 'blog' | 'about';
 }
 
 const { title, description = '', active } = Astro.props;
@@ -20,16 +20,12 @@ const { title, description = '', active } = Astro.props;
     <Analytics />
   </head>
   <body>
-    <Nav active={active} />
-    <main>
-      <slot />
-    </main>
-    <Footer />
+    <div class="qm-shell">
+      <Nav active={active} />
+      <main>
+        <slot />
+      </main>
+      <Footer />
+    </div>
   </body>
 </html>
-
-<style>
-  main {
-    display: block;
-  }
-</style>
