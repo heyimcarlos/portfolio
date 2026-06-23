@@ -3,8 +3,8 @@ title: "Polymer Project: Introduction"
 description: "This is the story of how I got the chance to work on an AI/ML project for the largest manufacturing company in North America."
 pubDate: "May 28 2026"
 tag: notes
-featured: false
-draft: true
+featured: true
+draft: false
 ---
 ![Talking to the SMEs](../../assets/projects/ti-auto/abc-team1.jpg)
 
