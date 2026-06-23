@@ -1,5 +1,131 @@
 ---
-import ProjectsIndex from '../../components/ProjectsIndex.astro';
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+const projects = (await getCollection('projects')).sort((a, b) => {
+  if (a.data.featured !== b.data.featured) return a.data.featured ? -1 : 1;
+  if (a.data.year !== b.data.year) return a.data.year < b.data.year ? 1 : -1;
+  return (a.data.order ?? 0) - (b.data.order ?? 0);
+});
+
+const count = String(projects.length).padStart(2, '0');
 ---
 
-<ProjectsIndex active="all" />
+<Layout
+  title="Work — Carlos"
+  description="Things I've shipped, broken, and rebuilt. Each one taught me something I didn't expect."
+  active="work"
+>
+  <header class="qm-page-head">
+    <span class="qm-page-tag">work · 2020 — now</span>
+    <h1 class="qm-h1">Selected <em>projects.</em></h1>
+    <p class="qm-lead">
+      Things I've shipped, broken, and rebuilt. Each one taught me something I didn't expect.
+    </p>
+  </header>
+
+  <div class="qm-list-head">
+    <h2>Featured</h2>
+    <span class="qm-count">{count} projects</span>
+  </div>
+
+  <div>
+    {
+      projects.map((p, i) => (
+        <a href={`/projects/${p.id}`} class="qm-proj">
+          <span class="qm-proj-num">№ {String(i + 1).padStart(2, '0')}</span>
+          <div>
+            <h3 class="qm-proj-title">{p.data.title}</h3>
+            <p class="qm-proj-brief">{p.data.description}</p>
+            <div class="qm-proj-stack">{p.data.stack.join(' · ')}</div>
+          </div>
+          <div class="qm-proj-meta">
+            <span><b>{p.data.year}</b></span>
+            <span>{p.data.role ?? p.data.category}</span>
+            <span>{p.data.status}</span>
+          </div>
+        </a>
+      ))
+    }
+  </div>
+</Layout>
+
+<style>
+  .qm-proj {
+    display: grid;
+    grid-template-columns: 60px 1fr 220px;
+    gap: 32px;
+    align-items: baseline;
+    padding: 36px 0;
+    border-bottom: 1px solid var(--rule);
+    color: inherit;
+    text-decoration: none;
+    transition: padding-left 0.25s;
+  }
+
+  .qm-proj:hover {
+    padding-left: 12px;
+  }
+
+  .qm-proj:hover .qm-proj-title {
+    color: var(--accent);
+  }
+
+  .qm-proj-num {
+    font-size: 13px;
+    color: var(--fg-3);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .qm-proj-title {
+    font-size: 28px;
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    line-height: 1.15;
+    margin: 0 0 10px;
+    transition: color 0.2s;
+    color: var(--fg);
+  }
+
+  .qm-proj-brief {
+    font-size: 15px;
+    color: var(--fg-2);
+    margin: 0 0 14px;
+    max-width: 56ch;
+    line-height: 1.55;
+  }
+
+  .qm-proj-stack {
+    font-size: 12px;
+    color: var(--fg-3);
+  }
+
+  .qm-proj-meta {
+    font-size: 13px;
+    color: var(--fg-3);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: flex-end;
+    text-align: right;
+  }
+
+  .qm-proj-meta b {
+    color: var(--fg-2);
+    font-weight: 500;
+  }
+
+  @media (max-width: 720px) {
+    .qm-proj {
+      grid-template-columns: 40px 1fr;
+    }
+    .qm-proj-meta {
+      grid-column: 2;
+      align-items: flex-start;
+      text-align: left;
+      flex-direction: row;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+  }
+</style>

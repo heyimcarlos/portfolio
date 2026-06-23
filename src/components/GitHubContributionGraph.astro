@@ -1,0 +1,296 @@
+---
+type ContributionLevel = 0 | 1 | 2 | 3 | 4;
+
+interface ContributionDay {
+  date: string;
+  day: number;
+  week: number;
+  level: ContributionLevel;
+  label: string;
+}
+
+interface ContributionMonth {
+  label: string;
+  span: number;
+}
+
+interface ContributionData {
+  weekCount: number;
+  months: ContributionMonth[];
+  grid: Array<Array<ContributionDay | undefined>>;
+}
+
+const githubUsername = 'heyimcarlos';
+const githubUrl = `https://github.com/${githubUsername}`;
+const contributionUrl = `https://github.com/users/${githubUsername}/contributions`;
+const dayLabels = ['', 'Mon', '', 'Wed', '', 'Fri', ''];
+const monthFormatter = new Intl.DateTimeFormat('en-US', {
+  month: 'short',
+  timeZone: 'UTC',
+});
+
+const getAttribute = (tag: string, name: string) => {
+  const match = tag.match(new RegExp(`\\b${name}="([^"]*)"`));
+  return match?.[1] ?? '';
+};
+
+const toLevel = (value: string): ContributionLevel => {
+  const level = Number.parseInt(value, 10);
+  return level >= 0 && level <= 4 ? (level as ContributionLevel) : 0;
+};
+
+const cleanText = (html: string) =>
+  html
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+const parseTooltipLabels = (html: string) => {
+  const labels = new Map<string, string>();
+  const pattern = /<tool-tip\b[^>]*\bfor="([^"]+)"[^>]*>([^<]*)<\/tool-tip>/g;
+
+  for (const match of html.matchAll(pattern)) {
+    labels.set(match[1], cleanText(match[2]));
+  }
+
+  return labels;
+};
+
+const parseDays = (html: string): ContributionDay[] => {
+  const labels = parseTooltipLabels(html);
+  const days: ContributionDay[] = [];
+  const pattern =
+    /<td\b(?=[^>]*\bclass="[^"]*\bContributionCalendar-day\b[^"]*")[^>]*><\/td>/g;
+
+  for (const match of html.matchAll(pattern)) {
+    const tag = match[0];
+    const id = getAttribute(tag, 'id');
+    const position = id.match(/contribution-day-component-(\d+)-(\d+)/);
+
+    if (!position) continue;
+
+    const date = getAttribute(tag, 'data-date');
+    if (!date) continue;
+
+    days.push({
+      date,
+      day: Number.parseInt(position[1], 10),
+      week: Number.parseInt(position[2], 10),
+      level: toLevel(getAttribute(tag, 'data-level')),
+      label: labels.get(id) ?? `${date}: contribution level ${getAttribute(tag, 'data-level')}`,
+    });
+  }
+
+  return days;
+};
+
+const getMonthLabel = (date: string) =>
+  monthFormatter.format(new Date(`${date}T00:00:00.000Z`));
+
+const buildMonths = (days: ContributionDay[], weekCount: number): ContributionMonth[] => {
+  const months: ContributionMonth[] = [];
+
+  for (let week = 0; week < weekCount; week += 1) {
+    const firstDayInWeek = days.find((day) => day.week === week);
+    if (!firstDayInWeek) continue;
+
+    const label = getMonthLabel(firstDayInWeek.date);
+    const current = months.at(-1);
+
+    if (current?.label === label) {
+      current.span += 1;
+    } else {
+      months.push({ label, span: 1 });
+    }
+  }
+
+  return months;
+};
+
+const buildGrid = (days: ContributionDay[], weekCount: number) => {
+  const dayByPosition = new Map(days.map((day) => [`${day.day}:${day.week}`, day]));
+
+  return Array.from({ length: 7 }, (_, day) =>
+    Array.from({ length: weekCount }, (_, week) => dayByPosition.get(`${day}:${week}`)),
+  );
+};
+
+const getGithubContributions = async (): Promise<ContributionData | undefined> => {
+  try {
+    const response = await fetch(contributionUrl, {
+      headers: {
+        Accept: 'text/html',
+        'User-Agent': 'heyimcarlos.dev',
+      },
+    });
+
+    if (!response.ok) return undefined;
+
+    const html = await response.text();
+    const days = parseDays(html);
+    if (days.length === 0) return undefined;
+
+    const weekCount = Math.max(...days.map((day) => day.week)) + 1;
+
+    return {
+      weekCount,
+      months: buildMonths(days, weekCount),
+      grid: buildGrid(days, weekCount),
+    };
+  } catch {
+    return undefined;
+  }
+};
+
+const contributions = await getGithubContributions();
+---
+
+<section class="github-graph" aria-label={`GitHub contribution graph for ${githubUsername}`}>
+
+  {
+    contributions ? (
+      <div class="github-calendar" aria-label={`GitHub contribution graph for ${githubUsername}`}>
+        <div class="github-calendar-scroll">
+          <table
+            class="github-calendar-table"
+            aria-label={`GitHub contribution graph for ${githubUsername}`}
+          >
+            <thead>
+              <tr>
+                <th scope="col" class="github-calendar-day-label">
+                  <span class="sr-only">Day of week</span>
+                </th>
+                {contributions.months.map((month) => (
+                  <th scope="col" colspan={month.span} class="github-calendar-month">
+                    {month.label}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {contributions.grid.map((row, rowIndex) => (
+                <tr>
+                  <th scope="row" class="github-calendar-day-label">
+                    {dayLabels[rowIndex] ? (
+                      <span>{dayLabels[rowIndex]}</span>
+                    ) : (
+                      <span class="sr-only">
+                        {['Sunday', 'Tuesday', 'Thursday', 'Saturday'][rowIndex / 2] ?? 'Day'}
+                      </span>
+                    )}
+                  </th>
+                  {row.map((day) =>
+                    day ? (
+                      <td
+                        class="github-calendar-cell"
+                        data-level={day.level}
+                        aria-label={day.label}
+                        title={day.label}
+                      />
+                    ) : (
+                      <td class="github-calendar-cell github-calendar-cell-empty" aria-hidden="true" />
+                    ),
+                  )}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    ) : (
+      <a href={githubUrl} class="github-calendar github-calendar-fallback">
+        GitHub contributions are unavailable right now. View profile ->
+      </a>
+    )
+  }
+</section>
+
+<style>
+  .github-graph {
+    margin: 2rem 0;
+  }
+
+  .github-calendar {
+    display: block;
+    color: #c9d1d9;
+  }
+
+  .github-calendar-scroll {
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  .github-calendar-table {
+    min-width: 840px;
+    border-spacing: 4px;
+    border-collapse: separate;
+    table-layout: fixed;
+  }
+
+  .github-calendar-table th,
+  .github-calendar-table td {
+    padding: 0;
+  }
+
+  .github-calendar-month {
+    height: 20px;
+    color: #8b949e;
+    font-size: 11px;
+    font-weight: 400;
+    line-height: 1;
+    text-align: left;
+  }
+
+  .github-calendar-day-label {
+    width: 30px;
+    color: #8b949e;
+    font-size: 11px;
+    font-weight: 400;
+    line-height: 12px;
+    text-align: left;
+  }
+
+  .github-calendar-cell {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+    background: #161b22;
+    outline: 1px solid rgba(27, 31, 36, 0.06);
+  }
+
+  .github-calendar-cell[data-level='1'] {
+    background: #0e4429;
+  }
+
+  .github-calendar-cell[data-level='2'] {
+    background: #006d32;
+  }
+
+  .github-calendar-cell[data-level='3'] {
+    background: #26a641;
+  }
+
+  .github-calendar-cell[data-level='4'] {
+    background: #39d353;
+  }
+
+  .github-calendar-cell-empty {
+    background: transparent;
+    outline: none;
+  }
+
+  .github-calendar-fallback {
+    color: #8b949e;
+    font-size: 14px;
+    transition:
+      border-color 0.2s,
+      color 0.2s;
+  }
+
+  .github-calendar-fallback:hover {
+    border-color: #8b949e;
+    color: #c9d1d9;
+  }
+
+</style>

@@ -1,370 +1,275 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Timeline, { type TimelineEvent } from '../components/Timeline.astro';
-import Tag from '../components/Tag.astro';
 
-const TIMELINE_EVENTS: TimelineEvent[] = [
+interface WorkRow {
+  range: string;
+  role: string;
+  co: string;
+  loc: string;
+  note: string;
+}
+
+interface EduRow {
+  year: string;
+  what: string;
+  where: string;
+  loc: string;
+}
+
+const WORK: WorkRow[] = [
   {
-    year: '1995',
-    place: 'Santo Domingo, DO',
-    role: 'Born',
-    type: 'life',
-    desc: 'Sports, gaming, and an early obsession with competitive anything.',
-  },
-  {
-    year: '2014 — 2019',
-    place: 'Web',
-    role: 'Esports Live Streamer',
-    org: 'Twitch',
-    type: 'edu',
-    desc: 'Competitive gaming livestream with a community of 200+ viewers.',
-  },
-  {
-    year: '2019',
-    place: 'Santo Domingo, DO',
-    role: 'B.B.A. Business Administration',
-    org: 'Pontifical Catholic University (PUCMM)',
-    type: 'edu',
-    desc: 'Graduated business school.',
-  },
-  {
-    year: '2019',
-    place: 'Santo Domingo, DO',
-    role: 'Analyst',
-    org: 'ScotiaBank',
-    type: 'work',
-    desc: 'Realized finance was not it. Started eyeing a different kind of problem-solving.',
-  },
-  {
-    year: '2020',
-    place: 'New York, NY',
-    role: 'Software Engineering Immersive',
-    org: 'Fullstack Academy',
-    type: 'edu',
-    desc: 'Completed the bootcamp — React, Node, Express, PostgreSQL. First time code felt addictive.',
-  },
-  {
-    year: '2020 — 2022',
-    place: 'Remote',
-    role: 'Full-Stack Developer',
-    org: '305 Global Marketing',
-    type: 'work',
-    desc: 'Shipped a multi-tenant e-commerce platform and an ops dashboard on Next.js + AWS + PostgreSQL + Mongo. ~250k annual revenue.',
-  },
-  {
-    year: '2022 — 2023',
-    place: 'Remote',
-    role: 'SDE II',
-    org: 'Exactera',
-    type: 'work',
-    desc: 'Implemented ML-powered vector search at scale.',
-  },
-  {
-    year: '2023 — 2026',
-    place: 'Toronto, CA',
-    role: 'Software Engineering Technology - AI (AdvDip)',
-    org: 'Centennial College',
-    type: 'edu',
-    desc: 'Full-time student, two part-time jobs. GPA 4.4/4.5. Member of the Engineerging Student Association. Math tutor. Scholarship recipient.',
-  },
-  {
-    year: '2024',
-    place: 'Toronto, CA',
-    role: 'Lead Software Developer & Coordinator',
-    org: 'Centennial OER Lab',
-    type: 'work',
-    desc: 'Led engineering on open educational tools for 12k+ students. Type-safe, small team, high-leverage.',
-  },
-  {
-    year: '2025 — 2026',
-    place: 'Toronto, CA',
-    role: 'Fullstack Software Engineer',
-    org: 'Xello',
-    type: 'work',
-    desc: 'Major contributor to "The Real Game" — a career exploration tool used by millions of students.',
-  },
-  {
-    year: '2026',
-    place: 'Toronto, CA',
+    range: '2026 — now',
     role: 'Machine Learning Engineer',
-    org: 'TI Automotive',
-    type: 'work',
-    desc: 'Built an Inverse model-based Reinforcement Learning model to predict polymer blends from OEM specs, now a tool used by Lab Techs.',
+    co: 'TI Automotive',
+    loc: 'Toronto',
+    note: 'Inverse-RL model predicting polymer blends from OEM specs. In production with lab techs.',
+  },
+  {
+    range: '2025 — 26',
+    role: 'Fullstack Software Engineer',
+    co: 'Xello',
+    loc: 'Toronto',
+    note: 'Major contributor to "The Real Game" — a career-exploration tool used by millions of students.',
+  },
+  {
+    range: '2024',
+    role: 'Lead Software Developer',
+    co: 'Centennial OER Lab',
+    loc: 'Toronto',
+    note: 'Led engineering on open educational tools for 12k+ students. Type-safe, small team, high leverage.',
+  },
+  {
+    range: '2022 — 23',
+    role: 'SDE II',
+    co: 'Exactera',
+    loc: 'Remote',
+    note: 'Implemented ML-powered vector search at scale.',
+  },
+  {
+    range: '2020 — 22',
+    role: 'Full-Stack Developer',
+    co: '305 Global Marketing',
+    loc: 'Remote',
+    note: 'Multi-tenant e-commerce platform + ops dashboard on Next.js + AWS + Postgres + Mongo.',
   },
 ];
 
-const STACK: { category: string; items: string[] }[] = [
-  { category: 'Languages', items: ['TypeScript', 'JS', 'Python', 'Go', 'Rust'] },
-  { category: 'Frontend', items: ['React', 'Next', 'Astro', 'Tailwind', 'Angular'] },
-  { category: 'Backend', items: ['Node', 'Postgres', 'MySQL', 'Redis', 'FastAPI', 'tokio'] },
-  { category: 'Infra', items: ['Vercel', 'AWS', 'Docker', 'GH Actions', 'circleci', 'terraform', 'huggingface', 'n8n'] },
-  { category: 'ML', items: ['pytorch', 'harness engineering', 'context engineering', 'LLM fine-tuning', 'LoRA'] },
+const EDUCATION: EduRow[] = [
+  {
+    year: '2023 — 26',
+    what: 'AdvDip · Software Engineering Tech (AI)',
+    where: 'Centennial College',
+    loc: 'Toronto',
+  },
+  {
+    year: '2020',
+    what: 'Software Engineering Immersive',
+    where: 'Fullstack Academy',
+    loc: 'New York',
+  },
+  {
+    year: '2019',
+    what: 'B.B.A. Business Administration',
+    where: 'PUCMM',
+    loc: 'Santo Domingo',
+  },
+];
+
+const STACK: { group: string; items: string[] }[] = [
+  { group: 'Languages', items: ['TypeScript', 'JavaScript', 'Python', 'Go', 'Rust'] },
+  { group: 'Frontend', items: ['React', 'Next.js', 'Astro', 'Tailwind', 'Angular'] },
+  { group: 'Backend', items: ['Node', 'Postgres', 'MySQL', 'Redis', 'FastAPI', 'tokio'] },
+  { group: 'Infra', items: ['Vercel', 'AWS', 'Docker', 'GH Actions', 'Terraform'] },
+  { group: 'ML', items: ['PyTorch', 'Hugging Face', 'LoRA', 'fine-tuning', 'RL'] },
 ];
 ---
 
 <Layout
   title="About — Carlos"
-  description="Dominican software engineer. Came for the gaming, stayed for the compiler."
+  description="Dominican engineer based in Toronto. Currently building inverse-RL models at TI Automotive."
   active="about"
 >
-  <section class="origins">
-    <span class="eyebrow">CHAPTER 01 · ORIGINS</span>
-    <h1 class="h1">
-      I came for the gaming, <em>stayed</em> for the compiler<span class="dot">.</span>
-    </h1>
-    <div class="prose">
-      <p>
-        I spent my teens trying to go pro at SOCOM, Counter-Strike, and later Fortnite. I made it.
-        Then I tried finance, and it wasn't it — I wanted work where the output scaled with the
-        effort. At a family wedding, a cousin said, "you should learn to code."
-      </p>
-      <p>
-        One bootcamp, a software engineering degree, a move to Toronto, and a few jobs later, I'm
-        focused on <mark>AI engineering and machine learning</mark> — retrieval systems,
-        Reinforcement Learning, and the unglamorous plumbing that makes models useful in
-        production.
-      </p>
-      <p>
-      Outside the screen: BJJ (blue belt, forever), snowboarding, surfing, building silly things. This site is one of them.
-      </p>
-    </div>
-  </section>
+  <header class="qm-page-head">
+    <span class="qm-page-tag">about · forever a beginner</span>
+    <h1 class="qm-h1">A short <em>biography.</em></h1>
+  </header>
 
-  <section class="timeline-section">
-    <span class="eyebrow">CHAPTER 02 · THE TIMELINE</span>
-    <h2 class="h2">
-      The long <em>way</em> here<span class="dot">.</span>
-    </h2>
-    <p class="subtitle">~31 years · 4 cities · 1 reasonably consistent career</p>
-    <Timeline events={TIMELINE_EVENTS} />
-  </section>
+  <div class="qm-about">
+    <p>
+      Dominican engineer based in <b>Toronto</b>. Spent my teens going pro at Counter-Strike
+      and Fortnite, tried finance briefly, then learned to code at a kitchen table.
+    </p>
+    <p>
+      Now focused on <b>AI engineering and machine learning</b> — retrieval systems,
+      reinforcement learning, and the unglamorous plumbing that makes models useful in
+      production. Outside the screen: BJJ blue belt, snowboarding, surfing, building silly
+      things.
+    </p>
+  </div>
 
-  <section class="stack-section">
-    <span class="eyebrow">CHAPTER 03 · THE STACK</span>
-    <h2 class="h2 stack-title">
-      Tools of the <em>trade</em><span class="dot">.</span>
-    </h2>
-    <div class="stack-grid">
-      {
-        STACK.map((group) => (
-          <div class="stack-card">
-            <div class="stack-label">{group.category}</div>
-            <div class="stack-tags">
-              {group.items.map((item) => (
-                <Tag variant="bg">{item}</Tag>
-              ))}
-            </div>
+  <h2 class="qm-block-h2">Experience</h2>
+  <div>
+    {
+      WORK.map((w) => (
+        <div class="qm-work-row">
+          <span class="qm-work-year">{w.range}</span>
+          <div>
+            <p class="qm-work-role">
+              {w.role}, <span class="qm-work-co">{w.co}</span>
+            </p>
+            <p class="qm-work-note">{w.note}</p>
           </div>
-        ))
-      }
-    </div>
-  </section>
-
-  <section class="meta-strip">
-    <div class="meta-grid">
-      <div class="meta-cell">
-        <div class="meta-label">loc.</div>
-        <div class="meta-value">Toronto, CA</div>
-      </div>
-      <div class="meta-cell">
-        <div class="meta-label">orig.</div>
-        <div class="meta-value">Santo Domingo, DO</div>
-      </div>
-      <div class="meta-cell">
-        <div class="meta-label">tz</div>
-        <div class="meta-value">EST · UTC-5</div>
-      </div>
-      <div class="meta-cell">
-        <div class="meta-label">status</div>
-        <div class="meta-value status-value">
-          <span class="rb-dot-live"></span> open to roles
+          <span class="qm-work-loc">{w.loc}</span>
         </div>
-      </div>
-    </div>
-  </section>
+      ))
+    }
+  </div>
+
+  <h2 class="qm-block-h2">Education</h2>
+  <div>
+    {
+      EDUCATION.map((e) => (
+        <div class="qm-edu-row">
+          <span class="qm-work-year">{e.year}</span>
+          <div>
+            <b>{e.what}</b>
+            <em>{e.where}</em>
+          </div>
+          <span class="qm-work-loc">{e.loc}</span>
+        </div>
+      ))
+    }
+  </div>
+
+  <h2 class="qm-block-h2">Stack</h2>
+  <dl class="qm-stack">
+    {
+      STACK.map((s) => (
+        <div>
+          <dt>{s.group}</dt>
+          <dd>{s.items.join(', ')}</dd>
+        </div>
+      ))
+    }
+  </dl>
 </Layout>
 
 <style>
-  section {
-    border-bottom: 3px solid var(--zine-ink);
+  .qm-about {
+    max-width: 64ch;
   }
 
-  .eyebrow {
-    display: block;
-    font-family: var(--font-mono);
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    opacity: 0.6;
-    margin-bottom: 8px;
+  .qm-about p {
+    color: var(--fg-2);
+    font-size: 17px;
+    line-height: 1.65;
+    margin: 0 0 18px;
   }
 
-  em {
-    font-style: italic;
+  .qm-about p b {
+    color: var(--fg);
     font-weight: 500;
   }
 
-  .dot {
-    color: var(--zine-accent);
+  .qm-work-row,
+  .qm-edu-row {
+    display: grid;
+    grid-template-columns: 110px 1fr 140px;
+    gap: 24px;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--rule);
+    align-items: baseline;
   }
 
-  .origins {
-    padding: 64px 32px 48px;
-    text-align: center;
+  .qm-edu-row {
+    padding: 18px 0;
   }
 
-  .h1 {
-    max-width: 820px;
-    margin: 0 auto;
-    font-weight: 700;
-    letter-spacing: -2.4px;
-    line-height: 0.95;
-    font-size: clamp(38px, 6vw, 68px);
+  .qm-work-row:last-child,
+  .qm-edu-row:last-child {
+    border-bottom: none;
   }
 
-  .prose {
-    max-width: 720px;
-    margin: 28px auto 0;
+  .qm-work-year,
+  .qm-work-loc {
+    font-size: 13px;
+    color: var(--fg-3);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .qm-work-loc {
+    text-align: right;
+  }
+
+  .qm-work-role {
     font-size: 16px;
-    line-height: 1.7;
-    text-align: left;
-  }
-
-  .prose p {
-    margin: 0 0 16px;
-  }
-
-  .prose mark {
-    background: var(--zine-accent);
-    color: inherit;
-    padding: 0 3px;
-  }
-
-  .timeline-section {
-    padding: 56px 32px 48px;
-    text-align: center;
-  }
-
-  .timeline-section .eyebrow {
-    margin-bottom: 6px;
-  }
-
-  .h2 {
+    color: var(--fg);
     margin: 0;
-    font-weight: 700;
-    letter-spacing: -1.6px;
-    line-height: 1;
-    font-size: clamp(28px, 5vw, 44px);
-    margin-bottom: 8px;
+    font-weight: 500;
   }
 
-  .subtitle {
-    margin: 0 0 32px;
-    font-family: var(--font-mono);
-    font-size: 11px;
-    opacity: 0.6;
+  .qm-work-co {
+    color: var(--fg-2);
+    font-weight: 400;
   }
 
-  .stack-section {
-    padding: 48px 32px;
-    text-align: center;
+  .qm-work-note {
+    font-size: 14px;
+    color: var(--fg-2);
+    margin: 8px 0 0;
+    max-width: 64ch;
+    line-height: 1.5;
   }
 
-  .stack-title {
-    letter-spacing: -1.5px;
-    font-size: clamp(28px, 4.5vw, 40px);
-    margin-bottom: 28px;
+  .qm-edu-row b {
+    color: var(--fg);
+    font-weight: 500;
+    font-size: 15px;
+    display: block;
   }
 
-  .stack-grid {
+  .qm-edu-row em {
+    font-style: normal;
+    color: var(--fg-2);
+    font-size: 13px;
+    display: block;
+    margin-top: 2px;
+  }
+
+  .qm-stack {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 14px;
-    max-width: 880px;
-    margin: 0 auto;
-    text-align: left;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px 64px;
+    margin: 0;
   }
 
-  .stack-card {
-    background: var(--zine-paper);
-    border: 2.5px solid var(--zine-ink);
-    box-shadow: 4px 4px 0 var(--zine-ink);
-    padding: 14px 16px;
-  }
-
-  .stack-label {
-    font-family: var(--font-mono);
-    font-size: 10px;
+  .qm-stack dt {
+    font-size: 12px;
+    color: var(--fg-3);
+    letter-spacing: 0.06em;
     text-transform: uppercase;
-    letter-spacing: 1.5px;
-    font-weight: 700;
-    margin-bottom: 8px;
+    margin-bottom: 12px;
   }
 
-  .stack-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
+  .qm-stack dd {
+    margin: 0;
+    font-size: 15px;
+    color: var(--fg);
   }
 
-  .meta-strip {
-    padding: 36px 32px;
-    text-align: center;
-  }
-
-  .meta-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    max-width: 720px;
-    margin: 0 auto;
-    font-family: var(--font-mono);
-    font-size: 11px;
-  }
-
-  .meta-cell {
-    border: 2px solid var(--zine-ink);
-    padding: 10px 12px;
-    background: var(--zine-paper);
-    text-align: left;
-  }
-
-  .meta-label {
-    opacity: 0.6;
-    margin-bottom: 4px;
-  }
-
-  .meta-value {
-    font-weight: 700;
-  }
-
-  .status-value {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  @media (max-width: 1024px) {
-    .stack-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  @media (max-width: 768px) {
-    .meta-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  @media (max-width: 640px) {
-    .stack-grid {
+  @media (max-width: 720px) {
+    .qm-work-row,
+    .qm-edu-row {
       grid-template-columns: 1fr;
+      gap: 6px;
+      padding: 18px 0;
     }
-  }
-
-  @media (max-width: 480px) {
-    .meta-grid {
+    .qm-work-loc {
+      text-align: left;
+    }
+    .qm-stack {
       grid-template-columns: 1fr;
+      gap: 24px;
     }
   }
 </style>
