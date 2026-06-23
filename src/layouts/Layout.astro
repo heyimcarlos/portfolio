@@ -3,20 +3,22 @@ import Analytics from '@vercel/analytics/astro';
 import BaseHead from '../components/BaseHead.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import type { ImageMetadata } from 'astro';
 
 interface Props {
   title: string;
   description?: string;
   active?: 'home' | 'work' | 'blog' | 'about';
+  image?: ImageMetadata;
 }
 
-const { title, description = '', active } = Astro.props;
+const { title, description = '', active, image } = Astro.props;
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
-    <BaseHead title={title} description={description} />
+    <BaseHead title={title} description={description} image={image} />
     <Analytics />
   </head>
   <body>

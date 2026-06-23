@@ -15,6 +15,7 @@ const {
   description,
   pubDate,
   updatedDate,
+  heroImage,
   readTime,
   excerpt,
   prev,
@@ -28,7 +29,7 @@ const date = formatDate(pubDate);
 const subtitle = excerpt ?? description;
 ---
 
-<Layout title={`${title} — Carlos`} description={description} active="blog">
+<Layout title={`${title} — Carlos`} description={description} active="blog" image={heroImage}>
   <a href="/blog" class="qm-back">← back to writing</a>
 
   <header class="qm-page-head">
