@@ -1,17 +1,21 @@
 ---
-title: 'The Boring Model Won'
-description: 'Building a Forward Model for Polymer Properties. Part 2 of a series on the polymer ML project I built during my time at TI Automotive. I tried four neural network architectures — a plain MLP, a ResNet, an ensemble, and a committee and the plain MLP won.'
+title: 'Architecture Was Not the Problem'
+description: 'Building a forward model for polymer properties. Part 2 of the polymer ML project: I tried four neural network architectures, expecting one to win clearly. None did.'
 pubDate: 'Apr 24 2026'
 tag: notes
 heroImage: '../../assets/blog-placeholder-3.jpg'
 featured: true
 draft: true
 ---
-# The Boring Model Won: Building a Forward Model for Polymer Properties
+*Part 2 of a series on the polymer ML project I built during my final year at Centennial College. [Part 1](/blog/polymer-project-intro/) covered the data work: messy recipes, fake correlations, synthetic copies, ingredient grouping, and the SME features that rescued melt flow rate.*
 
-*Part 2 of a series on the polymer ML project I built during my final year at Centennial College. [Part 1](LINK) covered null augmentation — how I turned 470 real manufacturing trials into 4,136 training samples without generating synthetic data.*
+This post is about what happened after that.
 
-*This post is about what happened after. I tried four neural network architectures — a plain MLP, a ResNet, an ensemble, and a committee — and the plain MLP won. That finding is the headline. But the three decisions that mattered more than architecture are the reason I'm writing this post.*
+I had a forward model: recipe in, predicted properties out. The next question was obvious. Which neural network architecture should power it?
+
+I tried four. I expected one to win clearly. None did.
+
+That became the real finding. At this dataset size, with this feature set, architecture was not where the leverage lived.
 
 ---
 
@@ -19,113 +23,107 @@ draft: true
 
 Before the results, the four architectures I compared:
 
-[IMAGE: forward_model_architecture_shootout.svg — the 4-panel diagram]
+[IMAGE: forward_model_architecture_shootout.svg - the 4-panel diagram]
 
-**MLP.** A plain multilayer perceptron. Two hidden layers of 256 units, ReLU activations, dropout in between. One trunk, shared by all 16 output heads. The simplest baseline.
+**MLP.** A plain multilayer perceptron. Two hidden layers, ReLU activations, dropout in between, and one shared trunk for the six dense target properties. The simplest baseline.
 
-**ResNet.** Same two-layer structure, but each hidden block has a skip connection that adds its input back to its output. The idea — borrowed from computer vision — is that skip connections help gradients flow through deeper networks and let the network learn the *residual* on top of an identity mapping. Good when the true function is close to identity; useful for very deep networks. I tried it at 3 blocks of 128 hidden units.
+**ResNet.** Same general idea, but with skip connections. Each block adds its input back to its output, which can help deeper networks learn residual corrections instead of rebuilding the whole function from scratch.
 
-**Ensemble.** Five MLPs trained with different random seeds, predictions averaged at test time. The idea is variance reduction: each individual MLP makes different mistakes, and averaging cancels some of them out. Works well when the bottleneck is model variance rather than bias. Comes with a 5× compute cost at training and inference.
+**Ensemble.** Five MLPs trained with different random seeds, with predictions averaged at test time. The idea is variance reduction: each model makes slightly different mistakes, and averaging cancels some of them out.
 
-**Committee.** A separate MLP per target property — 16 independent models, each specialized in one output. The idea is that each property might have its own relationship with recipe inputs, so forcing them to share a trunk is giving up information. Comes with a 16× parameter cost and loses all the regularization benefit of multi-task learning.
+**Committee.** One separate MLP per target property. The idea is specialization: maybe density, melt flow rate, ash content, and impact properties each deserve their own model.
 
-Each of these has a reason to try. None of them are crazy. They reflect four different intuitions about what the bottleneck is: capacity (ResNet), variance (Ensemble), per-target specialization (Committee), or nothing — the simplest thing works (MLP).
+Each of these had a reason to exist. They represented four different guesses about the bottleneck: simplicity, depth, variance, or per-property specialization.
 
 ## The shootout
 
-Same data. Same train/test split. Same 6 dense target properties. Same training budget.
+Same data. Same grouped train/test split. Same six dense target properties. Same training budget.
 
-| Architecture | Parameters | Avg R² |
+The project eventually predicted more than six properties, but the architecture shootout stayed on the six with enough measurements to make the comparison meaningful. Part 1 has the data sparsity story; this post uses the clean comparison set.
+
+| Architecture | Parameters | Avg R2 |
 |---|---:|---:|
-| **MLP (single)** | **17,094** | **0.877** |
-| Ensemble (5× MLP) | 128,670 | 0.853 |
-| Committee (1 MLP per target) | 150,534 | 0.847 |
-| ResNet (128 hidden, 3 blocks) | 107,910 | 0.748 |
+| Ensemble (5x MLP) | 128,670 | 0.870 |
+| ResNet (128 hidden, 3 blocks) | 107,910 | 0.866 |
+| MLP (single) | 17,094 | 0.858 |
+| Committee (1 MLP per target) | 150,534 | 0.856 |
 
-Test set: 30 samples across 6 properties. The gaps are consistent across every property and large enough that they're not explained by sampling noise at that size.
+The old draft of this post had a different headline: "the boring model won." That was based on an earlier shootout where the single MLP beat the others clearly.
 
-**The single MLP wins with ~7× fewer parameters than the next-best architecture.** The ensemble trails by 2.4 R² points despite averaging five models. The committee is slightly worse still — giving each property its own model threw away the regularization of sharing a trunk across correlated targets. ResNet is the clear loser, 13 points below the winner on 7× the parameters.
+The rerun corrected that. The Ensemble nominally won. ResNet came second. The MLP came third. The Committee came last.
 
-[IMAGE: training_curves.png — validation loss vs epoch, all four architectures]
+But the whole field fit inside **1.4 R2 points**.
 
-Looking at the training curves explains a lot of this. The single MLP converges to the lowest validation loss and stays there. The ensemble tracks closely but never gets lower — averaging five models that all overfit in similar ways doesn't save you. The committee shows real per-target specialization but lacks cross-target regularization. ResNet plateaus visibly higher from the start.
+On a small held-out set, that is not a decisive win. Different random seeds could shuffle the ranking. The only result sharp enough to keep is that the Committee was both the most expensive and the least accurate. Sharing a trunk across correlated targets helped more than I expected.
 
-## Why the boring model won
+[IMAGE: training_curves.png - validation loss vs epoch, all four architectures]
 
-The usual mistake is to reach for more capacity when the model underperforms. At 4,136 training samples, capacity wasn't the problem. More parameters just gave the model more ways to overfit — to memorize the augmented copies instead of generalizing from the base recipes underneath them.
+## Why none of them won
 
-The winning MLP is almost comically simple:
+The tempting interpretation is to say the Ensemble won and stop there. That would be technically true and mostly useless.
 
-```yaml
-hidden_dims: [256, 256]
-dropout: 0.17
-weight_decay: 0.00022
-learning_rate: 0.001
-batch_size: 32
-epochs: 50, early stopping patience 50
-```
+The better reading is that none of the architectures pulled away. The smallest model and the largest model landed in the same neighborhood. More capacity did not create a breakthrough. More specialization did not create a breakthrough. Averaging five models helped a little, but not enough to change the shape of the project.
 
-Two hidden layers. Square. 89,104 parameters in the final form. No skip connections, no attention, no tricks.
+That matters because the rest of the system had much larger effects. Cleaning the data, respecting grouped splits, masking missing targets, and encoding SME knowledge moved the model more than choosing between these four architectures.
 
-The hyperparameter sweep that got there was an autoresearch loop — 18 iterations, each one testing a single change against the current best. The patterns that held up across both sweeps: dropout around 0.17 is a narrow plateau (0.13 and 0.19 were both clearly worse); weight decay 0.00022 was the single biggest win in the entire sweep (+0.026 R² in one step); and every architectural change — wider, narrower, deeper, asymmetric, batch-normed, skip-connected — made the model worse.
+This is the part I wish I understood earlier. On small industrial datasets, architecture can feel like the most interesting decision because it has the most impressive names. But if the data is small, sparse, and physically constrained, architecture is often downstream of boring things being correct.
 
-At ~4k samples, on this kind of tabular data, everything that added capacity hurt more than it helped.
+## The bottleneck was still melt flow rate
 
-## Sidebar: the trainer bug I found while writing this post
+The clearest evidence was melt flow rate.
 
-While assembling the numbers for this post, I noticed something uncomfortable. My trainer constructs `nn.HuberLoss()` or `nn.MSELoss()` based on a config setting — but the actual line that computes the loss in the training loop hardcodes squared error:
+In Part 1, I walked through why melt flow rate was different: it needed a physics feature from the SME's spreadsheet. Without that feature, the model had to discover a sharp non-linear rule from a few hundred recipes. With the feature, melt flow rate jumped from roughly `R2 = 0.43` to `R2 = 0.92`.
+
+The architecture shootout showed the same thing from the other side. Without those physics features, every architecture was stuck around `R2 = 0.42-0.48` on melt flow rate, while the other dense properties were mostly above `0.89`.
+
+That is a clean result. If four different architectures all fail on the same property in the same way, the problem is probably not the architecture. It is the information you gave the model.
+
+Architecture choice could not rescue melt flow rate. The SME feature could.
+
+## Sidebar: two bugs I found while writing this post
+
+While putting together the numbers for this post, I read through pieces of code I had not touched in months. I found two bugs.
+
+**Bug 1.** The trainer constructs `nn.HuberLoss()` based on the config setting `loss_function: huber`, but the actual loss line in the training loop hardcodes squared error:
 
 ```python
 loss = torch.sum((outputs[mask] - y_batch[mask]) ** 2) / mask.sum()
 ```
 
-My config says `loss_function: huber`. The code is actually training with masked MSE.
+So every model that declared `huber` in its config actually trained with masked MSE. The config field was wired up as far as constructing the unused criterion. An earlier hyperparameter sweep had measured Huber as slightly better, about `+0.006 R2`, but that got silently reverted when I added NaN masking and inlined the squared-error computation.
 
-The hyperparameter sweep had found that Huber beat MSE by +0.006 R² on an earlier trainer revision that used `self.criterion`. That finding was real at the time. It got silently reverted in a later rewrite I did — I added the NaN masking logic and inlined the squared-error computation in the process, which quietly replaced the criterion dispatch.
+The architecture ranking does not change because every model had the same bug. The production model was probably slightly worse than it could have been. Real, not catastrophic.
 
-I'm flagging this because (a) it's honest, (b) it's exactly the kind of bug ML research code is riddled with, and (c) the final model is probably 0.006 R² worse than it could have been — real but not catastrophic. The architecture shootout ranking doesn't change; every architecture was trained with the same bug.
+**Bug 2.** The `MCDropoutPredictor.predict` method called `add_engineered_features(df, feature_set="all")`, regardless of which feature set the model was trained on.
 
-If this were a production model I'd fix it and rerun. For a handoff-stage research project, I'm writing it down and moving on. That's a judgment call I'd defend.
+For the deployed model, which was trained on `all`, the bug was invisible. For a model trained on `all_no_physics`, this would build the wrong feature dataframe and then slice it back down through `feature_cols.json`. Probably correct predictions, wasted compute, and a landmine for future models.
 
-## The three things that mattered more than architecture
+Two bugs is more than I want to find in a post-hoc audit. They are also exactly the kind of bug ML research code accumulates: a refactor reverting an earlier decision, or a hardcoded value staying correct only by coincidence. The fix is reading your own code with fresh eyes more often than I did. This post counted as that exercise.
 
-This is the part I actually want people to remember. Each of these decisions had more effect on model quality than the difference between the best and worst architecture in the shootout.
+## Three things that mattered more than architecture
+
+This is the part I actually want people to remember.
 
 ### 1. NaN-masked loss
 
-My 16 target properties are wildly unbalanced in how often they were measured. Some had 94 test samples. Three had only 3.
+The dataset had missing target values everywhere. A recipe might have density and melt flow rate measured, but not every impact or tensile property. Dropping rows with missing values would throw away most of the dataset. Imputing missing lab measurements would teach the model fake ground truth.
 
-| Property | Test samples |
-|---|---:|
-| melt_flow_rate, density, flex_modulus | 94 each |
-| ash_content | 91 |
-| hdt_180mpa | 89 |
-| charpy_notched_23c, tensile_yield_50mm | 64 |
-| izod_notched_23c | 33 |
-| *...9 more...* | |
-| elongation_break_50mm, izod_notched_n30c | 4 |
-| tensile_break_5mm | 3 |
-
-A 24× spread between the most- and least-measured property. If you drop rows with any missing values, you're left with almost nothing. If you impute missing values, you're teaching the model that the imputed numbers are ground truth. Both destroy signal.
-
-The fix is a per-element mask in the loss:
+The fix was a per-element mask in the loss:
 
 ```python
 mask = ~torch.isnan(y_batch)
 loss = torch.sum((outputs[mask] - y_batch[mask]) ** 2) / mask.sum()
 ```
 
-`mask` is `(batch_size, n_targets)`. A single training sample can contribute gradient to any subset of the 16 outputs — whichever properties were actually measured for that row. The model sees every sample; it just updates only the heads that had a real target.
+`mask` is shaped like `(batch_size, n_targets)`. A single sample can contribute gradient to whichever target properties were actually measured. The model sees the row, but only updates the heads with real lab values.
 
-I think of this as the most underrated detail in small-data tabular ML. You almost never see it discussed in tutorials, but without it, real manufacturing or scientific datasets become un-modelable.
+This mattered more than the architecture. Without it, the real manufacturing dataset basically stops being modelable.
 
 ### 2. Group-aware train/test splits
 
-The augmentation pipeline produces ~9 synthetic copies per base recipe, with IDs like `D620GC_1201314_synthetic_3`. A naive random split puts copies of the same base recipe in both train and test. The model has effectively seen a near-duplicate of every test row during training, and R² inflates by 10–20 points.
+The synthetic-copy pipeline created several variants of each base recipe. A naive random split can put copies of the same base recipe in both train and test. Then the model has effectively seen the test recipe already, and R2 inflates.
 
-This is the kind of bug that's invisible unless you look for it specifically. You get great validation numbers, ship the model, watch it fall apart in production, and spend two weeks trying to figure out why.
-
-The fix uses sklearn's `GroupShuffleSplit`:
+The fix was to split by base recipe ID:
 
 ```python
 def extract_base_lot_id(id_str):
@@ -138,15 +136,15 @@ gss = GroupShuffleSplit(n_splits=1, test_size=test_size, random_state=42)
 train_idx, test_idx = next(gss.split(df, groups=groups))
 ```
 
-All augmented copies of a base recipe go to the same side of the split. I also shipped an explicit leakage-check function that runs after every data load and asserts zero overlap between train and test base IDs. Defense in depth — when the cost of a silent bug is "every R² number in your paper is wrong," belt and suspenders is the correct posture.
+All copies of a base recipe go to the same side of the split. I also added a leakage check that asserts zero overlap between train and test base IDs.
 
-Every R² in this entire project depends on the group split being right. This detail matters more than any model architecture choice I made.
+Every R2 number in the project depends on that being right. This is one of those details that sounds small until it invalidates an entire experiment.
 
-### 3. MC Dropout for uncertainty — and a reality check
+### 3. MC Dropout for uncertainty
 
-The forward model's job wasn't just to predict properties. It was to be the environment for a reinforcement learning agent that proposes recipes from OEM specs (coming up in Post 3 of this series). The RL agent needs to know not just what the model predicts, but *how confident the model is*. A recipe that the forward model is very uncertain about is one the agent should avoid — it's probably in a region of ingredient space where the model doesn't have training data.
+The forward model was not only used for predictions. It was supposed to become the environment for a reinforcement learning agent in Part 3. That agent needed a rough uncertainty signal, because recipes far away from training data should be penalized.
 
-I used MC Dropout: at inference time, leave dropout on, run 10 forward passes, take the mean as the prediction and the standard deviation as the uncertainty estimate.
+I used MC Dropout: at inference time, leave dropout on, run several forward passes, use the mean as the prediction and the standard deviation as uncertainty.
 
 ```python
 self.model.train()  # leave dropout on at inference
@@ -159,37 +157,39 @@ mean = np.mean(predictions, axis=0)
 std = np.std(predictions, axis=0)
 ```
 
-The RL agent's reward subtracts a term proportional to this std, so the agent learns to prefer recipes the forward model is confident about.
+Production used `n_samples=10`. For calibration, I tested `n_samples=50` on the held-out set and compared predicted standard deviation against actual absolute error.
 
-This all works in theory. But does it actually work? I hadn't checked until I started writing this post. So I wrote a calibration script: run MC Dropout with N=50 samples on the held-out test set, and for every (sample, property) pair, compute the model's predicted std and the absolute residual. If MC Dropout is well calibrated, they should correlate strongly.
+[IMAGE: mc_dropout_calibration.png - scatter plot, global r = 0.313]
 
-[IMAGE: mc_dropout_calibration.png — scatter plot, global r = 0.313]
+Global Pearson `r = 0.313`. Directionally useful. Far from well calibrated.
 
-**Global Pearson r = 0.313.** Directionally useful. Far from well calibrated.
+The per-property story was mixed. On melt flow rate, `r = 0.76`, which means the model had a real sense of when it did not know. On a couple of sparse tensile properties, the correlation was negative, meaning the model was confident where it was wrong. Across the dense properties, predicted uncertainty was generally lower than actual residual.
 
-The per-property story is more honest. On melt flow rate, per-property r = 0.76 — the model really does know when it doesn't know. On elongation at break (only 4 test samples), r = 0.89 but the n is too small to trust. And on tensile_break_50mm and tensile_yield_50mm, per-property r is *negative* — the model is actively confident where it's wrong. Mean predicted std is consistently lower than mean actual residual across every dense property, which means MC Dropout is *underestimating* uncertainty in this setup.
+That does not make MC Dropout useless. It means I should treat it as a cheap, biased uncertainty signal. For an RL reward that only needs to avoid high-uncertainty regions, that can be enough. For confidence intervals shown to a lab technician, it would not be enough. I would use conformal prediction instead.
 
-This isn't a failure of the technique. It's a reality check on what MC Dropout is: a cheap approximation to Bayesian inference that gives you a useful-but-biased uncertainty signal. For my downstream use — driving exploration in an RL agent that just needs to know which regions are more uncertain than others — it's probably good enough. But if I were reporting confidence intervals to a lab technician who was going to manufacture a recipe based on my prediction, MC Dropout would not be the right tool. Conformal prediction would be the principled fix.
+There is also an honest production footnote here: the deep Ensemble nominally won the architecture shootout, but MC Dropout shipped. The reason was not a principled trade-off I carefully wrote down at the time. MC Dropout was already integrated when the Ensemble experiment ran, and the Ensemble's gain was not decisive enough to justify swapping it in.
 
-## What I'd do with 10× the data
+## What I would do with 10x the data
 
-Almost none of what I'd try next is about architecture. At 15k+ real samples, tabular transformers like TabNet or FT-Transformer would start to pay off where they currently overfit. Conformal prediction would replace MC Dropout for calibrated intervals. Active learning — using model uncertainty to pick which recipes the lab should run next — would close the loop on data collection. Multi-task learning with property groupings (thermal, impact, tensile) might help the sparse targets.
+Almost none of what I would try next starts with architecture.
 
-But ordering matters. The single biggest lever on this model is still a lab technician running more trials. Everything else sits downstream of data.
+With 10x more real samples, I would first improve uncertainty: conformal prediction for calibrated intervals, and probably a real deep ensemble if inference cost stayed acceptable. Then active learning: use model uncertainty to recommend which recipes the lab should run next. Then maybe tabular transformers like TabNet or FT-Transformer, once the dataset was large enough for them not to overfit immediately.
+
+But the order matters. The single biggest lever would still be more real lab trials. Everything else sits downstream of data.
 
 ## The general point
 
-Almost all of this post is about things that aren't model architecture. That's the pattern I wish someone had told me when I started. At small-to-moderate dataset sizes, on real industrial data:
+The original version of this post wanted to say the boring model won.
 
-- The loss function handling missing values matters more than the architecture.
-- The train/test split respecting the data's group structure matters more than the architecture.
-- Knowing when your uncertainty estimates are lying to you matters more than the architecture.
-- Picking a reasonable MLP and tuning dropout and weight decay gets you to within a few points of any fancier approach.
+The more honest version is that every architecture landed in the same neighborhood. The model choice mattered, but not as much as the decisions around it:
 
-The boring model won. It won because of the un-boring decisions around it.
+- The loss function had to ignore missing targets without throwing away rows.
+- The train/test split had to respect synthetic-copy groups.
+- The uncertainty signal had to be useful enough for an RL agent without pretending to be calibrated.
+- Melt flow rate needed physics knowledge, not a fancier network.
+
+That is the lesson I trust now. At small-to-moderate dataset sizes, on real industrial data, the architecture is rarely the main character. The work that moves the needle is usually the stuff around the model.
 
 ---
 
-*Next in the series: the inverse problem — how this forward model became the environment for a PPO agent that proposes recipes from OEM specs. Coming soon.*
-
-*Feedback and corrections welcome, especially if you've hit the group-split bug in your own work.*
+*Next in the series: the inverse problem — how this forward model became the environment for a PPO agent that proposes recipes from OEM specs.*
