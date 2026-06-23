@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
+import GitHubContributionGraph from '../components/GitHubContributionGraph.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 import { computeReadTime } from '../lib/readTime';
 
@@ -25,7 +26,7 @@ const formatDate = (d: Date) =>
 
 <Layout title={SITE_TITLE} description={SITE_DESCRIPTION} active="home">
   <header class="qm-page-head home-head">
-    <h1 class="qm-h1 home-h1">Carlos Cruz <em>— software engineer.</em></h1>
+    <h1 class="qm-h1 home-h1">Carlos de la Cruz <em>— software engineer.</em></h1>
     <div class="qm-lead home-lead">
       <p>
         I build software, mostly around <b>AI and machine learning</b>. Right now I'm shipping
@@ -38,14 +39,7 @@ const formatDate = (d: Date) =>
         I'm Dominican, based in Toronto, and open to roles.
       </p>
     </div>
-    <div class="qm-meta">
-      <span><b>Toronto, CA</b></span>
-      <span>EST · UTC−5</span>
-      <span>orig. Santo Domingo, DO</span>
-      <span>
-        <a href="/about" class="meta-link">more about me →</a>
-      </span>
-    </div>
+    <GitHubContributionGraph />
   </header>
 
   {
@@ -105,22 +99,19 @@ const formatDate = (d: Date) =>
 </Layout>
 
 <style>
-  .home-head {
-    margin-bottom: 96px;
-    padding-top: 24px;
-  }
-
   .home-h1 {
     font-size: clamp(34px, 3.6vw, 48px);
     font-weight: 500;
     letter-spacing: -0.025em;
     line-height: 1.08;
     margin: 0 0 36px;
-    max-width: 22ch;
+    width: 100%;
+    max-width: none;
   }
 
   .home-lead {
-    max-width: 60ch;
+    width: 100%;
+    max-width: none;
     font-size: 19px;
     line-height: 1.65;
   }
@@ -141,7 +132,7 @@ const formatDate = (d: Date) =>
   .qm-meta {
     display: flex;
     gap: 32px;
-    margin-top: 36px;
+    margin-top: 12px;
     font-size: 13px;
     color: var(--fg-3);
     flex-wrap: wrap;
