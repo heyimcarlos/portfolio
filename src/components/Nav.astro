@@ -17,7 +17,7 @@ const items: { key: Active; label: string; href: string }[] = [
 <nav class="qm-nav">
   <a href="/" class="qm-mark" aria-label="Carlos — home">
     <span class="qm-dot" aria-hidden="true"></span>
-    carlos · open to roles
+    carlos · open to positions
   </a>
   <span class="qm-nav-links">
     {
@@ -34,59 +34,3 @@ const items: { key: Active; label: string; href: string }[] = [
     }
   </span>
 </nav>
-
-<style>
-  .qm-nav {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    padding-bottom: 32px;
-    border-bottom: 1px solid var(--rule);
-    margin-bottom: 72px;
-    gap: 16px;
-    flex-wrap: wrap;
-  }
-
-  .qm-mark {
-    font-size: 14px;
-    color: var(--fg);
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    text-decoration: none;
-    background: none;
-    border: none;
-    padding: 0;
-    font-family: inherit;
-    cursor: pointer;
-  }
-
-  .qm-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--accent);
-    box-shadow: 0 0 12px var(--accent);
-    display: inline-block;
-  }
-
-  .qm-nav-links {
-    display: flex;
-    gap: 28px;
-    font-size: 14px;
-  }
-
-  .qm-navlink {
-    color: var(--fg-3);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-
-  .qm-navlink:hover {
-    color: var(--fg);
-  }
-
-  .qm-navlink[data-active='true'] {
-    color: var(--fg);
-  }
-</style>

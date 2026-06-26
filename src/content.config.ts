@@ -28,7 +28,7 @@ const projects = defineCollection({
       description: z.string(),
       stack: z.array(z.string()),
       cover: z.string().optional(),
-      category: z.enum(["web", "oss", "side-quests"]).default("web"),
+      category: z.enum(["ai", "web", "oss", "side-quests"]).default("web"),
       featured: z.boolean().default(false),
       url: z.string().url().optional(),
       repo: z.string().url().optional(),
