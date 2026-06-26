@@ -45,6 +45,10 @@
     @apply m-0 bg-bg p-0 text-fg;
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     font-family: var(--font-sans);
     font-size: 16px;
@@ -145,8 +149,8 @@
 
   .home-lead {
     @apply mb-10 w-full;
-    max-width: 900px;
-    font-size: 19px;
+    max-width: 64ch;
+    font-size: 17px;
     line-height: 1.65;
   }
 
@@ -168,6 +172,10 @@
 
   .qm-list-head {
     @apply mb-2 flex items-baseline justify-between border-b border-rule pb-6;
+  }
+
+  .qm-page-head + .qm-list-head {
+    @apply mt-14;
   }
 
   .qm-list-head h2,
@@ -278,6 +286,10 @@
   .qm-contact {
     @apply mt-12 grid items-end gap-16;
     grid-template-columns: 1fr auto;
+  }
+
+  .qm-contact-section {
+    scroll-margin-top: 48px;
   }
 
   .qm-contact h3 {

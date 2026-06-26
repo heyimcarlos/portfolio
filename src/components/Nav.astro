@@ -6,6 +6,7 @@ interface Props {
 }
 
 const { active } = Astro.props;
+const contactHref = active === 'home' ? '#contact' : '/#contact';
 
 const items: { key: Active; label: string; href: string }[] = [
   { key: 'work', label: 'work', href: '/projects' },
@@ -32,5 +33,6 @@ const items: { key: Active; label: string; href: string }[] = [
         </a>
       ))
     }
+    <a href={contactHref} class="qm-navlink">contact</a>
   </span>
 </nav>
