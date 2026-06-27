@@ -375,6 +375,12 @@
     @apply mt-0.5 block text-[13px] not-italic text-fg-muted;
   }
 
+  .qm-edu-note {
+    @apply max-w-[56ch] text-sm text-fg-muted;
+    line-height: 1.5;
+    margin: 8px 0 0;
+  }
+
   .qm-stack {
     @apply m-0 grid gap-y-8 gap-x-16;
     grid-template-columns: repeat(2, 1fr);

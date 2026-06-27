@@ -14,6 +14,7 @@ interface EduRow {
   what: string;
   where: string;
   loc: string;
+  note?: string;
 }
 
 const WORK: WorkRow[] = [
@@ -60,6 +61,7 @@ const EDUCATION: EduRow[] = [
     what: 'AdvDip · Software Engineering Tech (AI)',
     where: 'Centennial College',
     loc: 'Toronto',
+    note: 'Graduated with High Honours; highest GPA in the Software Engineering Technology AI cohort.',
   },
   {
     year: '2020',
@@ -133,6 +135,7 @@ const STACK: { group: string; items: string[] }[] = [
           <div>
             <b>{e.what}</b>
             <em>{e.where}</em>
+            {e.note && <p class="qm-edu-note">{e.note}</p>}
           </div>
           <span class="qm-work-loc">{e.loc}</span>
         </div>
