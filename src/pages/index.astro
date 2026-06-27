@@ -11,6 +11,9 @@ const projects = (await getCollection('projects')).sort((a, b) => {
   return (a.data.order ?? 0) - (b.data.order ?? 0);
 });
 
+const selectedProjectIds = new Set(['ti-automotive-polymer-ml', 'tryagent-ca']);
+const selectedProjects = projects.filter((project) => selectedProjectIds.has(project.id));
+
 const blogEntries = await getCollection('blog', ({ data }) =>
   import.meta.env.PROD ? !data.draft : true,
 );
@@ -60,7 +63,7 @@ const formatDate = (d: Date) =>
   <h2 class="qm-block-h2">Selected work</h2>
   <div>
     {
-      projects.map((p, i) => (
+      selectedProjects.map((p, i) => (
         <a href={`/projects/${p.id}`} class="qm-proj">
           <span class="qm-proj-num">№ {String(i + 1).padStart(2, '0')}</span>
           <div>

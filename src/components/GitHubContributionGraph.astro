@@ -15,6 +15,7 @@ interface ContributionMonth {
 }
 
 interface ContributionData {
+  summary: string;
   weekCount: number;
   months: ContributionMonth[];
   grid: Array<Array<ContributionDay | undefined>>;
@@ -22,8 +23,8 @@ interface ContributionData {
 
 const githubUsername = 'heyimcarlos';
 const githubUrl = `https://github.com/${githubUsername}`;
-const contributionUrl = `https://github.com/users/${githubUsername}/contributions`;
-const dayLabels = ['', 'Mon', '', 'Wed', '', 'Fri', ''];
+const currentYear = new Date().getUTCFullYear();
+const contributionUrl = `https://github.com/users/${githubUsername}/contributions?from=${currentYear}-01-01&to=${currentYear}-12-31`;
 const monthFormatter = new Intl.DateTimeFormat('en-US', {
   month: 'short',
   timeZone: 'UTC',
@@ -54,6 +55,16 @@ const parseTooltipLabels = (html: string) => {
   }
 
   return labels;
+};
+
+const parseContributionCount = (html: string) => {
+  const match = html.match(
+    /<h2\b[^>]*id="js-contribution-activity-description"[^>]*>([\s\S]*?)<\/h2>/,
+  );
+  if (!match) return undefined;
+
+  const text = cleanText(match[1]);
+  return text.match(/^([\d,]+)/)?.[1];
 };
 
 const parseDays = (html: string): ContributionDay[] => {
@@ -131,8 +142,10 @@ const getGithubContributions = async (): Promise<ContributionData | undefined> =
     if (days.length === 0) return undefined;
 
     const weekCount = Math.max(...days.map((day) => day.week)) + 1;
+    const contributionCount = parseContributionCount(html) ?? '0';
 
     return {
+      summary: `${contributionCount} contributions in ${currentYear}`,
       weekCount,
       months: buildMonths(days, weekCount),
       grid: buildGrid(days, weekCount),
@@ -150,35 +163,16 @@ const contributions = await getGithubContributions();
   {
     contributions ? (
       <div class="github-calendar" aria-label={`GitHub contribution graph for ${githubUsername}`}>
+        <p class="github-calendar-summary">{contributions.summary}</p>
         <div class="github-calendar-scroll">
           <table
             class="github-calendar-table"
             aria-label={`GitHub contribution graph for ${githubUsername}`}
           >
-            <thead>
-              <tr>
-                <th scope="col" class="github-calendar-day-label">
-                  <span class="sr-only">Day of week</span>
-                </th>
-                {contributions.months.map((month) => (
-                  <th scope="col" colspan={month.span} class="github-calendar-month">
-                    {month.label}
-                  </th>
-                ))}
-              </tr>
-            </thead>
+            <caption class="sr-only">{contributions.summary}</caption>
             <tbody>
               {contributions.grid.map((row, rowIndex) => (
-                <tr>
-                  <th scope="row" class="github-calendar-day-label">
-                    {dayLabels[rowIndex] ? (
-                      <span>{dayLabels[rowIndex]}</span>
-                    ) : (
-                      <span class="sr-only">
-                        {['Sunday', 'Tuesday', 'Thursday', 'Saturday'][rowIndex / 2] ?? 'Day'}
-                      </span>
-                    )}
-                  </th>
+                <tr aria-label={`GitHub contribution row ${rowIndex + 1}`}>
                   {row.map((day) =>
                     day ? (
                       <td
@@ -194,6 +188,15 @@ const contributions = await getGithubContributions();
                 </tr>
               ))}
             </tbody>
+            <tfoot>
+              <tr>
+                {contributions.months.map((month) => (
+                  <td colspan={month.span} class="github-calendar-month">
+                    {month.label}
+                  </td>
+                ))}
+              </tr>
+            </tfoot>
           </table>
         </div>
       </div>
