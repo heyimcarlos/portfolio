@@ -20,9 +20,9 @@ The application's core features were required to be built from the ground up, su
 
 As the sole developer, I was able to work on backend and frontend feature implementations, including Authentication and Authorization, Database Schema, API, and UI Component Library development. As the project grew, so did our team. Having a bigger team allowed me to delegate tasks and focus on the backend, where I built and deployed APIs, such as a wallet feature with credit, debit, and transfer functionality.
 
-![shop page](/src/assets/projects/305-global-marketing_shop-page.png)
+![shop page](../../assets/projects/305-global-marketing_shop-page.png)
 
-![profile wallet](/src/assets/projects/305-global-marketing_profile-wallet.png)
+![profile wallet](../../assets/projects/305-global-marketing_profile-wallet.png)
 
 ## Purpose and Goal
 
@@ -30,17 +30,17 @@ This e-commerce application was my first job after attending [Fullstack Academy]
 
 The main goal of this application was to build an experience that would feel like standard e-commerce. The client wanted to allow users to purchase membership packages that provide the following privileges: product discounts of up to 50%, a customizable store allocated to a subdomain based on their username, commission distribution for sales originating on the said store, a payout system so users could retrieve their generated earnings.
 
-![profile shop orders](/src/assets/projects/305-global-marketing_profile-shop-orders.png)
+![profile shop orders](../../assets/projects/305-global-marketing_profile-shop-orders.png)
 
 ## Spotlight
 
 I'm very proud of the member tree, which vividly displays how members are connected. This feature was challenging to implement, starting with the server, where we had to fetch the tree's head plus children and recursively attach each other. Our most significant hurdle happened in the front end. The tree did not render in Safari, and most of our users used this browser; this forced me to opt for a data visualization library called [D3.js](https://d3js.org), which was extremely difficult to handle in a Next.js server environment. After learning about [Next.js](https://nextjs.org) dynamic imports, I could take all of this interaction client side and successfully render the tree without issues.
 
-![profile tree](/src/assets/projects/305-global-marketing_profile-tree.png)
+![profile tree](../../assets/projects/305-global-marketing_profile-tree.png)
 
 Also, I wanted to mention a shipping calculator feature built with the [USPS API](https://www.usps.com/business/web-tools-apis/). The client wanted to calculate shipping costs based on the product's weight, dimensions, and destination address, so I created the shipping calculator API with [Shipengine](https://shipengine.com); this allowed me to automate the shipping calculation, label purchases, and provide tracking information.
 
-![checkout process](/src/assets/projects/305-global-marketing_checkout-process.png)
+![checkout process](../../assets/projects/305-global-marketing_checkout-process.png)
 
 ## Current Status
 

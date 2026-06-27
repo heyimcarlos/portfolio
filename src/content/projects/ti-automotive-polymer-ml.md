@@ -29,7 +29,7 @@ The dataset was small, sparse, and noisy: roughly 500 recipes, 50+ ingredients, 
 - Compared neural architectures, masking missing targets instead of imputing lab measurements.
 - Used the forward model as the environment for model-based inverse search.
 
-![Model-based reinforcement learning approach](/src/assets/projects/ti-auto/model-based-rl.png)
+![Model-based reinforcement learning approach](../../assets/projects/ti-auto/model-based-rl.png)
 
 ## Result
 
