@@ -20,9 +20,9 @@ The application's features were developed from scratch, including an innovative 
 
 As an engineer for this product, I shaped both frontend and backend aspects. I contributed to the frontend by developing an innovative interactive map, while my primary role was constructing the backend from scratch. I created a database using PlanetScale, a MySQL provider, and Prisma ORM. I also built APIs using tRPC and introduced a feature for automatically converting currencies and languages based on user preferences. These responsibilities were pivotal in enhancing Ntornos' scalability, efficiency, and UX.
 
-![map](/src/assets/projects/ntornos-map.png)
+![map](../../assets/projects/ntornos-map.png)
 
-![map features](/src/assets/projects/ntornos-map-features.png)
+![map features](../../assets/projects/ntornos-map-features.png)
 
 ## Purpose and Goal
 
@@ -30,19 +30,19 @@ This geo project application was my first shot at building a product from scratc
 
 The main goal was to build an intuitive and interactive real estate platform. Our team wanted to provide users with a unique property search experience, incorporating features like an innovative map-based search, and dynamic area clustering. Furthermore, we aimed to equip realtors with property management tools and analytical data, enhancing their engagement and conversion rates. Another goal was to make the platform globally adaptable, converting currencies and languages based on user preferences and catering to a worldwide audience.
 
-![settings profile](/src/assets/projects/ntornos-settings-profile.png)
+![settings profile](../../assets/projects/ntornos-settings-profile.png)
 
 ## Spotlight
 
 I'm very proud of the map. Implementing this feature involved managing large volumes of dynamic data on the backend and ensuring seamless interactivity on the frontend. The challenge was associating properties with their geographical areas on the back and frontend to create an intuitive, efficient map where users could highlight a location and view the properties. Despite the complexity of implementing this within the Next.js environment, the result was a dynamic, user-friendly interactive map that has significantly elevated the user experience on the platform.
 
-![mobile map](/src/assets/projects/ntornos-map-mobile.png)
-![map filters](/src/assets/projects/ntornos-map-mobile-filters.png)
-![map preview](/src/assets/projects/ntornos-map-mobile-preview.png)
+![mobile map](../../assets/projects/ntornos-map-mobile.png)
+![map filters](../../assets/projects/ntornos-map-mobile-filters.png)
+![map preview](../../assets/projects/ntornos-map-mobile-preview.png)
 
 Additionally, I'd like to highlight the property editing functionality developed for both backend and frontend. Our goal was to provide realtors with a smooth and intuitive interface to manage their property listings.
 
-![edit properties](/src/assets/projects/ntornos-edit.png)
+![edit properties](../../assets/projects/ntornos-edit.png)
 
 ## Current Status
 
