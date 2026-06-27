@@ -14,19 +14,20 @@ interface EduRow {
   what: string;
   where: string;
   loc: string;
+  note?: string;
 }
 
 const WORK: WorkRow[] = [
   {
     range: '2026 — now',
-    role: 'Machine Learning Engineer',
+    role: 'Applied ML Engineer',
     co: 'TI Automotive',
     loc: 'Toronto',
-    note: 'Inverse-RL model predicting polymer blends from OEM specs. In production with lab techs.',
+    note: 'Polymer-blend recommendation system from OEM specs: forward modeling, feature engineering, uncertainty, and model-based search.',
   },
   {
     range: '2025 — 26',
-    role: 'Fullstack Software Engineer',
+    role: 'Full-stack Software Engineer',
     co: 'Xello',
     loc: 'Toronto',
     note: 'Major contributor to "The Real Game" — a career-exploration tool used by millions of students.',
@@ -60,6 +61,7 @@ const EDUCATION: EduRow[] = [
     what: 'AdvDip · Software Engineering Tech (AI)',
     where: 'Centennial College',
     loc: 'Toronto',
+    note: 'Graduated with High Honours; highest GPA in the Software Engineering Technology AI cohort.',
   },
   {
     year: '2020',
@@ -86,7 +88,7 @@ const STACK: { group: string; items: string[] }[] = [
 
 <Layout
   title="About — Carlos"
-  description="Dominican engineer based in Toronto. Currently building inverse-RL models at TI Automotive."
+  description="Dominican engineer based in Toronto, focused on applied AI systems and backend product engineering."
   active="about"
 >
   <header class="qm-page-head">
@@ -100,10 +102,9 @@ const STACK: { group: string; items: string[] }[] = [
       and Fortnite, tried finance briefly, then learned to code at a kitchen table.
     </p>
     <p>
-      Now focused on <b>AI engineering and machine learning</b> — retrieval systems,
-      reinforcement learning, and the unglamorous plumbing that makes models useful in
-      production. Outside the screen: BJJ blue belt, snowboarding, surfing, building silly
-      things.
+      Now focused on <b>applied AI systems and backend product engineering</b>: retrieval,
+      agents, model evaluation, data-heavy workflows, and the unglamorous plumbing that makes
+      models useful. Outside the screen: BJJ blue belt, snowboarding, surfing, building silly things.
     </p>
   </div>
 
@@ -134,6 +135,7 @@ const STACK: { group: string; items: string[] }[] = [
           <div>
             <b>{e.what}</b>
             <em>{e.where}</em>
+            {e.note && <p class="qm-edu-note">{e.note}</p>}
           </div>
           <span class="qm-work-loc">{e.loc}</span>
         </div>
@@ -153,123 +155,3 @@ const STACK: { group: string; items: string[] }[] = [
     }
   </dl>
 </Layout>
-
-<style>
-  .qm-about {
-    max-width: 64ch;
-  }
-
-  .qm-about p {
-    color: var(--fg-2);
-    font-size: 17px;
-    line-height: 1.65;
-    margin: 0 0 18px;
-  }
-
-  .qm-about p b {
-    color: var(--fg);
-    font-weight: 500;
-  }
-
-  .qm-work-row,
-  .qm-edu-row {
-    display: grid;
-    grid-template-columns: 110px 1fr 140px;
-    gap: 24px;
-    padding: 22px 0;
-    border-bottom: 1px solid var(--rule);
-    align-items: baseline;
-  }
-
-  .qm-edu-row {
-    padding: 18px 0;
-  }
-
-  .qm-work-row:last-child,
-  .qm-edu-row:last-child {
-    border-bottom: none;
-  }
-
-  .qm-work-year,
-  .qm-work-loc {
-    font-size: 13px;
-    color: var(--fg-3);
-    font-variant-numeric: tabular-nums;
-  }
-
-  .qm-work-loc {
-    text-align: right;
-  }
-
-  .qm-work-role {
-    font-size: 16px;
-    color: var(--fg);
-    margin: 0;
-    font-weight: 500;
-  }
-
-  .qm-work-co {
-    color: var(--fg-2);
-    font-weight: 400;
-  }
-
-  .qm-work-note {
-    font-size: 14px;
-    color: var(--fg-2);
-    margin: 8px 0 0;
-    max-width: 64ch;
-    line-height: 1.5;
-  }
-
-  .qm-edu-row b {
-    color: var(--fg);
-    font-weight: 500;
-    font-size: 15px;
-    display: block;
-  }
-
-  .qm-edu-row em {
-    font-style: normal;
-    color: var(--fg-2);
-    font-size: 13px;
-    display: block;
-    margin-top: 2px;
-  }
-
-  .qm-stack {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 32px 64px;
-    margin: 0;
-  }
-
-  .qm-stack dt {
-    font-size: 12px;
-    color: var(--fg-3);
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    margin-bottom: 12px;
-  }
-
-  .qm-stack dd {
-    margin: 0;
-    font-size: 15px;
-    color: var(--fg);
-  }
-
-  @media (max-width: 720px) {
-    .qm-work-row,
-    .qm-edu-row {
-      grid-template-columns: 1fr;
-      gap: 6px;
-      padding: 18px 0;
-    }
-    .qm-work-loc {
-      text-align: left;
-    }
-    .qm-stack {
-      grid-template-columns: 1fr;
-      gap: 24px;
-    }
-  }
-</style>

@@ -10,7 +10,7 @@ draft: false
 
 ## The Journey
 
-While in the fifth semester of the Software Eng Tech - AI degree at Centennial College, my professor announced that they were looking for a student to participate in a polymer manufacturing project. She invited a couple of students to apply, and to my surprise, I was one of them.
+While in the fifth semester of the Software Eng Tech - AI diploma at Centennial College, my professor announced that they were looking for a student to participate in a polymer manufacturing project. She invited a couple of students to apply, and to my surprise, I was one of them.
 
 The interview problem was framed as a cake. Imagine a document describing the scientific properties the cake must have: glucose level, density, thickness, colour, etc. Could I build a model that predicts a recipe matching those targets?
 
