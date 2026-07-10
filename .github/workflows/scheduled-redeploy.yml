@@ -1,0 +1,25 @@
+name: Scheduled redeploy
+
+on:
+  schedule:
+    # GitHub cron is UTC. This is 09:17 in Toronto during daylight time.
+    - cron: "17 13 * * *"
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  redeploy:
+    name: Trigger production rebuild
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger deploy hook
+        env:
+          DEPLOY_HOOK_URL: ${{ secrets.DEPLOY_HOOK_URL }}
+        run: |
+          if [ -z "$DEPLOY_HOOK_URL" ]; then
+            echo "Missing DEPLOY_HOOK_URL repository secret."
+            exit 1
+          fi
+
+          curl --fail --silent --show-error --request POST "$DEPLOY_HOOK_URL"
