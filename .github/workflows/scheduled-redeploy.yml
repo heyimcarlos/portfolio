@@ -6,13 +6,40 @@ on:
     - cron: "17 13 * * *"
   workflow_dispatch:
 
-permissions: {}
+permissions:
+  contents: write
 
 jobs:
   redeploy:
-    name: Trigger production rebuild
+    name: Refresh contribution graph and rebuild
     runs-on: ubuntu-latest
     steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Update contribution snapshot
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node scripts/update-github-contributions.mjs
+
+      - name: Commit contribution snapshot
+        run: |
+          if git diff --quiet -- src/data/github-contributions.json; then
+            echo "Contribution snapshot is already current."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/data/github-contributions.json
+          git commit -m "chore: update GitHub contribution snapshot"
+          git push
+
       - name: Trigger deploy hook
         env:
           DEPLOY_HOOK_URL: ${{ secrets.DEPLOY_HOOK_URL }}

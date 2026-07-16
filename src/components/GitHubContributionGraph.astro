@@ -1,4 +1,6 @@
 ---
+import contributionsSnapshot from '../data/github-contributions.json';
+
 type ContributionLevel = 0 | 1 | 2 | 3 | 4;
 
 interface ContributionDay {
@@ -15,147 +17,19 @@ interface ContributionMonth {
 }
 
 interface ContributionData {
+  username: string;
+  year: number;
+  fetchedAt: string;
+  source: string;
   summary: string;
   weekCount: number;
   months: ContributionMonth[];
-  grid: Array<Array<ContributionDay | undefined>>;
+  grid: Array<Array<ContributionDay | null>>;
 }
 
-const githubUsername = 'heyimcarlos';
+const contributions = contributionsSnapshot as ContributionData;
+const githubUsername = contributions.username;
 const githubUrl = `https://github.com/${githubUsername}`;
-const currentYear = new Date().getUTCFullYear();
-const contributionUrl = `https://github.com/users/${githubUsername}/contributions?from=${currentYear}-01-01&to=${currentYear}-12-31`;
-const monthFormatter = new Intl.DateTimeFormat('en-US', {
-  month: 'short',
-  timeZone: 'UTC',
-});
-
-const getAttribute = (tag: string, name: string) => {
-  const match = tag.match(new RegExp(`\\b${name}="([^"]*)"`));
-  return match?.[1] ?? '';
-};
-
-const toLevel = (value: string): ContributionLevel => {
-  const level = Number.parseInt(value, 10);
-  return level >= 0 && level <= 4 ? (level as ContributionLevel) : 0;
-};
-
-const cleanText = (html: string) =>
-  html
-    .replace(/<[^>]+>/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim();
-
-const parseTooltipLabels = (html: string) => {
-  const labels = new Map<string, string>();
-  const pattern = /<tool-tip\b[^>]*\bfor="([^"]+)"[^>]*>([^<]*)<\/tool-tip>/g;
-
-  for (const match of html.matchAll(pattern)) {
-    labels.set(match[1], cleanText(match[2]));
-  }
-
-  return labels;
-};
-
-const parseContributionCount = (html: string) => {
-  const match = html.match(
-    /<h2\b[^>]*id="js-contribution-activity-description"[^>]*>([\s\S]*?)<\/h2>/,
-  );
-  if (!match) return undefined;
-
-  const text = cleanText(match[1]);
-  return text.match(/^([\d,]+)/)?.[1];
-};
-
-const parseDays = (html: string): ContributionDay[] => {
-  const labels = parseTooltipLabels(html);
-  const days: ContributionDay[] = [];
-  const pattern =
-    /<td\b(?=[^>]*\bclass="[^"]*\bContributionCalendar-day\b[^"]*")[^>]*><\/td>/g;
-
-  for (const match of html.matchAll(pattern)) {
-    const tag = match[0];
-    const id = getAttribute(tag, 'id');
-    const position = id.match(/contribution-day-component-(\d+)-(\d+)/);
-
-    if (!position) continue;
-
-    const date = getAttribute(tag, 'data-date');
-    if (!date) continue;
-
-    days.push({
-      date,
-      day: Number.parseInt(position[1], 10),
-      week: Number.parseInt(position[2], 10),
-      level: toLevel(getAttribute(tag, 'data-level')),
-      label: labels.get(id) ?? `${date}: contribution level ${getAttribute(tag, 'data-level')}`,
-    });
-  }
-
-  return days;
-};
-
-const getMonthLabel = (date: string) =>
-  monthFormatter.format(new Date(`${date}T00:00:00.000Z`));
-
-const buildMonths = (days: ContributionDay[], weekCount: number): ContributionMonth[] => {
-  const months: ContributionMonth[] = [];
-
-  for (let week = 0; week < weekCount; week += 1) {
-    const firstDayInWeek = days.find((day) => day.week === week);
-    if (!firstDayInWeek) continue;
-
-    const label = getMonthLabel(firstDayInWeek.date);
-    const current = months.at(-1);
-
-    if (current?.label === label) {
-      current.span += 1;
-    } else {
-      months.push({ label, span: 1 });
-    }
-  }
-
-  return months;
-};
-
-const buildGrid = (days: ContributionDay[], weekCount: number) => {
-  const dayByPosition = new Map(days.map((day) => [`${day.day}:${day.week}`, day]));
-
-  return Array.from({ length: 7 }, (_, day) =>
-    Array.from({ length: weekCount }, (_, week) => dayByPosition.get(`${day}:${week}`)),
-  );
-};
-
-const getGithubContributions = async (): Promise<ContributionData | undefined> => {
-  try {
-    const response = await fetch(contributionUrl, {
-      headers: {
-        Accept: 'text/html',
-        'User-Agent': 'heyimcarlos.dev',
-      },
-    });
-
-    if (!response.ok) return undefined;
-
-    const html = await response.text();
-    const days = parseDays(html);
-    if (days.length === 0) return undefined;
-
-    const weekCount = Math.max(...days.map((day) => day.week)) + 1;
-    const contributionCount = parseContributionCount(html) ?? '0';
-
-    return {
-      summary: `${contributionCount} contributions in ${currentYear}`,
-      weekCount,
-      months: buildMonths(days, weekCount),
-      grid: buildGrid(days, weekCount),
-    };
-  } catch {
-    return undefined;
-  }
-};
-
-const contributions = await getGithubContributions();
 ---
 
 <section class="github-graph" aria-label={`GitHub contribution graph for ${githubUsername}`}>
